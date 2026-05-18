@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="cyberpunk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenType English - Luyện Gõ Phím Kết Hợp Học Tiếng Anh Cao Cấp</title>
+  <meta name="description" content="ZenType English là ứng dụng web cao cấp giúp bạn vừa luyện tốc độ gõ phím (Typing Test), vừa nâng cao vốn từ vựng, mẫu câu giao tiếp tiếng Anh kèm phát âm và dịch nghĩa trực quan.">
+  <meta name="keywords" content="luyện gõ phím, typing test, học tiếng anh, 10-finger typing, wpm, gõ phím nhanh, zentype">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+    
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-section">
+        <div class="logo-glow"></div>
+        <i class="fa-solid fa-keyboard logo-icon"></i>
+        <h1>ZenType <span class="logo-accent">English</span></h1>
+      </div>
+      
+      <!-- Toolbar Controls -->
+      <div class="toolbar-controls">
+        <!-- Sound Style Controller -->
+        <div class="control-group">
+          <button class="icon-btn tooltip" id="btn-sound-toggle" data-tooltip="Tắt/Bật Âm Thanh">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <select id="sound-select" class="custom-select" title="Loại Âm Thanh">
+            <option value="clicky">Keyboard Clicky</option>
+            <option value="typewriter">Typewriter Retro</option>
+            <option value="silent">Silent Switch</option>
+          </select>
+        </div>
+
+        <!-- TTS Voice Controller -->
+        <div class="control-group">
+          <button class="icon-btn tooltip" id="btn-tts-toggle" data-tooltip="Tự động phát âm khi gõ từ">
+            <i class="fa-solid fa-ear-listen text-accent"></i>
+          </button>
+          <select id="voice-accent" class="custom-select" title="Giọng Đọc">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+          </select>
+        </div>
+
+        <!-- Theme Selection Grid -->
+        <div class="control-group">
+          <i class="fa-solid fa-palette theme-icon"></i>
+          <select id="theme-select" class="custom-select" title="Đổi Giao Diện">
+            <option value="cyberpunk">Cyberpunk Neon</option>
+            <option value="lavender">Lavender Glass</option>
+            <option value="carbon">Carbon Sleek</option>
+            <option value="forest">Forest Mint</option>
+            <option value="retro">Retro Terminal</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation / Mode Selection -->
+    <nav class="mode-navigation">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-mode="vocabulary" id="tab-vocab">
+          <i class="fa-solid fa-book-open"></i> Từ Vựng (Vocabulary)
+        </button>
+        <button class="nav-tab" data-mode="phrases" id="tab-phrases">
+          <i class="fa-solid fa-quote-left"></i> Mẫu Câu (Phrases)
+        </button>
+        <button class="nav-tab" data-mode="stories" id="tab-stories">
+          <i class="fa-solid fa-newspaper"></i> Truyện Ngắn (Stories)
+        </button>
+      </div>
+
+      <!-- Context Sub-options -->
+      <div class="sub-options">
+        <div class="option-container active" id="options-count">
+          <span class="option-label">Số lượng từ:</span>
+          <button class="option-btn active" data-count="10">10</button>
+          <button class="option-btn" data-count="20">20</button>
+          <button class="option-btn" data-count="30">30</button>
+          <button class="option-btn" data-count="50">50</button>
+        </div>
+        <div class="option-container" id="options-stories" style="display: none;">
+          <span class="option-label">Chọn câu chuyện:</span>
+          <select id="story-select" class="custom-select">
+            <!-- Dynamic stories injected from data.js -->
+          </select>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <main class="main-workspace">
+      
+      <!-- Live Stats HUD -->
+      <section class="stats-hud">
+        <div class="stat-card" id="hud-wpm">
+          <div class="stat-icon-wrapper wpm-accent">
+            <i class="fa-solid fa-gauge-high"></i>
+          </div>
+          <div class="stat-details">
+            <span class="stat-value" id="live-wpm">0</span>
+            <span class="stat-title">WPM (Tốc độ)</span>
+          </div>
+        </div>
+
+        <div class="stat-card" id="hud-accuracy">
+          <div class="stat-icon-wrapper accuracy-accent">
+            <i class="fa-solid fa-crosshairs"></i>
+          </div>
+          <div class="stat-details">
+            <span class="stat-value" id="live-accuracy">100%</span>
+            <span class="stat-title">Độ Chính Xác</span>
+          </div>
+        </div>
+
+        <div class="stat-card" id="hud-timer">
+          <div class="stat-icon-wrapper timer-accent">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div class="stat-details">
+            <span class="stat-value" id="live-timer">0s</span>
+            <span class="stat-title">Thời Gian</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Active Dictionary Lookup / IPA Info Panel -->
+      <section class="dictionary-card" id="dict-card">
+        <div class="dict-main">
+          <div class="word-header">
+            <h3 id="dict-word">Ready</h3>
+            <span class="part-of-speech" id="dict-pos">adj</span>
+            <span class="ipa" id="dict-ipa">/ˈred.i/</span>
+            <button class="tts-speak-btn tooltip" id="btn-speak-word" data-tooltip="Nghe Phát Âm">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+          </div>
+          <p class="definition" id="dict-definition">Sẵn sàng để bắt đầu luyện tập gõ phím.</p>
+        </div>
+        <div class="dict-hint">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Gõ từ đầu tiên để kích hoạt bộ đo đếm thời gian.</span>
+        </div>
+      </section>
+
+      <!-- Typing Arena -->
+      <section class="typing-arena-container">
+        <!-- Textarea / Input Receiver (Hidden, but focuses typing) -->
+        <input type="text" id="typing-input" class="hidden-input" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus>
+        
+        <!-- Focus Overlay -->
+        <div class="focus-overlay" id="focus-prompt">
+          <div class="overlay-content">
+            <i class="fa-solid fa-mouse-pointer cursor-pulse"></i>
+            <p>Nhấp vào đây để tiếp tục gõ phím</p>
+          </div>
+        </div>
+
+        <!-- Scrollable Monospaced Text Container -->
+        <div class="typing-box" id="typing-box">
+          <!-- Floating smooth caret -->
+          <div class="typing-caret" id="typing-caret"></div>
+          <!-- Target text spans injected by app.js -->
+          <div class="words-wrapper" id="words-wrapper"></div>
+        </div>
+
+        <!-- Reset Button -->
+        <button class="reset-btn" id="btn-reset" title="Bắt đầu lại (Nhấn Tab + Enter)">
+          <i class="fa-solid fa-rotate-left"></i> Chạy Lại (Reset)
+        </button>
+      </section>
+
+      <!-- Virtual Mechanical Keyboard Visualizer -->
+      <section class="keyboard-visualizer">
+        <div class="keyboard-row" id="kb-row-1">
+          <div class="key spec-key" id="key-Backquote">`</div>
+          <div class="key" id="key-Digit1">1</div>
+          <div class="key" id="key-Digit2">2</div>
+          <div class="key" id="key-Digit3">3</div>
+          <div class="key" id="key-Digit4">4</div>
+          <div class="key" id="key-Digit5">5</div>
+          <div class="key" id="key-Digit6">6</div>
+          <div class="key" id="key-Digit7">7</div>
+          <div class="key" id="key-Digit8">8</div>
+          <div class="key" id="key-Digit9">9</div>
+          <div class="key" id="key-Digit0">0</div>
+          <div class="key" id="key-Minus">-</div>
+          <div class="key" id="key-Equal">=</div>
+          <div class="key spec-key size-backspace" id="key-Backspace"><i class="fa-solid fa-delete-left"></i></div>
+        </div>
+        <div class="keyboard-row" id="kb-row-2">
+          <div class="key spec-key size-tab" id="key-Tab">Tab</div>
+          <div class="key" id="key-KeyQ">Q</div>
+          <div class="key" id="key-KeyW">W</div>
+          <div class="key" id="key-KeyE">E</div>
+          <div class="key" id="key-KeyR">R</div>
+          <div class="key" id="key-KeyT">T</div>
+          <div class="key" id="key-KeyY">Y</div>
+          <div class="key" id="key-KeyU">U</div>
+          <div class="key" id="key-KeyI">I</div>
+          <div class="key" id="key-KeyO">O</div>
+          <div class="key" id="key-KeyP">P</div>
+          <div class="key" id="key-BracketLeft">[</div>
+          <div class="key" id="key-BracketRight">]</div>
+          <div class="key spec-key size-slash" id="key-Backslash">\</div>
+        </div>
+        <div class="keyboard-row" id="kb-row-3">
+          <div class="key spec-key size-caps" id="key-CapsLock">Caps</div>
+          <div class="key" id="key-KeyA">A</div>
+          <div class="key" id="key-KeyS">S</div>
+          <div class="key" id="key-KeyD">D</div>
+          <div class="key" id="key-KeyF">F</div>
+          <div class="key" id="key-KeyG">G</div>
+          <div class="key" id="key-KeyH">H</div>
+          <div class="key" id="key-KeyJ">J</div>
+          <div class="key" id="key-KeyK">K</div>
+          <div class="key" id="key-KeyL">L</div>
+          <div class="key" id="key-Semicolon">;</div>
+          <div class="key" id="key-Quote">'</div>
+          <div class="key spec-key size-enter" id="key-Enter">Enter</div>
+        </div>
+        <div class="keyboard-row" id="kb-row-4">
+          <div class="key spec-key size-shift-l" id="key-ShiftLeft">Shift</div>
+          <div class="key" id="key-KeyZ">Z</div>
+          <div class="key" id="key-KeyX">X</div>
+          <div class="key" id="key-KeyC">C</div>
+          <div class="key" id="key-KeyV">V</div>
+          <div class="key" id="key-KeyB">B</div>
+          <div class="key" id="key-KeyN">N</div>
+          <div class="key" id="key-KeyM">M</div>
+          <div class="key" id="key-Comma">,</div>
+          <div class="key" id="key-Period">.</div>
+          <div class="key" id="key-Slash">/</div>
+          <div class="key spec-key size-shift-r" id="key-ShiftRight">Shift</div>
+        </div>
+        <div class="keyboard-row" id="kb-row-5">
+          <div class="key spec-key size-ctrl" id="key-ControlLeft">Ctrl</div>
+          <div class="key spec-key" id="key-MetaLeft"><i class="fa-brands fa-windows"></i></div>
+          <div class="key spec-key" id="key-AltLeft">Alt</div>
+          <div class="key size-space" id="key-Space">Space</div>
+          <div class="key spec-key" id="key-AltRight">Alt</div>
+          <div class="key spec-key" id="key-ControlRight">Ctrl</div>
+        </div>
+      </section>
+
+      <!-- History & Stats Analytics Dashboard -->
+      <section class="analytics-dashboard">
+        <div class="dashboard-header">
+          <h2><i class="fa-solid fa-chart-line"></i> Lịch Sử Luyện Tập & Tiến Trình</h2>
+          <button class="clear-history-btn" id="btn-clear-history" title="Xóa toàn bộ lịch sử">
+            <i class="fa-solid fa-trash-can"></i> Xóa Lịch Sử
+          </button>
+        </div>
+
+        <div class="history-grid">
+          <!-- Overview Cards -->
+          <div class="overview-stats">
+            <div class="mini-card">
+              <span class="mini-label">Tổng bài test</span>
+              <span class="mini-value" id="stats-total-tests">0</span>
+            </div>
+            <div class="mini-card">
+              <span class="mini-label">WPM cao nhất</span>
+              <span class="mini-value text-accent" id="stats-peak-wpm">0</span>
+            </div>
+            <div class="mini-card">
+              <span class="mini-label">WPM Trung bình</span>
+              <span class="mini-value" id="stats-avg-wpm">0</span>
+            </div>
+            <div class="mini-card">
+              <span class="mini-label">Độ chính xác TB</span>
+              <span class="mini-value" id="stats-avg-accuracy">0%</span>
+            </div>
+          </div>
+
+          <!-- History Table -->
+          <div class="history-table-wrapper">
+            <table class="history-table" id="history-table">
+              <thead>
+                <tr>
+                  <th>Thời Gian</th>
+                  <th>Chế Độ</th>
+                  <th>Tốc Độ (WPM)</th>
+                  <th>Độ Chính Xác</th>
+                  <th>Thời Lượng</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                <!-- Dynamic history rows injected by app.js -->
+                <tr class="empty-row">
+                  <td colspan="5">Chưa có dữ liệu lịch sử. Hãy hoàn thành bài test đầu tiên!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 ZenType English. Designed for pure typing excellence and fast learning.</p>
+    </footer>
+
+  </div>
+
+  <!-- Sound effect templates / hidden controls if needed -->
+  
+  <!-- JavaScript Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
