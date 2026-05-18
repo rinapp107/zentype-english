@@ -19,6 +19,19 @@ class RinTypeSpaceShooter {
     this.highScore = 0;
     this.difficulty = 'medium'; // easy | medium | hard
     
+    // Coins and Upgrades
+    this.coins = 0;
+    this.laserLevel = 1;      // Max 4
+    this.shieldLevel = 1;     // Max 3
+    this.hpLevel = 1;         // Max 3
+    this.boosterLevel = 1;    // Max 3
+    this.maxHp = 100;
+    
+    // Wave / Stage system
+    this.waveEnemiesKilled = 0;
+    this.waveTarget = 10;
+    this.waveClearTimer = 0;  // Frames left in wave clear warp animation
+    
     // Game entities
     this.enemies = [];
     this.lasers = [];
@@ -67,6 +80,12 @@ class RinTypeSpaceShooter {
     // Load high score
     this.loadHighScore();
     
+    // Load existing upgrades and gold coins from localStorage
+    this.loadUpgrades();
+    
+    // Bind click events for upgrade shop tabs and buttons
+    this.bindShopEvents();
+    
     // Set initial size
     this.resizeCanvas();
     
@@ -105,6 +124,238 @@ class RinTypeSpaceShooter {
     }
   }
 
+  loadUpgrades() {
+    try {
+      this.coins = parseInt(localStorage.getItem('rintype_game_coins')) || 0;
+      this.laserLevel = parseInt(localStorage.getItem('rintype_upgrade_laser')) || 1;
+      this.shieldLevel = parseInt(localStorage.getItem('rintype_upgrade_shield')) || 1;
+      this.hpLevel = parseInt(localStorage.getItem('rintype_upgrade_hp')) || 1;
+      this.boosterLevel = parseInt(localStorage.getItem('rintype_upgrade_booster')) || 1;
+    } catch (e) {
+      this.coins = 0;
+      this.laserLevel = 1;
+      this.shieldLevel = 1;
+      this.hpLevel = 1;
+      this.boosterLevel = 1;
+    }
+    
+    // Recalculate max HP
+    if (this.hpLevel === 2) this.maxHp = 120;
+    else if (this.hpLevel === 3) this.maxHp = 150;
+    else this.maxHp = 100;
+    
+    this.updateShopUI();
+  }
+
+  saveUpgrades() {
+    try {
+      localStorage.setItem('rintype_game_coins', this.coins);
+      localStorage.setItem('rintype_upgrade_laser', this.laserLevel);
+      localStorage.setItem('rintype_upgrade_shield', this.shieldLevel);
+      localStorage.setItem('rintype_upgrade_hp', this.hpLevel);
+      localStorage.setItem('rintype_upgrade_booster', this.boosterLevel);
+    } catch (e) {}
+    
+    // Recalculate max HP
+    if (this.hpLevel === 2) this.maxHp = 120;
+    else if (this.hpLevel === 3) this.maxHp = 150;
+    else this.maxHp = 100;
+    
+    this.updateShopUI();
+  }
+
+  updateShopUI() {
+    // Costs tables
+    const costs = {
+      laser: [0, 100, 250, 500, 999999], // 1->2 is 100, 2->3 is 250, 3->4 is 500
+      shield: [0, 80, 200, 999999],
+      hp: [0, 100, 220, 999999],
+      booster: [0, 80, 180, 999999]
+    };
+    
+    const coinHud = document.getElementById('game-coins-hud');
+    if (coinHud) coinHud.textContent = this.coins;
+    
+    const shopCoins = document.getElementById('shop-coin-count');
+    if (shopCoins) shopCoins.textContent = this.coins;
+    
+    // Laser button
+    const laserLevelTxt = document.getElementById('laser-upgrade-level');
+    const laserCostTxt = document.getElementById('laser-upgrade-cost');
+    const laserBtn = document.getElementById('btn-upgrade-laser');
+    if (laserLevelTxt && laserCostTxt && laserBtn) {
+      laserLevelTxt.textContent = this.laserLevel;
+      if (this.laserLevel >= 4) {
+        laserCostTxt.textContent = 'MAX';
+        laserBtn.disabled = true;
+        laserBtn.style.background = '#475569';
+      } else {
+        const cost = costs.laser[this.laserLevel];
+        laserCostTxt.innerHTML = `<i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> ${cost}`;
+        laserBtn.disabled = this.coins < cost;
+        laserBtn.style.background = this.coins >= cost ? '#2563eb' : '#475569';
+      }
+    }
+    
+    // Shield button
+    const shieldLevelTxt = document.getElementById('shield-upgrade-level');
+    const shieldCostTxt = document.getElementById('shield-upgrade-cost');
+    const shieldBtn = document.getElementById('btn-upgrade-shield');
+    if (shieldLevelTxt && shieldCostTxt && shieldBtn) {
+      shieldLevelTxt.textContent = this.shieldLevel;
+      if (this.shieldLevel >= 3) {
+        shieldCostTxt.textContent = 'MAX';
+        shieldBtn.disabled = true;
+        shieldBtn.style.background = '#475569';
+      } else {
+        const cost = costs.shield[this.shieldLevel];
+        shieldCostTxt.innerHTML = `<i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> ${cost}`;
+        shieldBtn.disabled = this.coins < cost;
+        shieldBtn.style.background = this.coins >= cost ? '#059669' : '#475569';
+      }
+    }
+    
+    // HP button
+    const hpLevelTxt = document.getElementById('hp-upgrade-level');
+    const hpCostTxt = document.getElementById('hp-upgrade-cost');
+    const hpBtn = document.getElementById('btn-upgrade-hp');
+    if (hpLevelTxt && hpCostTxt && hpBtn) {
+      hpLevelTxt.textContent = this.hpLevel;
+      if (this.hpLevel >= 3) {
+        hpCostTxt.textContent = 'MAX';
+        hpBtn.disabled = true;
+        hpBtn.style.background = '#475569';
+      } else {
+        const cost = costs.hp[this.hpLevel];
+        hpCostTxt.innerHTML = `<i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> ${cost}`;
+        hpBtn.disabled = this.coins < cost;
+        hpBtn.style.background = this.coins >= cost ? '#dc2626' : '#475569';
+      }
+    }
+    
+    // Booster button
+    const boosterLevelTxt = document.getElementById('booster-upgrade-level');
+    const boosterCostTxt = document.getElementById('booster-upgrade-cost');
+    const boosterBtn = document.getElementById('btn-upgrade-booster');
+    if (boosterLevelTxt && boosterCostTxt && boosterBtn) {
+      boosterLevelTxt.textContent = this.boosterLevel;
+      if (this.boosterLevel >= 3) {
+        boosterCostTxt.textContent = 'MAX';
+        boosterBtn.disabled = true;
+        boosterBtn.style.background = '#475569';
+      } else {
+        const cost = costs.booster[this.boosterLevel];
+        boosterCostTxt.innerHTML = `<i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> ${cost}`;
+        boosterBtn.disabled = this.coins < cost;
+        boosterBtn.style.background = this.coins >= cost ? '#7c3aed' : '#475569';
+      }
+    }
+  }
+
+  bindShopEvents() {
+    const tabBattle = document.getElementById('btn-tab-battle');
+    const tabShop = document.getElementById('btn-tab-shop');
+    const panelBattle = document.getElementById('game-battle-panel');
+    const panelShop = document.getElementById('game-shop-panel');
+    
+    if (tabBattle && tabShop && panelBattle && panelShop) {
+      tabBattle.onclick = () => {
+        tabBattle.classList.add('active');
+        tabBattle.style.background = '#3b82f6';
+        tabBattle.style.color = '#fff';
+        
+        tabShop.classList.remove('active');
+        tabShop.style.background = 'rgba(255,255,255,0.05)';
+        tabShop.style.color = '#94a3b8';
+        
+        panelBattle.style.display = 'flex';
+        panelShop.style.display = 'none';
+        
+        if (window.RinTypeAudio) window.RinTypeAudio.playKeydown();
+      };
+      
+      tabShop.onclick = () => {
+        tabShop.classList.add('active');
+        tabShop.style.background = '#3b82f6';
+        tabShop.style.color = '#fff';
+        
+        tabBattle.classList.remove('active');
+        tabBattle.style.background = 'rgba(255,255,255,0.05)';
+        tabBattle.style.color = '#94a3b8';
+        
+        panelBattle.style.display = 'none';
+        panelShop.style.display = 'flex';
+        
+        this.updateShopUI();
+        if (window.RinTypeAudio) window.RinTypeAudio.playKeydown();
+      };
+    }
+    
+    // Purchase Upgrade Event Handlers
+    const costs = {
+      laser: [0, 100, 250, 500],
+      shield: [0, 80, 200],
+      hp: [0, 100, 220],
+      booster: [0, 80, 180]
+    };
+    
+    const laserBtn = document.getElementById('btn-upgrade-laser');
+    if (laserBtn) {
+      laserBtn.onclick = () => {
+        if (this.laserLevel >= 4) return;
+        const cost = costs.laser[this.laserLevel];
+        if (this.coins >= cost) {
+          this.coins -= cost;
+          this.laserLevel++;
+          this.saveUpgrades();
+          if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // success sound
+        }
+      };
+    }
+    
+    const shieldBtn = document.getElementById('btn-upgrade-shield');
+    if (shieldBtn) {
+      shieldBtn.onclick = () => {
+        if (this.shieldLevel >= 3) return;
+        const cost = costs.shield[this.shieldLevel];
+        if (this.coins >= cost) {
+          this.coins -= cost;
+          this.shieldLevel++;
+          this.saveUpgrades();
+          if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // success sound
+        }
+      };
+    }
+    
+    const hpBtn = document.getElementById('btn-upgrade-hp');
+    if (hpBtn) {
+      hpBtn.onclick = () => {
+        if (this.hpLevel >= 3) return;
+        const cost = costs.hp[this.hpLevel];
+        if (this.coins >= cost) {
+          this.coins -= cost;
+          this.hpLevel++;
+          this.saveUpgrades();
+          if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // success sound
+        }
+      };
+    }
+    
+    const boosterBtn = document.getElementById('btn-upgrade-booster');
+    if (boosterBtn) {
+      boosterBtn.onclick = () => {
+        if (this.boosterLevel >= 3) return;
+        const cost = costs.booster[this.boosterLevel];
+        if (this.coins >= cost) {
+          this.coins -= cost;
+          this.boosterLevel++;
+          this.saveUpgrades();
+          if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // success sound
+        }
+      };
+    }
+  }
+
   resizeCanvas() {
     this.canvas.width = 800;
     this.canvas.height = 500;
@@ -121,11 +372,19 @@ class RinTypeSpaceShooter {
     const diffSelect = document.getElementById('game-difficulty-select');
     this.difficulty = diffSelect ? diffSelect.value : 'medium';
     
+    // Load upgrades state and maxHp
+    this.loadUpgrades();
+    
     this.isPlaying = true;
     this.isGameOverState = false;
     this.score = 0;
-    this.hp = 100;
+    this.hp = this.maxHp; // Start with upgraded max HP
     this.level = 1;
+    
+    // Initial Wave setup
+    this.waveEnemiesKilled = 0;
+    this.waveTarget = 10;
+    this.waveClearTimer = 0;
     
     // Configure based on difficulty
     if (this.difficulty === 'easy') {
@@ -177,7 +436,8 @@ class RinTypeSpaceShooter {
    * Spawns a new vocabulary meteor from active level database
    */
   spawnMeteor() {
-    if (!this.isPlaying) return;
+    // If wave transition is active, do not spawn regular enemies
+    if (!this.isPlaying || this.waveClearTimer > 0) return;
     
     // Pull vocabulary from active app state if available
     let wordList = ["hello", "morning", "please", "friend", "family", "mother", "father", "water", "happy", "smile"];
@@ -235,8 +495,12 @@ class RinTypeSpaceShooter {
     
     const meteorWidth = this.ctx.measureText(randomWord).width + 30;
     
-    // 20% chance to drop powerup items (Glowing purple carrier meteor)
-    const isItemCarrier = Math.random() < 0.20;
+    // Chance to drop powerup items (Glowing purple carrier meteor) - Boosted by Booster level!
+    let dropChance = 0.20;
+    if (this.boosterLevel === 2) dropChance = 0.25;
+    else if (this.boosterLevel === 3) dropChance = 0.30;
+    
+    const isItemCarrier = Math.random() < dropChance;
     
     const newEnemy = {
       x: Math.max(meteorWidth, Math.random() * (this.canvas.width - meteorWidth)),
@@ -244,9 +508,10 @@ class RinTypeSpaceShooter {
       word: randomWord,
       width: meteorWidth,
       height: 30,
-      speed: this.baseSpeed + (this.level * 0.12) + (Math.random() * 0.2),
+      speed: this.baseSpeed + (this.level * 0.10) + (Math.random() * 0.2),
       color: isItemCarrier ? '#e879f9' : this.getRandomMeteorColor(),
-      isItemCarrier: isItemCarrier
+      isItemCarrier: isItemCarrier,
+      isBoss: false
     };
     
     this.enemies.push(newEnemy);
@@ -337,7 +602,11 @@ class RinTypeSpaceShooter {
   triggerMistypePenalty() {
     if (this.difficulty === 'easy') return; // Easy mode: no penalty
     
-    const penalty = this.difficulty === 'hard' ? 5 : 2;
+    let penalty = this.difficulty === 'hard' ? 5 : 2;
+    // Shield level deduction
+    if (this.shieldLevel === 2) penalty = Math.max(1, penalty - 1);
+    else if (this.shieldLevel === 3) penalty = Math.max(1, penalty - 2);
+    
     this.hp -= penalty;
     if (this.hp < 0) this.hp = 0;
     this.updateHUD();
@@ -363,18 +632,40 @@ class RinTypeSpaceShooter {
    * Fires a cyan glowing laser towards the locked target
    */
   fireLaser(target) {
-    const laserSpeed = 12;
+    const laserSpeed = 14;
     
-    const newLaser = {
-      x: this.ship.x,
-      y: this.ship.y,
-      targetX: target.x,
-      targetY: target.y,
-      targetEnemyRef: target,
-      speed: laserSpeed
-    };
+    // Spawn multiple lasers based on weapon level!
+    const startPoints = [];
+    if (this.laserLevel === 1) {
+      startPoints.push({ x: this.ship.x, y: this.ship.y - 10, ox: 0, color: '#06b6d4' });
+    } else if (this.laserLevel === 2) {
+      startPoints.push({ x: this.ship.x - 15, y: this.ship.y, ox: -15, color: '#10b981' });
+      startPoints.push({ x: this.ship.x + 15, y: this.ship.y, ox: 15, color: '#10b981' });
+    } else if (this.laserLevel === 3) {
+      startPoints.push({ x: this.ship.x - 20, y: this.ship.y, ox: -20, color: '#c084fc' });
+      startPoints.push({ x: this.ship.x, y: this.ship.y - 10, ox: 0, color: '#c084fc' });
+      startPoints.push({ x: this.ship.x + 20, y: this.ship.y, ox: 20, color: '#c084fc' });
+    } else { // Level 4 (Quad hyper-lasers with sparks!)
+      startPoints.push({ x: this.ship.x - 25, y: this.ship.y + 5, ox: -25, color: '#fbbf24', spark: true });
+      startPoints.push({ x: this.ship.x - 10, y: this.ship.y - 10, ox: -10, color: '#f59e0b' });
+      startPoints.push({ x: this.ship.x + 10, y: this.ship.y - 10, ox: 10, color: '#f59e0b' });
+      startPoints.push({ x: this.ship.x + 25, y: this.ship.y + 5, ox: 25, color: '#fbbf24', spark: true });
+    }
     
-    this.lasers.push(newLaser);
+    startPoints.forEach(pt => {
+      this.lasers.push({
+        x: pt.x,
+        y: pt.y,
+        originOffset: pt.ox,
+        targetX: target.x,
+        targetY: target.y,
+        targetEnemyRef: target,
+        color: pt.color,
+        speed: laserSpeed,
+        spark: pt.spark || false
+      });
+    });
+    
     window.RinTypeAudio.playLaser();
   }
 
@@ -405,11 +696,19 @@ class RinTypeSpaceShooter {
    */
   activateItem(item) {
     if (item.type === 'freeze') {
-      this.freezeTimer = 300; // ~5 seconds of freeze at 60 FPS
+      let freezeDuration = 300; // ~5 seconds
+      if (this.boosterLevel === 2) freezeDuration = 360; // 6s
+      else if (this.boosterLevel === 3) freezeDuration = 420; // 7s
+      
+      this.freezeTimer = freezeDuration;
       if (window.RinTypeAudio) window.RinTypeAudio.playFreeze();
       this.triggerSparkles(item.x, item.y, '#38bdf8');
     } else if (item.type === 'heal') {
-      this.hp = Math.min(100, this.hp + 25);
+      let healAmount = 25;
+      if (this.hpLevel === 2) healAmount = 30;
+      else if (this.hpLevel === 3) healAmount = 40;
+      
+      this.hp = Math.min(this.maxHp, this.hp + healAmount);
       this.updateHUD();
       if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // plays chime
       this.triggerSparkles(item.x, item.y, '#22c55e');
@@ -451,10 +750,74 @@ class RinTypeSpaceShooter {
     requestAnimationFrame(() => this.gameLoop());
   }
 
+  awardCoins(enemy) {
+    let base = enemy.word.length;
+    let mult = 1.5;
+    if (this.difficulty === 'easy') mult = 1.0;
+    else if (this.difficulty === 'hard') mult = 2.0;
+    
+    let reward = Math.round(base * mult);
+    if (enemy.isItemCarrier) reward += 5;
+    if (enemy.isBoss) reward += 30;
+    
+    this.coins += reward;
+    
+    // Update coins HUD
+    const coinHud = document.getElementById('game-coins-hud');
+    if (coinHud) coinHud.textContent = this.coins;
+    
+    const shopCoins = document.getElementById('shop-coin-count');
+    if (shopCoins) shopCoins.textContent = this.coins;
+    
+    // Save coins to localStorage
+    try {
+      localStorage.setItem('rintype_game_coins', this.coins);
+    } catch (e) {}
+    
+    // Emit beautiful gold sparks
+    for (let i = 0; i < 8; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 3 + 1;
+      this.particles.push({
+        x: enemy.x + (Math.random() - 0.5) * 15,
+        y: enemy.y + (Math.random() - 0.5) * 15,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: '#fbbf24', // yellow gold
+        life: Math.random() * 20 + 10,
+        maxLife: 30,
+        alpha: 1,
+        size: Math.random() * 2 + 1
+      });
+    }
+  }
+
+  spawnBossMeteor() {
+    const bossWords = ["SPACE-INVADER", "CHICKEN-BOSS", "HYPER-DRIVE", "GALACTIC-FORCE", "QUANTUM-CORE", "NEBULOUS-CLOUD"];
+    const randomBossWord = bossWords[Math.floor(Math.random() * bossWords.length)];
+    
+    const meteorWidth = this.ctx.measureText(randomBossWord).width + 60; // extra wide!
+    
+    const bossEnemy = {
+      x: this.canvas.width / 2,
+      y: -50,
+      word: randomBossWord,
+      width: meteorWidth,
+      height: 45,
+      speed: this.baseSpeed * 0.4, // Boss moves slower but is huge!
+      color: '#ef4444', // glowing crimson red boss
+      isItemCarrier: true, // drops items when dead!
+      isBoss: true
+    };
+    
+    this.enemies.push(bossEnemy);
+  }
+
   update() {
-    // 1. Move stars background
+    // 1. Move stars background (hyperspeed scroll during wave transition!)
+    const speedMult = this.freezeTimer > 0 ? 0.25 : (this.waveClearTimer > 0 ? 4.5 : 1.0);
     this.stars.forEach(star => {
-      star.y += star.speed;
+      star.y += star.speed * speedMult * 6; // smooth continuous scroll
       if (star.y > this.canvas.height) {
         star.y = 0;
         star.x = Math.random() * this.canvas.width;
@@ -480,17 +843,21 @@ class RinTypeSpaceShooter {
     }
 
     // 4. Move meteor enemies
-    const speedMultiplier = this.freezeTimer > 0 ? 0.25 : 1.0;
+    const enemySpeedMult = this.freezeTimer > 0 ? 0.25 : 1.0;
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const enemy = this.enemies[i];
-      enemy.y += enemy.speed * speedMultiplier;
+      enemy.y += enemy.speed * enemySpeedMult;
       
       // If meteor hits bottom shield boundary
       if (enemy.y > this.canvas.height - 50) {
         this.enemies.splice(i, 1);
         
-        // HP Reduction
-        this.hp -= 20;
+        // HP Reduction scaled down by Shield level!
+        let collisionDmg = enemy.isBoss ? 40 : 20;
+        if (this.shieldLevel === 2) collisionDmg = Math.round(collisionDmg * 0.75);
+        else if (this.shieldLevel === 3) collisionDmg = Math.round(collisionDmg * 0.50);
+        
+        this.hp -= collisionDmg;
         if (this.hp < 0) this.hp = 0;
         this.updateHUD();
         
@@ -523,12 +890,22 @@ class RinTypeSpaceShooter {
         if (dist < this.shockwaveRadius) {
           this.triggerExplosion(enemy.x, enemy.y, enemy.color);
           
-          if (enemy.isItemCarrier) {
+          if (enemy.isBoss) {
+            // Drops 3 powerups fan layout!
+            this.spawnItemCapsule(enemy.x - 30, enemy.y);
+            this.spawnItemCapsule(enemy.x, enemy.y - 10);
+            this.spawnItemCapsule(enemy.x + 30, enemy.y);
+          } else if (enemy.isItemCarrier) {
             this.spawnItemCapsule(enemy.x, enemy.y);
           }
           
+          // Earning gold coins & score
+          this.awardCoins(enemy);
           this.score += enemy.word.length * 10;
           this.enemies.splice(i, 1);
+          
+          // Track wave metric
+          this.waveEnemiesKilled++;
           
           if (this.currentTarget === enemy) {
             this.currentTarget = null;
@@ -537,7 +914,10 @@ class RinTypeSpaceShooter {
         }
       }
       
-      if (this.shockwaveRadius > this.canvas.width) {
+      let maxRadius = this.canvas.width;
+      if (this.boosterLevel === 3) maxRadius = this.canvas.width * 1.2; // 20% larger shockwave!
+      
+      if (this.shockwaveRadius > maxRadius) {
         this.shockwaveActive = false;
         this.shockwaveRadius = 0;
       }
@@ -557,8 +937,13 @@ class RinTypeSpaceShooter {
         this.triggerExplosion(laser.targetX, laser.targetY, laser.targetEnemyRef.color);
         window.RinTypeAudio.playExplosion();
         
-        // Drop item capsule if isItemCarrier was hit
-        if (laser.targetEnemyRef.isItemCarrier) {
+        // Spawn capsule items
+        if (laser.targetEnemyRef.isBoss) {
+          // Spawn 3 capsules fan layout!
+          this.spawnItemCapsule(laser.targetX - 30, laser.targetY);
+          this.spawnItemCapsule(laser.targetX, laser.targetY - 10);
+          this.spawnItemCapsule(laser.targetX + 30, laser.targetY);
+        } else if (laser.targetEnemyRef.isItemCarrier) {
           this.spawnItemCapsule(laser.targetX, laser.targetY);
         }
         
@@ -568,22 +953,16 @@ class RinTypeSpaceShooter {
           this.enemies.splice(enemyIdx, 1);
         }
         
-        // Award score points
+        // Earning gold coins & score
+        this.awardCoins(laser.targetEnemyRef);
         this.score += laser.targetEnemyRef.word.length * 10;
         this.updateHUD();
         
+        // Track wave metric
+        this.waveEnemiesKilled++;
+        
         // Remove laser
         this.lasers.splice(i, 1);
-        
-        // Check level up (every 300 points)
-        const newLevel = Math.floor(this.score / 300) + 1;
-        if (newLevel > this.level) {
-          this.level = newLevel;
-          this.baseSpeed += 0.07;
-          this.spawnInterval = Math.max(1000, this.spawnInterval - 150);
-          this.startSpawner();
-          this.updateHUD();
-        }
       } else {
         // Advance laser closer to target
         const angle = Math.atan2(dy, dx);
@@ -602,6 +981,35 @@ class RinTypeSpaceShooter {
       
       if (p.life <= 0) {
         this.particles.splice(i, 1);
+      }
+    }
+
+    // 8. Wave Progression Transition
+    if (this.waveEnemiesKilled >= this.waveTarget && this.waveClearTimer === 0) {
+      this.waveClearTimer = 180; // 3 seconds warp drive animation
+      this.enemies = []; // clear screen
+      this.currentTarget = null;
+      this.typedText = "";
+      if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // chime sound
+    }
+
+    if (this.waveClearTimer > 0) {
+      this.waveClearTimer--;
+      if (this.waveClearTimer === 0) {
+        // Hyperspace warp complete! Go to next Wave/Stage
+        this.level++;
+        this.waveEnemiesKilled = 0;
+        this.waveTarget = 10 + this.level * 2; // scale enemies required
+        this.baseSpeed += 0.08;
+        this.spawnInterval = Math.max(800, this.spawnInterval - 150);
+        this.startSpawner();
+        
+        // Spawn boss every even wave!
+        if (this.level % 2 === 0) {
+          this.spawnBossMeteor();
+        }
+        
+        this.updateHUD();
       }
     }
   }
@@ -656,24 +1064,49 @@ class RinTypeSpaceShooter {
     });
     this.ctx.globalAlpha = 1.0;
     
-    // Draw ship exhaust flame
+    // Draw ship exhaust flame (upgraded wings if higher laser level!)
     const flameTime = Date.now();
     const flameSize = Math.sin(flameTime / 50) * 8 + 12;
-    this.ctx.fillStyle = '#f97316';
+    this.ctx.fillStyle = this.laserLevel >= 4 ? '#fbbf24' : '#f97316'; // gold for level 4!
+    
+    // Core flame
     this.ctx.beginPath();
     this.ctx.moveTo(this.ship.x - 5, this.ship.y + 15);
     this.ctx.lineTo(this.ship.x + 5, this.ship.y + 15);
     this.ctx.lineTo(this.ship.x, this.ship.y + 15 + flameSize);
     this.ctx.closePath();
     this.ctx.fill();
+    
+    // Wing side flames for laser levels 2, 3, 4!
+    if (this.laserLevel >= 2) {
+      this.ctx.fillStyle = this.laserLevel === 2 ? '#10b981' : (this.laserLevel === 3 ? '#c084fc' : '#fbbf24');
+      
+      // Left flame
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.ship.x - 18, this.ship.y + 12);
+      this.ctx.lineTo(this.ship.x - 12, this.ship.y + 12);
+      this.ctx.lineTo(this.ship.x - 15, this.ship.y + 12 + flameSize * 0.6);
+      this.ctx.closePath();
+      this.ctx.fill();
+      
+      // Right flame
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.ship.x + 12, this.ship.y + 12);
+      this.ctx.lineTo(this.ship.x + 18, this.ship.y + 12);
+      this.ctx.lineTo(this.ship.x + 15, this.ship.y + 12 + flameSize * 0.6);
+      this.ctx.closePath();
+      this.ctx.fill();
+    }
 
     // Draw ship body
     this.ctx.fillStyle = '#38bdf8';
+    
+    // Custom wing shapes based on upgrade tier!
     this.ctx.beginPath();
     this.ctx.moveTo(this.ship.x, this.ship.y - 20);
-    this.ctx.lineTo(this.ship.x - 20, this.ship.y + 15);
+    this.ctx.lineTo(this.ship.x - (18 + this.laserLevel * 2), this.ship.y + 15);
     this.ctx.lineTo(this.ship.x, this.ship.y + 5);
-    this.ctx.lineTo(this.ship.x + 20, this.ship.y + 15);
+    this.ctx.lineTo(this.ship.x + (18 + this.laserLevel * 2), this.ship.y + 15);
     this.ctx.closePath();
     this.ctx.fill();
     
@@ -685,20 +1118,43 @@ class RinTypeSpaceShooter {
     this.ctx.lineTo(this.ship.x + 8, this.ship.y + 4);
     this.ctx.closePath();
     this.ctx.fill();
+    
+    // Upgraded Cockpit shield overlay based on HP level
+    this.ctx.fillStyle = this.hpLevel === 2 ? '#10b981' : (this.hpLevel === 3 ? '#ec4899' : '#06b6d4');
+    this.ctx.beginPath();
+    this.ctx.arc(this.ship.x, this.ship.y - 2, 4, 0, Math.PI * 2);
+    this.ctx.fill();
 
-    // Draw lasers
-    this.ctx.shadowBlur = 15;
+    // Draw lasers with custom color, sparks, and trails!
     this.lasers.forEach(laser => {
-      this.ctx.shadowColor = '#00ffff';
-      this.ctx.strokeStyle = '#e0f2fe';
-      this.ctx.lineWidth = 3;
+      this.ctx.save();
+      this.ctx.shadowBlur = laser.spark ? 25 : 15;
+      this.ctx.shadowColor = laser.color || '#00ffff';
+      this.ctx.strokeStyle = laser.color || '#e0f2fe';
+      this.ctx.lineWidth = laser.spark ? 4 : 3;
       this.ctx.beginPath();
+      
       const angle = Math.atan2(laser.targetY - laser.y, laser.targetX - laser.x);
       this.ctx.moveTo(laser.x, laser.y);
-      this.ctx.lineTo(laser.x - Math.cos(angle) * 15, laser.y - Math.sin(angle) * 15);
+      this.ctx.lineTo(laser.x - Math.cos(angle) * 18, laser.y - Math.sin(angle) * 18);
       this.ctx.stroke();
+      
+      if (laser.spark && Math.random() < 0.35) {
+        // Emit beautiful electrical sparks in laser trajectory!
+        this.particles.push({
+          x: laser.x - Math.cos(angle) * 10,
+          y: laser.y - Math.sin(angle) * 10,
+          vx: (Math.random() - 0.5) * 5,
+          vy: (Math.random() - 0.5) * 5,
+          color: '#fbbf24',
+          life: 8,
+          maxLife: 8,
+          alpha: 1,
+          size: Math.random() * 2 + 1
+        });
+      }
+      this.ctx.restore();
     });
-    this.ctx.shadowBlur = 0;
 
     // Draw particles
     this.particles.forEach(p => {
@@ -715,9 +1171,15 @@ class RinTypeSpaceShooter {
       const isLocked = (this.currentTarget === enemy);
       
       // Draw meteor body
-      this.ctx.fillStyle = 'rgba(30, 41, 59, 0.88)';
+      this.ctx.fillStyle = enemy.isBoss ? 'rgba(239, 68, 68, 0.15)' : 'rgba(30, 41, 59, 0.88)';
       
-      if (enemy.isItemCarrier) {
+      if (enemy.isBoss) {
+        // Crimson glowing red boss border
+        this.ctx.strokeStyle = isLocked ? '#22c55e' : '#ef4444';
+        this.ctx.lineWidth = isLocked ? 4.5 : 3;
+        this.ctx.shadowBlur = isLocked ? 25 : 15;
+        this.ctx.shadowColor = isLocked ? '#22c55e' : '#ef4444';
+      } else if (enemy.isItemCarrier) {
         // Glowing purple carrier
         this.ctx.strokeStyle = isLocked ? '#22c55e' : '#e879f9';
         this.ctx.lineWidth = isLocked ? 3.5 : 2;
@@ -736,9 +1198,9 @@ class RinTypeSpaceShooter {
       this.ctx.beginPath();
       const radius = 8;
       const x = enemy.x - enemy.width / 2;
-      const y = enemy.y - 12;
+      const y = enemy.y - (enemy.isBoss ? 18 : 12);
       const w = enemy.width;
-      const h = 26;
+      const h = enemy.isBoss ? 36 : 26;
       this.ctx.moveTo(x + radius, y);
       this.ctx.lineTo(x + w - radius, y);
       this.ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
@@ -754,10 +1216,11 @@ class RinTypeSpaceShooter {
       this.ctx.shadowBlur = 0; // reset
 
       // Draw word text
-      this.ctx.font = 'bold 14px "Outfit", "Inter", sans-serif';
+      this.ctx.font = enemy.isBoss ? 'bold 16px "Outfit", sans-serif' : 'bold 14px "Outfit", "Inter", sans-serif';
       this.ctx.textAlign = 'center';
       
       const wordStr = enemy.word;
+      const textOffset = enemy.isBoss ? 8 : 6;
       
       if (isLocked) {
         const typedStr = this.typedText;
@@ -769,14 +1232,14 @@ class RinTypeSpaceShooter {
         // 1. Draw typed letters
         this.ctx.fillStyle = '#22c55e';
         this.ctx.textAlign = 'left';
-        this.ctx.fillText(typedStr, startX, enemy.y + 6);
+        this.ctx.fillText(typedStr, startX, enemy.y + textOffset);
         
         // 2. Draw remaining letters
         this.ctx.fillStyle = '#ffffff';
-        this.ctx.fillText(untypedStr, startX + typedWidth, enemy.y + 6);
+        this.ctx.fillText(untypedStr, startX + typedWidth, enemy.y + textOffset);
       } else {
-        this.ctx.fillStyle = enemy.isItemCarrier ? '#fdf2ff' : '#ffffff';
-        this.ctx.fillText(wordStr, enemy.x, enemy.y + 6);
+        this.ctx.fillStyle = enemy.isBoss ? '#ffe4e6' : (enemy.isItemCarrier ? '#fdf2ff' : '#ffffff');
+        this.ctx.fillText(wordStr, enemy.x, enemy.y + textOffset);
       }
     });
 
@@ -854,6 +1317,40 @@ class RinTypeSpaceShooter {
       this.ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
       this.ctx.lineWidth = 6;
       this.ctx.strokeRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    // Draw Boss Alert
+    const bossOnScreen = this.enemies.find(e => e.isBoss);
+    if (bossOnScreen && Math.floor(Date.now() / 400) % 2 === 0) {
+      this.ctx.font = 'bold 18px "Outfit", sans-serif';
+      this.ctx.fillStyle = '#ef4444';
+      this.ctx.textAlign = 'center';
+      this.ctx.shadowBlur = 10;
+      this.ctx.shadowColor = '#ef4444';
+      this.ctx.fillText("⚠️ THIÊN THẠCH MẸ ĐANG XUẤT HIỆN! ⚠️", this.canvas.width / 2, 35);
+      this.ctx.shadowBlur = 0;
+    }
+
+    // Draw Wave Clear Hyper-Speed Text Overlay
+    if (this.waveClearTimer > 0) {
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      
+      this.ctx.font = 'bold 32px "Outfit", sans-serif';
+      this.ctx.fillStyle = '#fbbf24';
+      this.ctx.textAlign = 'center';
+      this.ctx.shadowBlur = 20;
+      this.ctx.shadowColor = '#fbbf24';
+      
+      const secondsLeft = Math.ceil(this.waveClearTimer / 60);
+      this.ctx.fillText(`WAVE ${this.level} CLEARED!`, this.canvas.width / 2, this.canvas.height / 2 - 20);
+      
+      this.ctx.font = '500 16px "Outfit", sans-serif';
+      this.ctx.fillStyle = '#60a5fa';
+      this.ctx.shadowColor = '#60a5fa';
+      this.ctx.fillText(`KÍCH HOẠT NHẢY KHÔNG GIAN TRONG ${secondsLeft}s...`, this.canvas.width / 2, this.canvas.height / 2 + 20);
+      
+      this.ctx.shadowBlur = 0;
     }
 
     this.ctx.restore();

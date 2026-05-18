@@ -151,6 +151,7 @@
             </div>
             <span id="game-hp-text" style="font-size: 0.85rem; font-weight: 700;">100</span>
           </div>
+          <div class="game-hud-item" style="color: #f59e0b;"><i class="fa-solid fa-coins"></i> Vàng: <span id="game-coins-hud">0</span></div>
           <div class="game-hud-item"><i class="fa-solid fa-stairs"></i> Cấp độ: <span id="game-level">1</span></div>
         </div>
         
@@ -160,31 +161,116 @@
           <!-- Game Start Overlay -->
           <div class="game-overlay" id="game-start-overlay">
             <h2>🚀 CHIẾN TRƯỜNG GÕ PHÍM VŨ TRỤ</h2>
-            <p>Gõ chính xác các từ hiển thị trên thiên thạch đang rơi để phóng laser tiêu diệt chúng!</p>
-            <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px;">Từ vựng tự động đồng bộ theo Cấp độ Lộ Trình bạn đang chọn.</p>
             
-            <!-- Difficulty & Word Length Selection -->
-             <div class="game-difficulty-container" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
-               <div style="display: flex; align-items: center; gap: 8px;">
-                 <span style="font-size: 0.95rem; color: #94a3b8;">Độ khó:</span>
-                 <select id="game-difficulty-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
-                   <option value="easy">🟢 DỄ (Không trừ HP gõ sai)</option>
-                   <option value="medium" selected>🟡 TRUNG BÌNH (Trừ 2 HP)</option>
-                   <option value="hard">🔴 KHÓ (Trừ 5 HP, rơi cực nhanh)</option>
-                 </select>
-               </div>
-               <div style="display: flex; align-items: center; gap: 8px;">
-                 <span style="font-size: 0.95rem; color: #94a3b8;">Độ dài từ:</span>
-                 <select id="game-word-length-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
-                   <option value="all" selected>🌐 Tất cả độ dài</option>
-                   <option value="short">🟢 Từ ngắn (3 - 5 ký tự)</option>
-                   <option value="medium">🟡 Từ vừa (6 - 8 ký tự)</option>
-                   <option value="long">🔴 Từ dài (9+ ký tự)</option>
-                 </select>
-               </div>
-             </div>
+            <div class="game-tab-controls" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; width: 100%;">
+              <button class="game-overlay-tab active" id="btn-tab-battle" style="background: #3b82f6; color: #fff; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit; transition: all 0.2s ease;">🚀 Chuẩn Bị</button>
+              <button class="game-overlay-tab" id="btn-tab-shop" style="background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit; transition: all 0.2s ease; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-screwdriver-wrench text-accent"></i> Nhà Xưởng Nâng Cấp
+              </button>
+            </div>
             
-            <button class="game-start-btn" id="btn-start-game">BẮT ĐẦU CHIẾN ĐẤU</button>
+            <!-- Panel 1: Battle Prep -->
+            <div id="game-battle-panel" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+              <p>Gõ chính xác các từ hiển thị trên thiên thạch đang rơi để phóng laser tiêu diệt chúng!</p>
+              <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px;">Từ vựng tự động đồng bộ theo Cấp độ Lộ Trình bạn đang chọn.</p>
+              
+              <!-- Difficulty & Word Length Selection -->
+               <div class="game-difficulty-container" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
+                 <div style="display: flex; align-items: center; gap: 8px;">
+                   <span style="font-size: 0.95rem; color: #94a3b8;">Độ khó:</span>
+                   <select id="game-difficulty-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
+                     <option value="easy">🟢 DỄ (Không trừ HP gõ sai)</option>
+                     <option value="medium" selected>🟡 TRUNG BÌNH (Trừ 2 HP)</option>
+                     <option value="hard">🔴 KHÓ (Trừ 5 HP, rơi cực nhanh)</option>
+                   </select>
+                 </div>
+                 <div style="display: flex; align-items: center; gap: 8px;">
+                   <span style="font-size: 0.95rem; color: #94a3b8;">Độ dài từ:</span>
+                   <select id="game-word-length-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
+                     <option value="all" selected>🌐 Tất cả độ dài</option>
+                     <option value="short">🟢 Từ ngắn (3 - 5 ký tự)</option>
+                     <option value="medium">🟡 Từ vừa (6 - 8 ký tự)</option>
+                     <option value="long">🔴 Từ dài (9+ ký tự)</option>
+                   </select>
+                 </div>
+               </div>
+              
+              <button class="game-start-btn" id="btn-start-game">BẮT ĐẦU CHIẾN ĐẤU</button>
+            </div>
+            
+            <!-- Panel 2: Upgrade Hangar -->
+            <div id="game-shop-panel" style="width: 100%; display: none; flex-direction: column; align-items: center;">
+              <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); padding: 8px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                <i class="fa-solid fa-coins" style="color: #eab308; font-size: 1.3rem;"></i>
+                <span style="font-size: 0.95rem; color: #e2e8f0; font-weight: 500;">Tiền vàng tích lũy:</span>
+                <span id="shop-coin-count" style="font-size: 1.4rem; color: #f59e0b; font-weight: 800; font-family: 'JetBrains Mono', monospace;">0</span>
+              </div>
+              
+              <div class="shop-upgrades-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; max-height: 250px; overflow-y: auto; padding: 4px; margin-bottom: 15px;">
+                
+                <!-- Laser Weapon Card -->
+                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                      <i class="fa-solid fa-bolt" style="color: #60a5fa;"></i>
+                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Pháo Laser Bắn Tỉa</strong>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Nâng cấp từ tia đơn lên bắn đôi, tia ba plasma, và hyper-laser sấm sét cực khủng!</p>
+                  </div>
+                  <button id="btn-upgrade-laser" style="width: 100%; border: none; outline: none; background: #2563eb; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
+                    <span>Cấp <span id="laser-upgrade-level">1</span></span>
+                    <span id="laser-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 100</span>
+                  </button>
+                </div>
+                
+                <!-- Shield Armor Card -->
+                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                      <i class="fa-solid fa-shield-halved" style="color: #34d399;"></i>
+                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Giáp Lá Chắn Nano</strong>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Giảm sát thương khi va chạm thiên thạch đáy và giảm hẳn sát thương phạt khi gõ sai phím.</p>
+                  </div>
+                  <button id="btn-upgrade-shield" style="width: 100%; border: none; outline: none; background: #059669; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
+                    <span>Cấp <span id="shield-upgrade-level">1</span></span>
+                    <span id="shield-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 80</span>
+                  </button>
+                </div>
+                
+                <!-- Engine Max HP Card -->
+                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                      <i class="fa-solid fa-heart-pulse" style="color: #f87171;"></i>
+                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Bể Máu Tối Đa</strong>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Tăng giới hạn HP tối đa từ 100 lên 120 và 150 để chống chọi các màn chơi dồn dập.</p>
+                  </div>
+                  <button id="btn-upgrade-hp" style="width: 100%; border: none; outline: none; background: #dc2626; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
+                    <span>Cấp <span id="hp-upgrade-level">1</span></span>
+                    <span id="hp-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 100</span>
+                  </button>
+                </div>
+                
+                <!-- Chronos Booster Card -->
+                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                      <i class="fa-solid fa-wand-magic-sparkles" style="color: #c084fc;"></i>
+                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Lõi Bổ Trợ Thời Gian</strong>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Tăng thời gian Đóng Băng và tăng tỷ lệ rơi ra các hạt năng lượng Capsules.</p>
+                  </div>
+                  <button id="btn-upgrade-booster" style="width: 100%; border: none; outline: none; background: #7c3aed; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
+                    <span>Cấp <span id="booster-upgrade-level">1</span></span>
+                    <span id="booster-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 80</span>
+                  </button>
+                </div>
+                
+              </div>
+              <p style="font-size: 0.75rem; color: #64748b; margin: 0;">Bắn hạ các thiên thạch trong trận đấu để tích lũy thêm tiền vàng nâng cấp phi thuyền!</p>
+            </div>
           </div>
           
           <!-- Game Over Overlay -->
