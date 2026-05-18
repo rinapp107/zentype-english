@@ -6,7 +6,21 @@ class KeyboardAudioEngine {
   constructor() {
     this.ctx = null;
     this.isMuted = false;
-    this.currentStyle = 'clicky'; // clicky, typewriter, silent
+    this.currentStyle = 'clicky'; // clicky, typewriter, silent, zen
+    
+    // Zen melody frequencies (gorgeous pentatonic romantic loop)
+    this.zenMelody = [
+      // Phrase 1 (C Major 7 / Am)
+      261.63, 329.63, 392.00, 493.88, 523.25, 392.00, 329.63, 261.63,
+      220.00, 261.63, 329.63, 392.00, 440.00, 329.63, 261.63, 220.00,
+      // Phrase 2 (F Major 7 / G)
+      349.23, 440.00, 523.25, 659.25, 523.25, 440.00, 349.23, 261.63,
+      392.00, 493.88, 587.33, 783.99, 587.33, 493.88, 392.00, 293.66,
+      // Phrase 3 (Em / C)
+      329.63, 392.00, 493.88, 587.33, 659.25, 493.88, 392.00, 329.63,
+      523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 523.25, 392.00
+    ];
+    this.zenNoteIndex = 0;
   }
 
   /**
@@ -55,6 +69,9 @@ class KeyboardAudioEngine {
         break;
       case 'silent':
         this.playSilentClick(time);
+        break;
+      case 'zen':
+        this.playZenMelodyNote(time);
         break;
       case 'clicky':
       default:
@@ -342,6 +359,67 @@ class KeyboardAudioEngine {
     noiseSource.stop(time + 0.61);
     sub.start(time);
     sub.stop(time + 0.61);
+  }
+
+  /**
+   * Synthesizes a tranquil, warm bell-like note following a circular pentatonic melody loop
+   */
+  playZenMelodyNote(time) {
+    const ctx = this.ctx;
+    const freq = this.zenMelody[this.zenNoteIndex];
+    this.zenNoteIndex = (this.zenNoteIndex + 1) % this.zenMelody.length;
+
+    // Primary bell sine tone
+    const osc1 = ctx.createOscillator();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(freq, time);
+
+    // Warm sub triangle overtone for depth
+    const osc2 = ctx.createOscillator();
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(freq * 0.5, time);
+
+    // Soft high-end shimmer harmonic
+    const osc3 = ctx.createOscillator();
+    osc3.type = 'sine';
+    osc3.frequency.setValueAtTime(freq * 2, time);
+
+    const gain1 = ctx.createGain();
+    gain1.gain.setValueAtTime(0.0, time);
+    gain1.gain.linearRampToValueAtTime(0.18, time + 0.005); // quick soft attack
+    gain1.gain.exponentialRampToValueAtTime(0.0001, time + 0.8); // elegant long decay
+
+    const gain2 = ctx.createGain();
+    gain2.gain.setValueAtTime(0.0, time);
+    gain2.gain.linearRampToValueAtTime(0.08, time + 0.01);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, time + 0.5);
+
+    const gain3 = ctx.createGain();
+    gain3.gain.setValueAtTime(0.0, time);
+    gain3.gain.linearRampToValueAtTime(0.04, time + 0.005);
+    gain3.gain.exponentialRampToValueAtTime(0.0001, time + 0.3);
+
+    // Lowpass filter to keep it warm, smooth, and relaxing
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 1200;
+
+    osc1.connect(gain1);
+    osc2.connect(gain2);
+    osc3.connect(gain3);
+
+    gain1.connect(filter);
+    gain2.connect(filter);
+    gain3.connect(filter);
+
+    filter.connect(ctx.destination);
+
+    osc1.start(time);
+    osc1.stop(time + 1.0);
+    osc2.start(time);
+    osc2.stop(time + 0.6);
+    osc3.start(time);
+    osc3.stop(time + 0.4);
   }
 
   /**
