@@ -2,100 +2,99 @@
    RinType English - Core Styles & Design System
    ========================================================================== */
 
-/* --- Theme 1: Cyberpunk Neon (Default Dark) --- */
-[data-theme="cyberpunk"] {
-  --bg-primary: #0a0813;
-  --bg-secondary: rgba(18, 14, 36, 0.65);
-  --bg-tertiary: #17122e;
-  --text-main: #f0ebff;
-  --text-muted: #625c80;
-  --text-correct: #00f0ff;
-  --text-incorrect: #ff0055;
-  --bg-incorrect: rgba(255, 0, 85, 0.15);
-  --accent: #ff007f;
-  --accent-rgb: 255, 0, 127;
-  --border-color: rgba(255, 0, 127, 0.25);
-  --caret-color: #00f0ff;
-  --shadow-color: rgba(255, 0, 127, 0.15);
-  --keyboard-key-bg: #140e28;
-  --keyboard-key-active: #00f0ff;
-}
-
-/* --- Theme 2: Lavender Glass (Soothing Glassmorphism) --- */
-[data-theme="lavender"] {
-  --bg-primary: #12101b;
-  --bg-secondary: rgba(30, 24, 46, 0.55);
-  --bg-tertiary: rgba(43, 35, 66, 0.7);
-  --text-main: #e6e2f7;
-  --text-muted: #5e577d;
-  --text-correct: #a78bfa;
-  --text-incorrect: #f87171;
-  --bg-incorrect: rgba(248, 113, 113, 0.12);
-  --accent: #c084fc;
-  --accent-rgb: 192, 132, 252;
-  --border-color: rgba(192, 132, 252, 0.25);
-  --caret-color: #c084fc;
-  --shadow-color: rgba(192, 132, 252, 0.1);
-  --keyboard-key-bg: #201a33;
-  --keyboard-key-active: #c084fc;
-}
-
-/* --- Theme 3: Carbon Sleek (Minimalist Pitch Black) --- */
-[data-theme="carbon"] {
-  --bg-primary: #0d0d0d;
-  --bg-secondary: rgba(20, 20, 20, 0.85);
-  --bg-tertiary: #1a1a1a;
-  --text-main: #f3f4f6;
-  --text-muted: #4b5563;
-  --text-correct: #eab308;
+/* --- Theme 1: Minimalist Light (Sáng Tối Giản - Mặc Định) --- */
+[data-theme="minimal-light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --text-main: #334155;
+  --text-muted: #94a3b8;
+  --text-correct: #10b981;
   --text-incorrect: #ef4444;
-  --bg-incorrect: rgba(239, 68, 68, 0.1);
-  --accent: #eab308;
-  --accent-rgb: 234, 179, 8;
-  --border-color: rgba(234, 179, 8, 0.3);
-  --caret-color: #eab308;
-  --shadow-color: rgba(234, 179, 8, 0.05);
-  --keyboard-key-bg: #1f1f1f;
-  --keyboard-key-active: #eab308;
+  --bg-incorrect: rgba(239, 68, 68, 0.08);
+  --accent: #6366f1;
+  --accent-rgb: 99, 102, 241;
+  --border-color: #e2e8f0;
+  --caret-color: #6366f1;
+  --shadow-color: rgba(99, 102, 241, 0.05);
+  --keyboard-key-bg: #f8fafc;
+  --keyboard-key-active: #6366f1;
 }
 
-/* --- Theme 4: Forest Mint (Calming Organic) --- */
-[data-theme="forest"] {
-  --bg-primary: #0f1716;
-  --bg-secondary: rgba(20, 31, 29, 0.7);
-  --bg-tertiary: #192724;
-  --text-main: #e2f1ee;
-  --text-muted: #526f6a;
-  --text-correct: #4ade80;
-  --text-incorrect: #f87171;
-  --bg-incorrect: rgba(248, 113, 113, 0.1);
-  --accent: #2dd4bf;
-  --accent-rgb: 45, 212, 191;
-  --border-color: rgba(45, 212, 191, 0.25);
-  --caret-color: #2dd4bf;
-  --shadow-color: rgba(45, 212, 191, 0.08);
-  --keyboard-key-bg: #14211e;
-  --keyboard-key-active: #4ade80;
+/* --- Theme 2: Sakura Blossom (Hoa Anh Đào Mơ Mộng) --- */
+[data-theme="sakura-blossom"] {
+  --bg-primary: #fffbf9;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #fff1eb;
+  --text-main: #5c4033;
+  --text-muted: #a89085;
+  --text-correct: #059669;
+  --text-incorrect: #e11d48;
+  --bg-incorrect: rgba(225, 29, 72, 0.08);
+  --accent: #ff7a59;
+  --accent-rgb: 255, 122, 89;
+  --border-color: #ffe4d6;
+  --caret-color: #ff7a59;
+  --shadow-color: rgba(255, 122, 89, 0.06);
+  --keyboard-key-bg: #fffbf9;
+  --keyboard-key-active: #ff7a59;
 }
 
-/* --- Theme 5: Retro Terminal (Vintage CRT Vibe) --- */
-[data-theme="retro"] {
-  --bg-primary: #030a05;
-  --bg-secondary: rgba(6, 20, 10, 0.85);
-  --bg-tertiary: #0c2514;
-  --text-main: #33ff33;
-  --text-muted: #136013;
-  --text-correct: #33ff33;
-  --text-incorrect: #ff3333;
-  --bg-incorrect: rgba(255, 51, 51, 0.2);
-  --accent: #33ff33;
-  --accent-rgb: 51, 255, 51;
-  --border-color: rgba(51, 255, 51, 0.4);
-  --caret-color: #33ff33;
-  --shadow-color: rgba(51, 255, 51, 0.15);
-  --keyboard-key-bg: #07190d;
-  --keyboard-key-active: #33ff33;
-  font-family: 'Courier New', Courier, monospace !important;
+/* --- Theme 3: Cream Mocha (Kem Cà Phê Cổ Điển) --- */
+[data-theme="cream-mocha"] {
+  --bg-primary: #fcf8f2;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f4edd9;
+  --text-main: #3d3b3c;
+  --text-muted: #9d968f;
+  --text-correct: #2e7d32;
+  --text-incorrect: #c62828;
+  --bg-incorrect: rgba(198, 40, 40, 0.08);
+  --accent: #e0a96d;
+  --accent-rgb: 224, 169, 109;
+  --border-color: #ede2c9;
+  --caret-color: #e0a96d;
+  --shadow-color: rgba(224, 169, 109, 0.05);
+  --keyboard-key-bg: #fcf8f2;
+  --keyboard-key-active: #e0a96d;
+}
+
+/* --- Theme 4: Mint Fresh (Bạc Hà Mát Lạnh) --- */
+[data-theme="mint-fresh"] {
+  --bg-primary: #f2faf7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e1f4ee;
+  --text-main: #1f3d32;
+  --text-muted: #7aa092;
+  --text-correct: #059669;
+  --text-incorrect: #df1b1b;
+  --bg-incorrect: rgba(223, 27, 27, 0.08);
+  --accent: #10b981;
+  --accent-rgb: 16, 185, 129;
+  --border-color: #c9ebd8;
+  --caret-color: #10b981;
+  --shadow-color: rgba(16, 185, 129, 0.05);
+  --keyboard-key-bg: #f2faf7;
+  --keyboard-key-active: #10b981;
+}
+
+/* --- Theme 5: Ocean Breeze (Gió Biển Xanh Thẳm) --- */
+[data-theme="ocean-breeze"] {
+  --bg-primary: #f0f7ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e0effe;
+  --text-main: #1e3a8a;
+  --text-muted: #93c5fd;
+  --text-correct: #059669;
+  --text-incorrect: #ef4444;
+  --bg-incorrect: rgba(239, 68, 68, 0.08);
+  --accent: #3b82f6;
+  --accent-rgb: 59, 130, 246;
+  --border-color: #bae6fd;
+  --caret-color: #3b82f6;
+  --shadow-color: rgba(59, 130, 246, 0.05);
+  --keyboard-key-bg: #f0f7ff;
+  --keyboard-key-active: #3b82f6;
 }
 
 /* --- Base Layout --- */
@@ -133,7 +132,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .logo-section {
@@ -836,8 +835,8 @@ body {
   overflow-y: auto;
   max-height: 250px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
 }
 
 .history-table {
@@ -848,7 +847,7 @@ body {
 }
 
 .history-table th {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--bg-tertiary);
   color: var(--text-muted);
   font-weight: 700;
   padding: 12px;
@@ -859,12 +858,12 @@ body {
 
 .history-table td {
   padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-color);
   color: var(--text-main);
 }
 
 .history-table tr:hover {
-  background-color: rgba(255, 255, 255, 0.01);
+  background-color: rgba(var(--accent-rgb), 0.03);
 }
 
 .history-table tr.empty-row td {
@@ -910,7 +909,7 @@ body {
   padding: 20px 0;
   font-size: 12px;
   color: var(--text-muted);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--border-color);
 }
 
 /* --- Responsive Adjustments --- */
