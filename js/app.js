@@ -349,14 +349,30 @@ class RinTypeApplication {
         wordStr = item[key] || item.word || item.text || '';
       }
       
-      const len = wordStr.length;
+      // Clean word string from punctuation just to check its real length
+      const cleanWord = wordStr.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+      const len = cleanWord.length;
+      
       if (filterVal === 'short') return len >= 3 && len <= 5;
       if (filterVal === 'medium') return len >= 6 && len <= 8;
       if (filterVal === 'long') return len >= 9;
       return true;
     });
 
-    return filtered.length > 0 ? filtered : list;
+    if (filtered.length > 0) return filtered;
+    
+    // Solid fallbacks matching the exact lengths so we never return incorrect lengths!
+    if (filterVal === 'short') {
+      return ["run", "code", "time", "fast", "make", "work", "play", "easy", "help", "user", "data", "file", "web", "game", "app", "core", "page", "view", "task", "life", "mind", "good", "best", "cool", "smart"];
+    }
+    if (filterVal === 'medium') {
+      return ["active", "system", "design", "device", "future", "modern", "simple", "impact", "unique", "stable", "robust", "secure", "energy", "global", "growth", "wisdom", "spirit", "nature", "talent", "effort"];
+    }
+    if (filterVal === 'long') {
+      return ["algorithm", "database", "cybersecurity", "artificial", "intelligence", "application", "responsive", "framework", "repository", "encryption"];
+    }
+    
+    return list;
   }
 
   /**

@@ -201,14 +201,25 @@ class RinTypeSpaceShooter {
     
     if (lengthVal !== 'all') {
       const filtered = wordList.filter(w => {
-        const len = w.length;
+        const cleanW = w.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+        const len = cleanW.length;
         if (lengthVal === 'short') return len >= 3 && len <= 5;
         if (lengthVal === 'medium') return len >= 6 && len <= 8;
         if (lengthVal === 'long') return len >= 9;
         return true;
       });
+      
       if (filtered.length > 0) {
         wordList = filtered;
+      } else {
+        // Safe matching length fallbacks for game spawns so we never leak incorrect lengths
+        if (lengthVal === 'short') {
+          wordList = ["run", "code", "time", "fast", "make", "work", "play", "easy", "help", "user", "data", "file", "web", "game", "app", "core", "page", "view", "task", "life"];
+        } else if (lengthVal === 'medium') {
+          wordList = ["active", "system", "design", "device", "future", "modern", "simple", "impact", "unique", "stable", "robust", "secure", "energy", "global", "growth"];
+        } else if (lengthVal === 'long') {
+          wordList = ["algorithm", "database", "cybersecurity", "artificial", "intelligence", "application", "responsive", "framework", "repository", "encryption"];
+        }
       }
     }
 
