@@ -912,40 +912,35 @@ body {
   border-top: 1px solid var(--border-color);
 }
 
-/* --- App Main Mode Selector --- */
-.app-main-mode-selector {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 10px 0 20px 0;
-}
-
-.mode-select-btn {
-  background: var(--bg-secondary);
-  color: var(--text-main);
+/* --- Game Health Bar HUD --- */
+.game-hp-bar-container {
+  background: #1e293b;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 10px 20px;
+  border-radius: 6px;
+  height: 12px;
+  width: 120px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.game-hp-bar-fill {
+  width: 100%;
+  height: 100%;
+  background-color: #22c55e;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+
+.game-difficulty-container select {
   font-family: inherit;
-  font-size: 0.95rem;
   font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.mode-select-btn:hover {
-  background: var(--border-color);
-  transform: translateY(-2px);
-}
-
-.mode-select-btn.active {
-  background: var(--text-accent);
-  color: #fff;
+.game-difficulty-container select:focus {
   border-color: var(--text-accent);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
 }
 
 /* --- Game Arena Section --- */

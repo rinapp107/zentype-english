@@ -261,6 +261,90 @@ class KeyboardAudioEngine {
   }
 
   /**
+   * Synthesizes a magical, high-frequency freezing chime
+   */
+  playFreeze() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    const time = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(2200, time);
+    osc.frequency.exponentialRampToValueAtTime(600, time + 0.5);
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'highpass';
+    filter.frequency.value = 1000;
+
+    const gainNode = this.ctx.createGain();
+    gainNode.gain.setValueAtTime(0.0, time);
+    gainNode.gain.linearRampToValueAtTime(0.25, time + 0.03);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, time + 0.5);
+
+    osc.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(this.ctx.destination);
+
+    osc.start(time);
+    osc.stop(time + 0.51);
+  }
+
+  /**
+   * Synthesizes an epic thunderclap electric shockwave blast
+   */
+  playShockwave() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    const time = this.ctx.currentTime;
+    
+    // Crackle noise
+    const noiseSource = this.ctx.createBufferSource();
+    noiseSource.buffer = this.createNoiseBuffer();
+
+    const noiseFilter = this.ctx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(1000, time);
+    noiseFilter.frequency.exponentialRampToValueAtTime(300, time + 0.6);
+
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.0, time);
+    noiseGain.gain.linearRampToValueAtTime(0.4, time + 0.02);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.6);
+
+    noiseSource.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(this.ctx.destination);
+
+    // Deep low rumble
+    const sub = this.ctx.createOscillator();
+    sub.type = 'sawtooth';
+    sub.frequency.setValueAtTime(120, time);
+    sub.frequency.linearRampToValueAtTime(30, time + 0.6);
+
+    const subFilter = this.ctx.createBiquadFilter();
+    subFilter.type = 'lowpass';
+    subFilter.frequency.value = 150;
+
+    const subGain = this.ctx.createGain();
+    subGain.gain.setValueAtTime(0.0, time);
+    subGain.gain.linearRampToValueAtTime(0.55, time + 0.02);
+    subGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.6);
+
+    sub.connect(subFilter);
+    subFilter.connect(subGain);
+    subGain.connect(this.ctx.destination);
+
+    noiseSource.start(time);
+    noiseSource.stop(time + 0.61);
+    sub.start(time);
+    sub.stop(time + 0.61);
+  }
+
+  /**
    * Mutes or unmutes the audio engine
    */
   toggleMute() {

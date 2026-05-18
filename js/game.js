@@ -1,6 +1,8 @@
 /**
  * RinType English - Typing Space Shooter Game Engine
  * Highly optimized HTML5 Canvas game running at smooth 60 FPS.
+ * Upgraded features: 3 Difficulties, Health Points, Mistyping Penalties, Screen Shaking,
+ * and falling Power-up capsules (Freeze, Heal, Shockwave) with direct keyboard shortcut activation.
  */
 
 class RinTypeSpaceShooter {
@@ -12,15 +14,23 @@ class RinTypeSpaceShooter {
     this.isPlaying = false;
     this.isGameOverState = false;
     this.score = 0;
-    this.lives = 3;
+    this.hp = 100;
     this.level = 1;
     this.highScore = 0;
+    this.difficulty = 'medium'; // easy | medium | hard
     
     // Game entities
     this.enemies = [];
     this.lasers = [];
     this.particles = [];
     this.stars = [];
+    this.activeItems = []; // Floating capsules dropped
+    
+    // Power-up counters / states
+    this.freezeTimer = 0;       // Freeze duration in frames
+    this.shockwaveActive = false;
+    this.shockwaveRadius = 0;
+    this.shakeTimer = 0;        // Screen shake frame counter
     
     // Input management
     this.currentTarget = null; // Locked enemy target
@@ -51,7 +61,7 @@ class RinTypeSpaceShooter {
     if (!this.canvas) return;
     this.ctx = this.canvas.getContext('2d');
     
-    // Create random starry background background
+    // Create random starry background
     this.generateStars();
     
     // Load high score
@@ -96,7 +106,6 @@ class RinTypeSpaceShooter {
   }
 
   resizeCanvas() {
-    // Keep internal logical resolution 800x500 but styled responsively via CSS
     this.canvas.width = 800;
     this.canvas.height = 500;
     this.ship.x = this.canvas.width / 2;
@@ -109,16 +118,35 @@ class RinTypeSpaceShooter {
   start() {
     if (this.isPlaying) return;
     
+    const diffSelect = document.getElementById('game-difficulty-select');
+    this.difficulty = diffSelect ? diffSelect.value : 'medium';
+    
     this.isPlaying = true;
     this.isGameOverState = false;
     this.score = 0;
-    this.lives = 3;
+    this.hp = 100;
     this.level = 1;
-    this.spawnInterval = 3000;
+    
+    // Configure based on difficulty
+    if (this.difficulty === 'easy') {
+      this.spawnInterval = 3500;
+      this.baseSpeed = 0.45;
+    } else if (this.difficulty === 'hard') {
+      this.spawnInterval = 2000;
+      this.baseSpeed = 0.85;
+    } else {
+      this.spawnInterval = 2800;
+      this.baseSpeed = 0.6;
+    }
     
     this.enemies = [];
     this.lasers = [];
     this.particles = [];
+    this.activeItems = [];
+    this.freezeTimer = 0;
+    this.shockwaveActive = false;
+    this.shockwaveRadius = 0;
+    this.shakeTimer = 0;
     this.currentTarget = null;
     this.typedText = "";
     
@@ -151,17 +179,15 @@ class RinTypeSpaceShooter {
   spawnMeteor() {
     if (!this.isPlaying) return;
     
-    // Pull vocabulary from active app state if available, else fall back to basic database
+    // Pull vocabulary from active app state if available
     let wordList = ["hello", "morning", "please", "friend", "family", "mother", "father", "water", "happy", "smile"];
     try {
       if (window.RinTypeApp && window.RinTypeApp.words && window.RinTypeApp.words.length > 0) {
-        // Collect strings based on current active levels
         if (window.RinTypeApp.activeMode === 'roadmap') {
           const levelKey = window.RinTypeApp.dom.roadmapLevelSelect.value;
           const levelData = window.RINTYPE_DATABASE.roadmap[levelKey];
           wordList = levelData.vocabulary.map(v => v.word);
         } else {
-          // If not roadmap, pull from vocabulary
           wordList = window.RINTYPE_DATABASE.vocabulary.map(v => v.word);
         }
       }
@@ -172,15 +198,17 @@ class RinTypeSpaceShooter {
     // Pick random word
     const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
     
-    // Ensure we don't spawn duplicate words currently on screen to avoid keyboard collision
+    // Avoid duplicate words currently on screen
     const existingWords = this.enemies.map(e => e.word);
     if (existingWords.includes(randomWord) && wordList.length > 5) {
-      // Re-spawn once
       this.spawnMeteor();
       return;
     }
     
     const meteorWidth = this.ctx.measureText(randomWord).width + 30;
+    
+    // 20% chance to drop powerup items (Glowing purple carrier meteor)
+    const isItemCarrier = Math.random() < 0.20;
     
     const newEnemy = {
       x: Math.max(meteorWidth, Math.random() * (this.canvas.width - meteorWidth)),
@@ -188,8 +216,9 @@ class RinTypeSpaceShooter {
       word: randomWord,
       width: meteorWidth,
       height: 30,
-      speed: this.baseSpeed + (this.level * 0.15) + (Math.random() * 0.2),
-      color: this.getRandomMeteorColor()
+      speed: this.baseSpeed + (this.level * 0.12) + (Math.random() * 0.2),
+      color: isItemCarrier ? '#e879f9' : this.getRandomMeteorColor(),
+      isItemCarrier: isItemCarrier
     };
     
     this.enemies.push(newEnemy);
@@ -198,7 +227,7 @@ class RinTypeSpaceShooter {
   getRandomMeteorColor() {
     const colors = [
       '#f43f5e', // rose red
-      '#fb923c', // light orange
+      '#fb923c', // orange
       '#facc15', // amber yellow
       '#38bdf8', // sky blue
       '#818cf8', // indigo
@@ -223,36 +252,46 @@ class RinTypeSpaceShooter {
       // Ignore control keys, spaces or multi-character keys
       if (char.length !== 1) return;
       
-      // If we don't have an active target locked
+      // 1. Check if user pressed an active floating item capsule shortcut (F, H, S)
+      let itemActivated = false;
+      for (let i = 0; i < this.activeItems.length; i++) {
+        const item = this.activeItems[i];
+        if (char.toUpperCase() === item.shortcut.toUpperCase()) {
+          this.activateItem(item);
+          this.activeItems.splice(i, 1);
+          itemActivated = true;
+          break;
+        }
+      }
+      if (itemActivated) return;
+
+      // 2. Typing target locked enemy logic
       if (!this.currentTarget) {
         // Find an enemy starting with this character
-        // Priority to the ones lowest on the screen (highest Y value)
         let potentialTargets = this.enemies.filter(enemy => enemy.word.toLowerCase().startsWith(char.toLowerCase()));
         
         if (potentialTargets.length > 0) {
-          // Sort descending by Y coordinate
-          potentialTargets.sort((a, b) => b.y - a.y);
+          potentialTargets.sort((a, b) => b.y - a.y); // lock lowest enemy first
           this.currentTarget = potentialTargets[0];
           this.typedText = char;
           
-          // Play click sound feedback
           window.RinTypeAudio.playKeydown();
-          
-          // Check if word completed (single char word)
           this.checkWordCompletion();
+        } else {
+          // Mistyped key penalty
+          this.triggerMistypePenalty();
         }
       } else {
-        // We have a target locked, check if the next character matches
         const nextCharIndex = this.typedText.length;
         const targetNextChar = this.currentTarget.word[nextCharIndex];
         
         if (char.toLowerCase() === targetNextChar.toLowerCase()) {
           this.typedText += targetNextChar;
-          
-          // Play click sound feedback
           window.RinTypeAudio.playKeydown();
-          
           this.checkWordCompletion();
+        } else {
+          // Mistyped key penalty
+          this.triggerMistypePenalty();
         }
       }
     };
@@ -267,12 +306,26 @@ class RinTypeSpaceShooter {
     }
   }
 
+  triggerMistypePenalty() {
+    if (this.difficulty === 'easy') return; // Easy mode: no penalty
+    
+    const penalty = this.difficulty === 'hard' ? 5 : 2;
+    this.hp -= penalty;
+    if (this.hp < 0) this.hp = 0;
+    this.updateHUD();
+    
+    // Screen shaking and light red glow overlay
+    this.shakeTimer = 8;
+    this.triggerShieldHitEffect();
+    
+    if (this.hp <= 0) {
+      this.gameOver();
+    }
+  }
+
   checkWordCompletion() {
     if (this.typedText === this.currentTarget.word) {
-      // Fire laser!
       this.fireLaser(this.currentTarget);
-      
-      // Clear targets
       this.currentTarget = null;
       this.typedText = "";
     }
@@ -290,14 +343,72 @@ class RinTypeSpaceShooter {
       targetX: target.x,
       targetY: target.y,
       targetEnemyRef: target,
-      speed: laserSpeed,
-      progress: 0
+      speed: laserSpeed
     };
     
     this.lasers.push(newLaser);
-    
-    // Play sci-fi laser shot sound
     window.RinTypeAudio.playLaser();
+  }
+
+  /**
+   * Drops a power-up capsule from a destroyed carrier meteorite
+   */
+  spawnItemCapsule(x, y) {
+    const types = ['freeze', 'heal', 'shockwave'];
+    const type = types[Math.floor(Math.random() * types.length)];
+    
+    let shortcut = 'F';
+    if (type === 'heal') shortcut = 'H';
+    if (type === 'shockwave') shortcut = 'S';
+    
+    this.activeItems.push({
+      x: x,
+      y: y,
+      type: type,
+      shortcut: shortcut,
+      speed: 1.2,
+      radius: 18,
+      pulseAngle: 0
+    });
+  }
+
+  /**
+   * Activates power-up capsules
+   */
+  activateItem(item) {
+    if (item.type === 'freeze') {
+      this.freezeTimer = 300; // ~5 seconds of freeze at 60 FPS
+      if (window.RinTypeAudio) window.RinTypeAudio.playFreeze();
+      this.triggerSparkles(item.x, item.y, '#38bdf8');
+    } else if (item.type === 'heal') {
+      this.hp = Math.min(100, this.hp + 25);
+      this.updateHUD();
+      if (window.RinTypeAudio) window.RinTypeAudio.playFreeze(); // plays chime
+      this.triggerSparkles(item.x, item.y, '#22c55e');
+    } else if (item.type === 'shockwave') {
+      this.shockwaveActive = true;
+      this.shockwaveRadius = 10;
+      if (window.RinTypeAudio) window.RinTypeAudio.playShockwave();
+      this.triggerSparkles(item.x, item.y, '#eab308');
+    }
+  }
+
+  triggerSparkles(x, y, color) {
+    for (let i = 0; i < 15; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 2 + 1;
+      this.particles.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: color,
+        life: Math.random() * 20 + 10,
+        maxLife: 30,
+        alpha: 1,
+        size: Math.random() * 2.5 + 0.8
+      });
+    }
   }
 
   /**
@@ -322,30 +433,48 @@ class RinTypeSpaceShooter {
       }
     });
 
-    // 2. Move meteor enemies
+    // 2. Handle active Freeze Timer countdown
+    if (this.freezeTimer > 0) {
+      this.freezeTimer--;
+    }
+
+    // 3. Move floating items capsules
+    for (let i = this.activeItems.length - 1; i >= 0; i--) {
+      const item = this.activeItems[i];
+      item.y += item.speed;
+      item.pulseAngle += 0.05;
+      
+      // Auto-collect items if they land at bottom shield
+      if (item.y > this.canvas.height - 50) {
+        this.activateItem(item);
+        this.activeItems.splice(i, 1);
+      }
+    }
+
+    // 4. Move meteor enemies
+    const speedMultiplier = this.freezeTimer > 0 ? 0.25 : 1.0;
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const enemy = this.enemies[i];
-      enemy.y += enemy.speed;
+      enemy.y += enemy.speed * speedMultiplier;
       
-      // If meteor hits the bottom boundary (collides with shield)
+      // If meteor hits bottom shield boundary
       if (enemy.y > this.canvas.height - 50) {
-        // Remove from list
         this.enemies.splice(i, 1);
         
-        // Lose a life
-        this.lives--;
+        // HP Reduction
+        this.hp -= 20;
+        if (this.hp < 0) this.hp = 0;
         this.updateHUD();
         
-        // Shake screen visual effect (can trigger canvas offset)
+        // Shake screen & trigger brief red damage flash
+        this.shakeTimer = 15;
         this.triggerShieldHitEffect();
         
-        // If lost all lives
-        if (this.lives <= 0) {
+        if (this.hp <= 0) {
           this.gameOver();
           return;
         }
         
-        // If target was destroyed, unlock target
         if (this.currentTarget === enemy) {
           this.currentTarget = null;
           this.typedText = "";
@@ -353,29 +482,65 @@ class RinTypeSpaceShooter {
       }
     }
 
-    // 3. Move active Lasers
+    // 5. Expand Shockwave and destroy collided enemies
+    if (this.shockwaveActive) {
+      this.shockwaveRadius += 10;
+      
+      for (let i = this.enemies.length - 1; i >= 0; i--) {
+        const enemy = this.enemies[i];
+        const dx = enemy.x - this.ship.x;
+        const dy = enemy.y - this.ship.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < this.shockwaveRadius) {
+          this.triggerExplosion(enemy.x, enemy.y, enemy.color);
+          
+          if (enemy.isItemCarrier) {
+            this.spawnItemCapsule(enemy.x, enemy.y);
+          }
+          
+          this.score += enemy.word.length * 10;
+          this.enemies.splice(i, 1);
+          
+          if (this.currentTarget === enemy) {
+            this.currentTarget = null;
+            this.typedText = "";
+          }
+        }
+      }
+      
+      if (this.shockwaveRadius > this.canvas.width) {
+        this.shockwaveActive = false;
+        this.shockwaveRadius = 0;
+      }
+      this.updateHUD();
+    }
+
+    // 6. Move active Lasers
     for (let i = this.lasers.length - 1; i >= 0; i--) {
       const laser = this.lasers[i];
       
-      // Move closer to destination coordinates
       const dx = laser.targetX - laser.x;
       const dy = laser.targetY - laser.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       
       if (dist < laser.speed) {
-        // Collision hit!
+        // Laser hit collision!
         this.triggerExplosion(laser.targetX, laser.targetY, laser.targetEnemyRef.color);
-        
-        // Play explosion sound effect
         window.RinTypeAudio.playExplosion();
         
-        // Remove enemy
+        // Drop item capsule if isItemCarrier was hit
+        if (laser.targetEnemyRef.isItemCarrier) {
+          this.spawnItemCapsule(laser.targetX, laser.targetY);
+        }
+        
+        // Remove enemy from list
         const enemyIdx = this.enemies.indexOf(laser.targetEnemyRef);
         if (enemyIdx !== -1) {
           this.enemies.splice(enemyIdx, 1);
         }
         
-        // Award scores
+        // Award score points
         this.score += laser.targetEnemyRef.word.length * 10;
         this.updateHUD();
         
@@ -386,20 +551,20 @@ class RinTypeSpaceShooter {
         const newLevel = Math.floor(this.score / 300) + 1;
         if (newLevel > this.level) {
           this.level = newLevel;
-          this.baseSpeed += 0.08;
-          this.spawnInterval = Math.max(1200, 3000 - (this.level * 200));
-          this.startSpawner(); // restart spawner interval
+          this.baseSpeed += 0.07;
+          this.spawnInterval = Math.max(1000, this.spawnInterval - 150);
+          this.startSpawner();
           this.updateHUD();
         }
       } else {
-        // Advance laser position
+        // Advance laser closer to target
         const angle = Math.atan2(dy, dx);
         laser.x += Math.cos(angle) * laser.speed;
         laser.y += Math.sin(angle) * laser.speed;
       }
     }
 
-    // 4. Update particles
+    // 7. Update active explosion particles
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
       p.x += p.vx;
@@ -414,15 +579,13 @@ class RinTypeSpaceShooter {
   }
 
   triggerShieldHitEffect() {
-    // Shaking offset handled dynamically during drawing, we trigger a brief screen red glow
-    this.canvas.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.7)';
+    this.canvas.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.8)';
     setTimeout(() => {
       this.canvas.style.boxShadow = 'none';
     }, 150);
   }
 
   triggerExplosion(x, y, color) {
-    // Generate beautiful colorful circular particles
     for (let i = 0; i < 20; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 4 + 1;
@@ -441,14 +604,26 @@ class RinTypeSpaceShooter {
   }
 
   draw() {
-    // Clear canvas
+    // Implement Screen Shaking offsets during drawings
+    let shakeX = 0;
+    let shakeY = 0;
+    if (this.shakeTimer > 0) {
+      shakeX = (Math.random() - 0.5) * 8;
+      shakeY = (Math.random() - 0.5) * 8;
+      this.shakeTimer--;
+    }
+    
+    this.ctx.save();
+    this.ctx.translate(shakeX, shakeY);
+
+    // Clear screen
     this.ctx.fillStyle = '#0d0f12';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
     // Draw stars
     this.ctx.fillStyle = '#ffffff';
     this.stars.forEach(star => {
-      this.ctx.globalAlpha = star.speed * 4; // brighter stars move faster
+      this.ctx.globalAlpha = star.speed * 4;
       this.ctx.fillRect(star.x, star.y, star.size, star.size);
     });
     this.ctx.globalAlpha = 1.0;
@@ -456,7 +631,7 @@ class RinTypeSpaceShooter {
     // Draw ship exhaust flame
     const flameTime = Date.now();
     const flameSize = Math.sin(flameTime / 50) * 8 + 12;
-    this.ctx.fillStyle = '#f97316'; // orange flame
+    this.ctx.fillStyle = '#f97316';
     this.ctx.beginPath();
     this.ctx.moveTo(this.ship.x - 5, this.ship.y + 15);
     this.ctx.lineTo(this.ship.x + 5, this.ship.y + 15);
@@ -464,17 +639,17 @@ class RinTypeSpaceShooter {
     this.ctx.closePath();
     this.ctx.fill();
 
-    // Draw ship (spaceship body)
-    this.ctx.fillStyle = '#38bdf8'; // neon blue body
+    // Draw ship body
+    this.ctx.fillStyle = '#38bdf8';
     this.ctx.beginPath();
-    this.ctx.moveTo(this.ship.x, this.ship.y - 20); // nose
-    this.ctx.lineTo(this.ship.x - 20, this.ship.y + 15); // left wing
-    this.ctx.lineTo(this.ship.x, this.ship.y + 5); // center bottom indentation
-    this.ctx.lineTo(this.ship.x + 20, this.ship.y + 15); // right wing
+    this.ctx.moveTo(this.ship.x, this.ship.y - 20);
+    this.ctx.lineTo(this.ship.x - 20, this.ship.y + 15);
+    this.ctx.lineTo(this.ship.x, this.ship.y + 5);
+    this.ctx.lineTo(this.ship.x + 20, this.ship.y + 15);
     this.ctx.closePath();
     this.ctx.fill();
     
-    // Ship decorations / nose cone
+    // Ship nose cone
     this.ctx.fillStyle = '#0284c7';
     this.ctx.beginPath();
     this.ctx.moveTo(this.ship.x, this.ship.y - 12);
@@ -483,20 +658,19 @@ class RinTypeSpaceShooter {
     this.ctx.closePath();
     this.ctx.fill();
 
-    // Draw active lasers
+    // Draw lasers
     this.ctx.shadowBlur = 15;
     this.lasers.forEach(laser => {
       this.ctx.shadowColor = '#00ffff';
       this.ctx.strokeStyle = '#e0f2fe';
       this.ctx.lineWidth = 3;
       this.ctx.beginPath();
-      // Calculate small trail
       const angle = Math.atan2(laser.targetY - laser.y, laser.targetX - laser.x);
       this.ctx.moveTo(laser.x, laser.y);
       this.ctx.lineTo(laser.x - Math.cos(angle) * 15, laser.y - Math.sin(angle) * 15);
       this.ctx.stroke();
     });
-    this.ctx.shadowBlur = 0; // reset glow
+    this.ctx.shadowBlur = 0;
 
     // Draw particles
     this.particles.forEach(p => {
@@ -513,17 +687,24 @@ class RinTypeSpaceShooter {
       const isLocked = (this.currentTarget === enemy);
       
       // Draw meteor body
-      this.ctx.fillStyle = 'rgba(30, 41, 59, 0.85)';
-      this.ctx.strokeStyle = isLocked ? '#22c55e' : enemy.color;
-      this.ctx.lineWidth = isLocked ? 3 : 1.5;
+      this.ctx.fillStyle = 'rgba(30, 41, 59, 0.88)';
       
-      // Draw meteor shadow blur if locked
-      if (isLocked) {
-        this.ctx.shadowBlur = 15;
-        this.ctx.shadowColor = '#22c55e';
+      if (enemy.isItemCarrier) {
+        // Glowing purple carrier
+        this.ctx.strokeStyle = isLocked ? '#22c55e' : '#e879f9';
+        this.ctx.lineWidth = isLocked ? 3.5 : 2;
+        this.ctx.shadowBlur = isLocked ? 18 : 10;
+        this.ctx.shadowColor = isLocked ? '#22c55e' : '#e879f9';
+      } else {
+        this.ctx.strokeStyle = isLocked ? '#22c55e' : enemy.color;
+        this.ctx.lineWidth = isLocked ? 3 : 1.5;
+        if (isLocked) {
+          this.ctx.shadowBlur = 15;
+          this.ctx.shadowColor = '#22c55e';
+        }
       }
       
-      // Draw smooth rounded pill background for word clarity
+      // Draw rounded pill meteor box
       this.ctx.beginPath();
       const radius = 8;
       const x = enemy.x - enemy.width / 2;
@@ -544,21 +725,17 @@ class RinTypeSpaceShooter {
       this.ctx.stroke();
       this.ctx.shadowBlur = 0; // reset
 
-      // Draw word text inside meteorite
+      // Draw word text
       this.ctx.font = 'bold 14px "Outfit", "Inter", sans-serif';
       this.ctx.textAlign = 'center';
       
       const wordStr = enemy.word;
       
       if (isLocked) {
-        // Draw matched characters in green
         const typedStr = this.typedText;
         const untypedStr = wordStr.slice(typedStr.length);
-        
         const fullWidth = this.ctx.measureText(wordStr).width;
         const typedWidth = this.ctx.measureText(typedStr).width;
-        
-        // Start text drawing alignment offset
         const startX = enemy.x - (fullWidth / 2);
         
         // 1. Draw typed letters
@@ -570,23 +747,91 @@ class RinTypeSpaceShooter {
         this.ctx.fillStyle = '#ffffff';
         this.ctx.fillText(untypedStr, startX + typedWidth, enemy.y + 6);
       } else {
-        // Pure white for standard enemies
-        this.ctx.fillStyle = '#ffffff';
+        this.ctx.fillStyle = enemy.isItemCarrier ? '#fdf2ff' : '#ffffff';
         this.ctx.fillText(wordStr, enemy.x, enemy.y + 6);
       }
     });
 
-    // Draw simple bottom boundary shield line (at canvas height - 40)
+    // Draw active falling capsules items
+    this.activeItems.forEach(item => {
+      const pulse = Math.sin(item.pulseAngle) * 3;
+      const finalRad = item.radius + pulse;
+      
+      this.ctx.save();
+      this.ctx.shadowBlur = 15;
+      
+      let strokeStyle = '';
+      let glowColor = '';
+      let label = '';
+      
+      if (item.type === 'freeze') {
+        strokeStyle = '#38bdf8';
+        glowColor = '#38bdf8';
+        label = '❄️ F';
+      } else if (item.type === 'heal') {
+        strokeStyle = '#22c55e';
+        glowColor = '#22c55e';
+        label = '❤️ H';
+      } else if (item.type === 'shockwave') {
+        strokeStyle = '#eab308';
+        glowColor = '#eab308';
+        label = '⚡ S';
+      }
+      
+      this.ctx.shadowColor = glowColor;
+      this.ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      this.ctx.strokeStyle = strokeStyle;
+      this.ctx.lineWidth = 2.5;
+      
+      this.ctx.beginPath();
+      this.ctx.arc(item.x, item.y, finalRad, 0, Math.PI * 2);
+      this.ctx.fill();
+      this.ctx.stroke();
+      
+      // Draw label
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.font = 'bold 12px "Outfit", sans-serif';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(label, item.x, item.y + 4);
+      
+      this.ctx.restore();
+    });
+
+    // Draw expanding Shockwave visual effect
+    if (this.shockwaveActive) {
+      this.ctx.save();
+      this.ctx.shadowBlur = 20;
+      this.ctx.shadowColor = '#eab308';
+      this.ctx.strokeStyle = 'rgba(234, 179, 8, 0.8)';
+      this.ctx.lineWidth = 4;
+      this.ctx.beginPath();
+      this.ctx.arc(this.ship.x, this.ship.y, this.shockwaveRadius, 0, Math.PI * 2);
+      this.ctx.stroke();
+      this.ctx.restore();
+    }
+
+    // Draw bottom shield line
     this.ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
     this.ctx.lineWidth = 2;
     this.ctx.beginPath();
     this.ctx.moveTo(0, this.canvas.height - 40);
     this.ctx.lineTo(this.canvas.width, this.canvas.height - 40);
     this.ctx.stroke();
+
+    // Draw Freeze screen visual frost effect overlay
+    if (this.freezeTimer > 0) {
+      this.ctx.fillStyle = 'rgba(56, 189, 248, 0.08)'; // Light frozen cyan
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      
+      this.ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+      this.ctx.lineWidth = 6;
+      this.ctx.strokeRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    this.ctx.restore();
   }
 
   drawStaticScene() {
-    // Render deep dark canvas background with start game label
     this.ctx.fillStyle = '#0d0f12';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.generateStars();
@@ -612,8 +857,23 @@ class RinTypeSpaceShooter {
 
   updateHUD() {
     document.getElementById('game-score').textContent = this.score;
-    document.getElementById('game-lives').textContent = this.lives;
     document.getElementById('game-level').textContent = this.level;
+    
+    const fill = document.getElementById('game-hp-fill');
+    const txt = document.getElementById('game-hp-text');
+    if (fill && txt) {
+      fill.style.width = `${this.hp}%`;
+      txt.textContent = this.hp;
+      
+      // Update color dynamically based on health values
+      if (this.hp > 50) {
+        fill.style.backgroundColor = '#22c55e';
+      } else if (this.hp > 25) {
+        fill.style.backgroundColor = '#eab308';
+      } else {
+        fill.style.backgroundColor = '#ef4444';
+      }
+    }
   }
 
   gameOver() {
@@ -623,10 +883,8 @@ class RinTypeSpaceShooter {
     if (this.spawnTimer) clearInterval(this.spawnTimer);
     this.unbindKeyboard();
     
-    // Save high score
     this.saveHighScore();
     
-    // Show game over overlay with scores
     document.getElementById('game-final-score').textContent = this.score;
     document.getElementById('game-over-overlay').style.display = 'flex';
   }

@@ -85,6 +85,9 @@
         <button class="nav-tab" data-mode="roadmap" id="tab-roadmap">
           <i class="fa-solid fa-graduation-cap"></i> Lộ Trình (Roadmap)
         </button>
+        <button class="nav-tab" data-mode="game" id="tab-game">
+          <i class="fa-solid fa-gamepad"></i> Trò Chơi (Typing Game)
+        </button>
       </div>
 
       <!-- Context Sub-options -->
@@ -123,16 +126,6 @@
       </div>
     </nav>
 
-    <!-- App Main Mode Selector: Practice vs Game -->
-    <div class="app-main-mode-selector">
-      <button class="mode-select-btn active" id="btn-mode-practice">
-        <i class="fa-solid fa-keyboard"></i> Bàn Luyện Tập (Practice Sandbox)
-      </button>
-      <button class="mode-select-btn" id="btn-mode-game">
-        <i class="fa-solid fa-gamepad"></i> Trò Chơi Bắn Súng (Space Shooter)
-      </button>
-    </div>
-
     <!-- Main Workspace -->
     <main class="main-workspace">
       
@@ -140,7 +133,13 @@
       <section class="game-arena-container" id="game-arena-section" style="display: none;">
         <div class="game-hud">
           <div class="game-hud-item"><i class="fa-solid fa-star"></i> Điểm: <span id="game-score">0</span></div>
-          <div class="game-hud-item"><i class="fa-solid fa-heart text-incorrect"></i> Mạng: <span id="game-lives">3</span></div>
+          <div class="game-hud-item" style="flex-grow: 0.5; max-width: 250px;">
+            <i class="fa-solid fa-heart text-incorrect"></i> HP: 
+            <div class="game-hp-bar-container" style="background: #1e293b; border: 1px solid #334155; border-radius: 4px; height: 12px; flex-grow: 1; margin: 0 8px; overflow: hidden; display: inline-block; vertical-align: middle;">
+              <div class="game-hp-bar-fill" id="game-hp-fill" style="width: 100%; height: 100%; background: #22c55e; transition: width 0.2s ease, background-color 0.2s ease;"></div>
+            </div>
+            <span id="game-hp-text" style="font-size: 0.85rem; font-weight: 700;">100</span>
+          </div>
           <div class="game-hud-item"><i class="fa-solid fa-stairs"></i> Cấp độ: <span id="game-level">1</span></div>
         </div>
         
@@ -151,7 +150,18 @@
           <div class="game-overlay" id="game-start-overlay">
             <h2>🚀 CHIẾN TRƯỜNG GÕ PHÍM VŨ TRỤ</h2>
             <p>Gõ chính xác các từ hiển thị trên thiên thạch đang rơi để phóng laser tiêu diệt chúng!</p>
-            <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 25px;">Từ vựng sẽ tự động tải theo Cấp độ Lộ Trình bạn đang học.</p>
+            <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px;">Từ vựng tự động đồng bộ theo Cấp độ Lộ Trình bạn đang chọn.</p>
+            
+            <!-- Difficulty Selection -->
+            <div class="game-difficulty-container" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 0.95rem; color: #94a3b8;">Độ khó chiến đấu:</span>
+              <select id="game-difficulty-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
+                <option value="easy">🟢 DỄ (Không mất HP khi gõ sai)</option>
+                <option value="medium" selected>🟡 TRUNG BÌNH (Trừ 2 HP khi gõ sai)</option>
+                <option value="hard">🔴 KHÓ (Trừ 5 HP khi gõ sai, rơi nhanh)</option>
+              </select>
+            </div>
+            
             <button class="game-start-btn" id="btn-start-game">BẮT ĐẦU CHIẾN ĐẤU</button>
           </div>
           

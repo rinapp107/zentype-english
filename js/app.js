@@ -100,8 +100,6 @@ class RinTypeApplication {
     this.dom.historyTableBody = document.getElementById('history-table-body');
 
     // Main selector & Game container caching
-    this.dom.btnModePractice = document.getElementById('btn-mode-practice');
-    this.dom.btnModeGame = document.getElementById('btn-mode-game');
     this.dom.gameArenaSection = document.getElementById('game-arena-section');
     this.dom.btnStartGame = document.getElementById('btn-start-game');
     this.dom.btnRestartGame = document.getElementById('btn-restart-game');
@@ -141,22 +139,51 @@ class RinTypeApplication {
         tab.classList.add('active');
         this.activeMode = tab.dataset.mode;
         
-        // Show/hide suboptions based on mode
-        if (this.activeMode === 'stories') {
-          this.dom.optionsCount.style.display = 'none';
-          this.dom.optionsStories.style.display = 'flex';
-          this.dom.optionsRoadmap.style.display = 'none';
-        } else if (this.activeMode === 'roadmap') {
+        if (this.activeMode === 'game') {
+          // Hide all suboptions
           this.dom.optionsCount.style.display = 'none';
           this.dom.optionsStories.style.display = 'none';
-          this.dom.optionsRoadmap.style.display = 'flex';
+          this.dom.optionsRoadmap.style.display = 'none';
+          
+          // Hide practice panels, show game arena
+          if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'flex';
+          document.querySelector('.stats-hud').style.display = 'none';
+          document.querySelector('.typing-arena-container').style.display = 'none';
+          document.querySelector('.analytics-dashboard').style.display = 'none';
+          
+          // Pause practice test
+          clearInterval(this.timerInterval);
+          this.isTestActive = false;
+          
+          // Initialize Space Shooter Canvas
+          if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.init('game-canvas');
         } else {
-          this.dom.optionsCount.style.display = 'flex';
-          this.dom.optionsStories.style.display = 'none';
-          this.dom.optionsRoadmap.style.display = 'none';
+          // Show practice panels, hide game arena
+          if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'none';
+          document.querySelector('.stats-hud').style.display = 'grid';
+          document.querySelector('.typing-arena-container').style.display = 'block';
+          document.querySelector('.analytics-dashboard').style.display = 'block';
+          
+          // Stop game loop
+          if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.stop();
+          
+          // Show appropriate suboptions based on mode
+          if (this.activeMode === 'stories') {
+            this.dom.optionsCount.style.display = 'none';
+            this.dom.optionsStories.style.display = 'flex';
+            this.dom.optionsRoadmap.style.display = 'none';
+          } else if (this.activeMode === 'roadmap') {
+            this.dom.optionsCount.style.display = 'none';
+            this.dom.optionsStories.style.display = 'none';
+            this.dom.optionsRoadmap.style.display = 'flex';
+          } else {
+            this.dom.optionsCount.style.display = 'flex';
+            this.dom.optionsStories.style.display = 'none';
+            this.dom.optionsRoadmap.style.display = 'none';
+          }
+          
+          this.resetTest();
         }
-        
-        this.resetTest();
       });
     });
 
@@ -179,54 +206,16 @@ class RinTypeApplication {
       });
     });
 
-    // Practice vs Game Mode Switcher
-    if (this.dom.btnModePractice && this.dom.btnModeGame) {
-      this.dom.btnModePractice.addEventListener('click', () => {
-        this.dom.btnModePractice.classList.add('active');
-        this.dom.btnModeGame.classList.remove('active');
-        
-        // Show practice panels, hide game
-        if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'none';
-        document.querySelector('.mode-navigation').style.display = 'block';
-        document.querySelector('.stats-hud').style.display = 'grid';
-        document.querySelector('.typing-arena-container').style.display = 'block';
-        document.querySelector('.analytics-dashboard').style.display = 'block';
-        
-        // Stop game loop
-        if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.stop();
-        this.resetTest();
+    // Game start & restart triggers
+    if (this.dom.btnStartGame) {
+      this.dom.btnStartGame.addEventListener('click', () => {
+        if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.start();
       });
-
-      this.dom.btnModeGame.addEventListener('click', () => {
-        this.dom.btnModeGame.classList.add('active');
-        this.dom.btnModePractice.classList.remove('active');
-        
-        // Hide practice panels, show game
-        if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'flex';
-        document.querySelector('.mode-navigation').style.display = 'none';
-        document.querySelector('.stats-hud').style.display = 'none';
-        document.querySelector('.typing-arena-container').style.display = 'none';
-        document.querySelector('.analytics-dashboard').style.display = 'none';
-        
-        // Pause practice test
-        clearInterval(this.timerInterval);
-        this.isTestActive = false;
-        
-        // Initialize Space Shooter Canvas
-        if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.init('game-canvas');
+    }
+    if (this.dom.btnRestartGame) {
+      this.dom.btnRestartGame.addEventListener('click', () => {
+        if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.start();
       });
-
-      // Game start & restart triggers
-      if (this.dom.btnStartGame) {
-        this.dom.btnStartGame.addEventListener('click', () => {
-          if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.start();
-        });
-      }
-      if (this.dom.btnRestartGame) {
-        this.dom.btnRestartGame.addEventListener('click', () => {
-          if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.start();
-        });
-      }
     }
 
     // Story dropdown selection
