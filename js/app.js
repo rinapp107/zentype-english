@@ -82,6 +82,9 @@ class RinTypeApplication {
     this.dom.tabs = document.querySelectorAll('.nav-tab');
     this.dom.optionsCount = document.getElementById('options-count');
     this.dom.optionsStories = document.getElementById('options-stories');
+    this.dom.optionsRoadmap = document.getElementById('options-roadmap');
+    this.dom.roadmapLevelSelect = document.getElementById('roadmap-level-select');
+    this.dom.roadmapStepSelect = document.getElementById('roadmap-step-select');
     this.dom.optionBtns = document.querySelectorAll('#options-count .option-btn');
     this.dom.storySelect = document.getElementById('story-select');
     
@@ -132,14 +135,24 @@ class RinTypeApplication {
         if (this.activeMode === 'stories') {
           this.dom.optionsCount.style.display = 'none';
           this.dom.optionsStories.style.display = 'flex';
+          this.dom.optionsRoadmap.style.display = 'none';
+        } else if (this.activeMode === 'roadmap') {
+          this.dom.optionsCount.style.display = 'none';
+          this.dom.optionsStories.style.display = 'none';
+          this.dom.optionsRoadmap.style.display = 'flex';
         } else {
           this.dom.optionsCount.style.display = 'flex';
           this.dom.optionsStories.style.display = 'none';
+          this.dom.optionsRoadmap.style.display = 'none';
         }
         
         this.resetTest();
       });
     });
+
+    // Roadmap Selectors
+    this.dom.roadmapLevelSelect.addEventListener('change', () => this.resetTest());
+    this.dom.roadmapStepSelect.addEventListener('change', () => this.resetTest());
 
     // Sub-options word count selector
     this.dom.optionBtns.forEach(btn => {
@@ -281,6 +294,24 @@ class RinTypeApplication {
       const story = db.stories[this.storyIndex];
       this.words = [story];
       this.wordStrings = story.text.split(' ');
+    } else if (this.activeMode === 'roadmap') {
+      const levelKey = this.dom.roadmapLevelSelect.value;
+      const stepKey = this.dom.roadmapStepSelect.value;
+      const levelData = db.roadmap[levelKey];
+      
+      if (stepKey === 'vocab') {
+        this.words = levelData.vocabulary;
+        this.wordStrings = this.words.map(w => w.word);
+      } else if (stepKey === 'phrases') {
+        this.words = levelData.phrases;
+        this.wordStrings = [];
+        this.words.forEach(p => {
+          p.text.split(' ').forEach(w => this.wordStrings.push(w));
+        });
+      } else if (stepKey === 'story') {
+        this.words = [levelData.story];
+        this.wordStrings = levelData.story.text.split(' ');
+      }
     }
   }
 
@@ -738,6 +769,36 @@ class RinTypeApplication {
         this.dom.dictIpa.style.display = 'none';
         this.dom.dictDefinition.textContent = `Gợi ý nghĩa dịch: ${storyObj.translation.slice(0, 120)}...`;
       }
+    } else if (this.activeMode === 'roadmap') {
+      const stepKey = this.dom.roadmapStepSelect.value;
+      if (stepKey === 'vocab') {
+        const activeWordObj = this.words[this.wordIndex];
+        if (activeWordObj) {
+          this.dom.dictWord.textContent = activeWordObj.word;
+          this.dom.dictPos.textContent = activeWordObj.partOfSpeech;
+          this.dom.dictPos.style.display = 'inline-block';
+          this.dom.dictIpa.textContent = activeWordObj.ipa;
+          this.dom.dictIpa.style.display = 'inline-block';
+          this.dom.dictDefinition.textContent = activeWordObj.definition;
+        }
+      } else if (stepKey === 'phrases') {
+        const targetWord = this.wordStrings[this.wordIndex];
+        const phraseObj = this.words.find(p => p.text.includes(targetWord)) || this.words[0];
+        if (phraseObj) {
+          this.dom.dictWord.textContent = "Phrases (Level)";
+          this.dom.dictPos.style.display = 'none';
+          this.dom.dictIpa.style.display = 'none';
+          this.dom.dictDefinition.textContent = `"${phraseObj.text}" ➔ ${phraseObj.translation}`;
+        }
+      } else if (stepKey === 'story') {
+        const storyObj = this.words[0];
+        if (storyObj) {
+          this.dom.dictWord.textContent = storyObj.title;
+          this.dom.dictPos.style.display = 'none';
+          this.dom.dictIpa.style.display = 'none';
+          this.dom.dictDefinition.textContent = `Gợi ý nghĩa dịch: ${storyObj.translation}`;
+        }
+      }
     }
   }
 
@@ -745,11 +806,19 @@ class RinTypeApplication {
    * Vocalizes Text-to-Speech audio pronunciations using Web Speech API
    */
   speakActiveWord() {
-    if (this.activeMode !== 'vocabulary') return;
-    
-    const activeWordObj = this.words[this.wordIndex];
-    if (activeWordObj) {
-      this.speakText(activeWordObj.word);
+    if (this.activeMode === 'vocabulary') {
+      const activeWordObj = this.words[this.wordIndex];
+      if (activeWordObj) {
+        this.speakText(activeWordObj.word);
+      }
+    } else if (this.activeMode === 'roadmap') {
+      const stepKey = this.dom.roadmapStepSelect.value;
+      if (stepKey === 'vocab') {
+        const activeWordObj = this.words[this.wordIndex];
+        if (activeWordObj) {
+          this.speakText(activeWordObj.word);
+        }
+      }
     }
   }
 
@@ -764,6 +833,19 @@ class RinTypeApplication {
       const storyObj = this.words[0];
       if (storyObj) {
         this.speakText(storyObj.text);
+      }
+    } else if (this.activeMode === 'roadmap') {
+      const stepKey = this.dom.roadmapStepSelect.value;
+      if (stepKey === 'phrases') {
+        const phraseObj = this.words.find(p => p.text.includes(this.wordStrings[this.wordIndex])) || this.words[0];
+        if (phraseObj) {
+          this.speakText(phraseObj.text);
+        }
+      } else if (stepKey === 'story') {
+        const storyObj = this.words[0];
+        if (storyObj) {
+          this.speakText(storyObj.text);
+        }
       }
     }
   }

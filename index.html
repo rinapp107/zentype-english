@@ -82,6 +82,9 @@
         <button class="nav-tab" data-mode="stories" id="tab-stories">
           <i class="fa-solid fa-newspaper"></i> Truyện Ngắn (Stories)
         </button>
+        <button class="nav-tab" data-mode="roadmap" id="tab-roadmap">
+          <i class="fa-solid fa-graduation-cap"></i> Lộ Trình (Roadmap)
+        </button>
       </div>
 
       <!-- Context Sub-options -->
@@ -97,6 +100,21 @@
           <span class="option-label">Chọn câu chuyện:</span>
           <select id="story-select" class="custom-select">
             <!-- Dynamic stories injected from data.js -->
+          </select>
+        </div>
+        <div class="option-container" id="options-roadmap" style="display: none;">
+          <span class="option-label">Lộ trình:</span>
+          <select id="roadmap-level-select" class="custom-select" style="margin-right: 8px;">
+            <option value="starter">Cấp 1: Starter (Mới Bắt Đầu - A1)</option>
+            <option value="elementary">Cấp 2: Elementary (Cơ Bản - A2)</option>
+            <option value="intermediate">Cấp 3: Intermediate (Trung Cấp - B1)</option>
+            <option value="upper-intermediate">Cấp 4: Upper-Intermediate (Khá - B2)</option>
+            <option value="master">Cấp 5: Advanced Master (Thành Thạo - C1/C2)</option>
+          </select>
+          <select id="roadmap-step-select" class="custom-select">
+            <option value="vocab">Bước 1: Luyện Từ Vựng</option>
+            <option value="phrases">Bước 2: Luyện Mẫu Câu</option>
+            <option value="story">Bước 3: Luyện Đọc Hiểu</option>
           </select>
         </div>
       </div>
