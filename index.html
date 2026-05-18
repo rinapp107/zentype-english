@@ -90,11 +90,14 @@
       <!-- Context Sub-options -->
       <div class="sub-options">
         <div class="option-container active" id="options-count">
-          <span class="option-label">Số lượng từ:</span>
-          <button class="option-btn active" data-count="10">10</button>
-          <button class="option-btn" data-count="20">20</button>
-          <button class="option-btn" data-count="30">30</button>
-          <button class="option-btn" data-count="50">50</button>
+          <span class="option-label">Chế độ luyện:</span>
+          <button class="option-btn active" data-type="words" data-value="10">10 Từ</button>
+          <button class="option-btn" data-type="words" data-value="25">25 Từ</button>
+          <button class="option-btn" data-type="words" data-value="50">50 Từ</button>
+          <span class="option-separator" style="opacity: 0.3; margin: 0 5px;">|</span>
+          <button class="option-btn" data-type="time" data-value="15">15 Giây</button>
+          <button class="option-btn" data-type="time" data-value="30">30 Giây</button>
+          <button class="option-btn" data-type="time" data-value="60">60 Giây</button>
         </div>
         <div class="option-container" id="options-stories" style="display: none;">
           <span class="option-label">Chọn câu chuyện:</span>
@@ -120,8 +123,47 @@
       </div>
     </nav>
 
+    <!-- App Main Mode Selector: Practice vs Game -->
+    <div class="app-main-mode-selector">
+      <button class="mode-select-btn active" id="btn-mode-practice">
+        <i class="fa-solid fa-keyboard"></i> Bàn Luyện Tập (Practice Sandbox)
+      </button>
+      <button class="mode-select-btn" id="btn-mode-game">
+        <i class="fa-solid fa-gamepad"></i> Trò Chơi Bắn Súng (Space Shooter)
+      </button>
+    </div>
+
     <!-- Main Workspace -->
     <main class="main-workspace">
+      
+      <!-- Game Arena Container (Space Shooter) -->
+      <section class="game-arena-container" id="game-arena-section" style="display: none;">
+        <div class="game-hud">
+          <div class="game-hud-item"><i class="fa-solid fa-star"></i> Điểm: <span id="game-score">0</span></div>
+          <div class="game-hud-item"><i class="fa-solid fa-heart text-incorrect"></i> Mạng: <span id="game-lives">3</span></div>
+          <div class="game-hud-item"><i class="fa-solid fa-stairs"></i> Cấp độ: <span id="game-level">1</span></div>
+        </div>
+        
+        <div class="game-canvas-wrapper">
+          <canvas id="game-canvas" width="800" height="500"></canvas>
+          
+          <!-- Game Start Overlay -->
+          <div class="game-overlay" id="game-start-overlay">
+            <h2>🚀 CHIẾN TRƯỜNG GÕ PHÍM VŨ TRỤ</h2>
+            <p>Gõ chính xác các từ hiển thị trên thiên thạch đang rơi để phóng laser tiêu diệt chúng!</p>
+            <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 25px;">Từ vựng sẽ tự động tải theo Cấp độ Lộ Trình bạn đang học.</p>
+            <button class="game-start-btn" id="btn-start-game">BẮT ĐẦU CHIẾN ĐẤU</button>
+          </div>
+          
+          <!-- Game Over Overlay -->
+          <div class="game-overlay" id="game-over-overlay" style="display: none;">
+            <h2>💥 TÀU BỊ TIÊU DIỆT (GAME OVER)</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 10px;">Điểm số của bạn: <span id="game-final-score" class="text-accent font-weight-bold" style="font-size: 1.8rem;">0</span></p>
+            <p style="margin-bottom: 25px;">Kỷ lục cao nhất: <span id="game-high-score" class="font-weight-bold">0</span></p>
+            <button class="game-start-btn" id="btn-restart-game">CHƠI LẠI NGAY</button>
+          </div>
+        </div>
+      </section>
       
       <!-- Live Stats HUD -->
       <section class="stats-hud">
@@ -270,6 +312,7 @@
   <!-- JavaScript Scripts -->
   <script src="js/data.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

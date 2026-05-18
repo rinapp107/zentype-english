@@ -183,6 +183,84 @@ class KeyboardAudioEngine {
   }
 
   /**
+   * Synthesizes a sci-fi laser gun shot for the game mode
+   */
+  playLaser() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    const time = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gainNode = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(880, time);
+    osc.frequency.exponentialRampToValueAtTime(110, time + 0.15);
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 2000;
+
+    gainNode.gain.setValueAtTime(0.0, time);
+    gainNode.gain.linearRampToValueAtTime(0.15, time + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, time + 0.15);
+
+    osc.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(this.ctx.destination);
+
+    osc.start(time);
+    osc.stop(time + 0.16);
+  }
+
+  /**
+   * Synthesizes a deep space meteorite explosion
+   */
+  playExplosion() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    const time = this.ctx.currentTime;
+    const noiseSource = this.ctx.createBufferSource();
+    noiseSource.buffer = this.createNoiseBuffer();
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(400, time);
+    filter.frequency.exponentialRampToValueAtTime(80, time + 0.3);
+
+    const gainNode = this.ctx.createGain();
+    gainNode.gain.setValueAtTime(0.0, time);
+    gainNode.gain.linearRampToValueAtTime(0.4, time + 0.02);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, time + 0.35);
+
+    noiseSource.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(this.ctx.destination);
+
+    // Deep low frequency thump
+    const thump = this.ctx.createOscillator();
+    thump.type = 'triangle';
+    thump.frequency.setValueAtTime(90, time);
+    thump.frequency.exponentialRampToValueAtTime(20, time + 0.3);
+
+    const thumpGain = this.ctx.createGain();
+    thumpGain.gain.setValueAtTime(0.0, time);
+    thumpGain.gain.linearRampToValueAtTime(0.3, time + 0.02);
+    thumpGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.35);
+
+    thump.connect(thumpGain);
+    thumpGain.connect(this.ctx.destination);
+
+    noiseSource.start(time);
+    noiseSource.stop(time + 0.36);
+    thump.start(time);
+    thump.stop(time + 0.36);
+  }
+
+  /**
    * Mutes or unmutes the audio engine
    */
   toggleMute() {

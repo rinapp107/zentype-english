@@ -7,6 +7,9 @@ class RinTypeApplication {
     // State management
     this.activeMode = 'vocabulary'; // vocabulary | phrases | stories
     this.wordLimit = 10;            // 10 | 20 | 30 | 50
+    this.practiceType = 'words';    // words | time
+    this.practiceValue = 10;        // 10, 25, 50 words OR 15, 30, 60 seconds
+    this.timerSeconds = 0;
     this.storyIndex = 0;            // Index of selected story
 
     this.words = [];                // List of words to type (array of objects or strings)
@@ -95,6 +98,13 @@ class RinTypeApplication {
     this.dom.statsAvgWpm = document.getElementById('stats-avg-wpm');
     this.dom.statsAvgAccuracy = document.getElementById('stats-avg-accuracy');
     this.dom.historyTableBody = document.getElementById('history-table-body');
+
+    // Main selector & Game container caching
+    this.dom.btnModePractice = document.getElementById('btn-mode-practice');
+    this.dom.btnModeGame = document.getElementById('btn-mode-game');
+    this.dom.gameArenaSection = document.getElementById('game-arena-section');
+    this.dom.btnStartGame = document.getElementById('btn-start-game');
+    this.dom.btnRestartGame = document.getElementById('btn-restart-game');
   }
 
   bindEvents() {
@@ -154,15 +164,70 @@ class RinTypeApplication {
     this.dom.roadmapLevelSelect.addEventListener('change', () => this.resetTest());
     this.dom.roadmapStepSelect.addEventListener('change', () => this.resetTest());
 
-    // Sub-options word count selector
+    // Sub-options practice mode selector
     this.dom.optionBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         this.dom.optionBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        this.wordLimit = parseInt(btn.dataset.count);
+        
+        this.practiceType = btn.dataset.type || 'words';
+        this.practiceValue = parseInt(btn.dataset.value);
+        if (this.practiceType === 'words') {
+          this.wordLimit = this.practiceValue;
+        }
         this.resetTest();
       });
     });
+
+    // Practice vs Game Mode Switcher
+    if (this.dom.btnModePractice && this.dom.btnModeGame) {
+      this.dom.btnModePractice.addEventListener('click', () => {
+        this.dom.btnModePractice.classList.add('active');
+        this.dom.btnModeGame.classList.remove('active');
+        
+        // Show practice panels, hide game
+        if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'none';
+        document.querySelector('.mode-navigation').style.display = 'block';
+        document.querySelector('.stats-hud').style.display = 'grid';
+        document.querySelector('.typing-arena-container').style.display = 'block';
+        document.querySelector('.analytics-dashboard').style.display = 'block';
+        
+        // Stop game loop
+        if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.stop();
+        this.resetTest();
+      });
+
+      this.dom.btnModeGame.addEventListener('click', () => {
+        this.dom.btnModeGame.classList.add('active');
+        this.dom.btnModePractice.classList.remove('active');
+        
+        // Hide practice panels, show game
+        if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'flex';
+        document.querySelector('.mode-navigation').style.display = 'none';
+        document.querySelector('.stats-hud').style.display = 'none';
+        document.querySelector('.typing-arena-container').style.display = 'none';
+        document.querySelector('.analytics-dashboard').style.display = 'none';
+        
+        // Pause practice test
+        clearInterval(this.timerInterval);
+        this.isTestActive = false;
+        
+        // Initialize Space Shooter Canvas
+        if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.init('game-canvas');
+      });
+
+      // Game start & restart triggers
+      if (this.dom.btnStartGame) {
+        this.dom.btnStartGame.addEventListener('click', () => {
+          if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.start();
+        });
+      }
+      if (this.dom.btnRestartGame) {
+        this.dom.btnRestartGame.addEventListener('click', () => {
+          if (window.RinTypeSpaceShooter) window.RinTypeSpaceShooter.start();
+        });
+      }
+    }
 
     // Story dropdown selection
     this.dom.storySelect.addEventListener('change', (e) => {
@@ -261,13 +326,14 @@ class RinTypeApplication {
     const db = window.RINTYPE_DATABASE;
     this.words = [];
     this.wordStrings = [];
+    const targetLimit = this.practiceType === 'time' ? 50 : this.wordLimit;
 
     if (this.activeMode === 'vocabulary') {
       // Pick random oxford/tech vocab
       const list = [...db.vocabulary];
       // Shuffle array
       const shuffled = list.sort(() => 0.5 - Math.random());
-      this.words = shuffled.slice(0, Math.min(this.wordLimit, shuffled.length));
+      this.words = shuffled.slice(0, Math.min(targetLimit, shuffled.length));
       this.wordStrings = this.words.map(w => w.word);
 
     } else if (this.activeMode === 'phrases') {
@@ -277,7 +343,7 @@ class RinTypeApplication {
       // Pick a phrase and slice words out of it
       let count = 0;
       let phraseIdx = 0;
-      while (count < this.wordLimit && phraseIdx < shuffled.length) {
+      while (count < targetLimit && phraseIdx < shuffled.length) {
         const phrase = shuffled[phraseIdx++];
         this.words.push(phrase); // Hold ref
         const splitWords = phrase.text.split(' ');
@@ -287,7 +353,7 @@ class RinTypeApplication {
         count += splitWords.length;
       }
       // Trim to limit
-      this.wordStrings = this.wordStrings.slice(0, this.wordLimit);
+      this.wordStrings = this.wordStrings.slice(0, targetLimit);
 
     } else if (this.activeMode === 'stories') {
       // Load full story block
@@ -315,6 +381,64 @@ class RinTypeApplication {
     }
   }
 
+  appendMoreWords() {
+    const db = window.RINTYPE_DATABASE;
+    let newWords = [];
+    
+    if (this.activeMode === 'vocabulary') {
+      const list = [...db.vocabulary];
+      const shuffled = list.sort(() => 0.5 - Math.random());
+      newWords = shuffled.slice(0, 20).map(w => w.word);
+    } else if (this.activeMode === 'phrases') {
+      const list = [...db.phrases];
+      const shuffled = list.sort(() => 0.5 - Math.random());
+      shuffled.slice(0, 5).forEach(p => {
+        p.text.split(' ').forEach(w => newWords.push(w));
+      });
+    } else if (this.activeMode === 'stories') {
+      const story = db.stories[Math.floor(Math.random() * db.stories.length)];
+      newWords = story.text.split(' ');
+    } else if (this.activeMode === 'roadmap') {
+      const levelKey = this.dom.roadmapLevelSelect.value;
+      const stepKey = this.dom.roadmapStepSelect.value;
+      const levelData = db.roadmap[levelKey];
+      if (stepKey === 'vocab') {
+        newWords = levelData.vocabulary.map(w => w.word);
+      } else if (stepKey === 'phrases') {
+        levelData.phrases.forEach(p => {
+          p.text.split(' ').forEach(w => newWords.push(w));
+        });
+      } else if (stepKey === 'story') {
+        newWords = levelData.story.text.split(' ');
+      }
+    }
+    
+    // Append to wordStrings
+    const startIdx = this.wordStrings.length;
+    newWords.forEach((word, index) => {
+      const wIdx = startIdx + index;
+      this.wordStrings.push(word);
+      
+      const wordContainer = document.createElement('div');
+      wordContainer.className = 'typing-word';
+      wordContainer.dataset.wordIndex = wIdx;
+
+      for (let cIdx = 0; cIdx < word.length; cIdx++) {
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'typing-letter';
+        letterSpan.textContent = word[cIdx];
+        wordContainer.appendChild(letterSpan);
+      }
+
+      const spaceSpan = document.createElement('span');
+      spaceSpan.className = 'typing-letter space-letter';
+      spaceSpan.textContent = ' ';
+      wordContainer.appendChild(spaceSpan);
+
+      this.dom.wordsWrapper.appendChild(wordContainer);
+    });
+  }
+
   /**
    * Renders the monospaced characters inside the glassmorphic typing arena
    */
@@ -335,7 +459,7 @@ class RinTypeApplication {
       }
 
       // Add a trailing space span at the end of each word (except the absolute last one)
-      if (wIdx < this.wordStrings.length - 1) {
+      if (this.practiceType === 'time' || wIdx < this.wordStrings.length - 1) {
         const spaceSpan = document.createElement('span');
         spaceSpan.className = 'typing-letter space-letter';
         spaceSpan.textContent = ' ';
@@ -461,6 +585,8 @@ class RinTypeApplication {
     this.startTime = null;
     this.correctKeystrokes = 0;
     this.totalKeystrokes = 0;
+    
+    this.timerSeconds = this.practiceType === 'time' ? this.practiceValue : 0;
 
     // Clear and restore input
     this.dom.typingInput.value = '';
@@ -470,7 +596,7 @@ class RinTypeApplication {
     // Update HUD counters
     this.dom.liveWpm.textContent = '0';
     this.dom.liveAccuracy.textContent = '100%';
-    this.dom.liveTimer.textContent = '0s';
+    this.dom.liveTimer.textContent = this.practiceType === 'time' ? `${this.timerSeconds}s` : '0s';
 
     // Generate database
     this.generateWords();
@@ -493,10 +619,11 @@ class RinTypeApplication {
   startTest() {
     this.isTestActive = true;
     this.startTime = new Date();
+    this.timerSeconds = this.practiceType === 'time' ? this.practiceValue : 0;
     
     this.timerInterval = setInterval(() => {
       this.updateTimer();
-    }, 500);
+    }, 1000);
 
     // Initial TTS speak on start if in Phrase/Story mode
     if (this.activeMode !== 'vocabulary' && this.ttsEnabled) {
@@ -507,11 +634,22 @@ class RinTypeApplication {
   updateTimer() {
     if (!this.startTime || this.isTestFinished) return;
     
-    const elapsed = Math.round((new Date() - this.startTime) / 1000);
-    this.dom.liveTimer.textContent = `${elapsed}s`;
-    
-    // Real time WPM / Accuracy update
-    this.calculateRealtimeStats(elapsed);
+    if (this.practiceType === 'time') {
+      this.timerSeconds--;
+      this.dom.liveTimer.textContent = `${this.timerSeconds}s`;
+      
+      const elapsed = this.practiceValue - this.timerSeconds;
+      this.calculateRealtimeStats(elapsed);
+      
+      if (this.timerSeconds <= 0) {
+        this.finishTest();
+        return;
+      }
+    } else {
+      const elapsed = Math.round((new Date() - this.startTime) / 1000);
+      this.dom.liveTimer.textContent = `${elapsed}s`;
+      this.calculateRealtimeStats(elapsed);
+    }
   }
 
   /**
@@ -601,8 +739,13 @@ class RinTypeApplication {
         this.charIndex = 0;
         this.dom.typingInput.value = '';
 
-        // Check if we finished the test
-        if (this.wordIndex >= this.wordStrings.length) {
+        // Handle infinite streaming in Time Mode
+        if (this.practiceType === 'time' && this.wordIndex >= this.wordStrings.length - 3) {
+          this.appendMoreWords();
+        }
+
+        // Check if we finished the test (Words Mode)
+        if (this.practiceType !== 'time' && this.wordIndex >= this.wordStrings.length) {
           this.finishTest();
           return;
         }
