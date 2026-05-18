@@ -123,6 +123,17 @@
             <option value="story">Bước 3: Luyện Đọc Hiểu</option>
           </select>
         </div>
+        
+        <!-- Word Length Filter Option -->
+        <div class="option-container" id="options-word-length" style="margin-left: auto; display: flex; align-items: center;">
+          <span class="option-label"><i class="fa-solid fa-arrows-left-right"></i> Độ dài từ:</span>
+          <select id="word-length-filter-select" class="custom-select" style="min-width: 140px; cursor: pointer; height: 32px; font-size: 0.85rem; padding: 4px 8px; border-radius: 6px;">
+            <option value="all" selected>🌐 Tất cả độ dài</option>
+            <option value="short">🟢 Từ ngắn (3 - 5 chữ)</option>
+            <option value="medium">🟡 Vừa (6 - 8 chữ)</option>
+            <option value="long">🔴 Từ dài (9+ chữ)</option>
+          </select>
+        </div>
       </div>
     </nav>
 
@@ -152,15 +163,26 @@
             <p>Gõ chính xác các từ hiển thị trên thiên thạch đang rơi để phóng laser tiêu diệt chúng!</p>
             <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px;">Từ vựng tự động đồng bộ theo Cấp độ Lộ Trình bạn đang chọn.</p>
             
-            <!-- Difficulty Selection -->
-            <div class="game-difficulty-container" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 0.95rem; color: #94a3b8;">Độ khó chiến đấu:</span>
-              <select id="game-difficulty-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
-                <option value="easy">🟢 DỄ (Không mất HP khi gõ sai)</option>
-                <option value="medium" selected>🟡 TRUNG BÌNH (Trừ 2 HP khi gõ sai)</option>
-                <option value="hard">🔴 KHÓ (Trừ 5 HP khi gõ sai, rơi nhanh)</option>
-              </select>
-            </div>
+            <!-- Difficulty & Word Length Selection -->
+             <div class="game-difficulty-container" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
+               <div style="display: flex; align-items: center; gap: 8px;">
+                 <span style="font-size: 0.95rem; color: #94a3b8;">Độ khó:</span>
+                 <select id="game-difficulty-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
+                   <option value="easy">🟢 DỄ (Không trừ HP gõ sai)</option>
+                   <option value="medium" selected>🟡 TRUNG BÌNH (Trừ 2 HP)</option>
+                   <option value="hard">🔴 KHÓ (Trừ 5 HP, rơi cực nhanh)</option>
+                 </select>
+               </div>
+               <div style="display: flex; align-items: center; gap: 8px;">
+                 <span style="font-size: 0.95rem; color: #94a3b8;">Độ dài từ:</span>
+                 <select id="game-word-length-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
+                   <option value="all" selected>🌐 Tất cả độ dài</option>
+                   <option value="short">🟢 Từ ngắn (3 - 5 ký tự)</option>
+                   <option value="medium">🟡 Từ vừa (6 - 8 ký tự)</option>
+                   <option value="long">🔴 Từ dài (9+ ký tự)</option>
+                 </select>
+               </div>
+             </div>
             
             <button class="game-start-btn" id="btn-start-game">BẮT ĐẦU CHIẾN ĐẤU</button>
           </div>

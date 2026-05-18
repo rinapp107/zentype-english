@@ -195,6 +195,23 @@ class RinTypeSpaceShooter {
       console.warn("Could not load dynamic vocabulary for game spawner, using fallback.");
     }
 
+    // Filter word list based on chosen word length setting
+    const lengthSelect = document.getElementById('game-word-length-select');
+    const lengthVal = lengthSelect ? lengthSelect.value : 'all';
+    
+    if (lengthVal !== 'all') {
+      const filtered = wordList.filter(w => {
+        const len = w.length;
+        if (lengthVal === 'short') return len >= 3 && len <= 5;
+        if (lengthVal === 'medium') return len >= 6 && len <= 8;
+        if (lengthVal === 'long') return len >= 9;
+        return true;
+      });
+      if (filtered.length > 0) {
+        wordList = filtered;
+      }
+    }
+
     // Pick random word
     const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
     

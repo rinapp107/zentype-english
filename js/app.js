@@ -103,6 +103,7 @@ class RinTypeApplication {
     this.dom.gameArenaSection = document.getElementById('game-arena-section');
     this.dom.btnStartGame = document.getElementById('btn-start-game');
     this.dom.btnRestartGame = document.getElementById('btn-restart-game');
+    this.dom.wordLengthFilterSelect = document.getElementById('word-length-filter-select');
   }
 
   bindEvents() {
@@ -144,6 +145,7 @@ class RinTypeApplication {
           this.dom.optionsCount.style.display = 'none';
           this.dom.optionsStories.style.display = 'none';
           this.dom.optionsRoadmap.style.display = 'none';
+          this.updateWordLengthFilterVisibility();
           
           // Hide practice panels, show game arena
           if (this.dom.gameArenaSection) this.dom.gameArenaSection.style.display = 'flex';
@@ -182,6 +184,7 @@ class RinTypeApplication {
             this.dom.optionsRoadmap.style.display = 'none';
           }
           
+          this.updateWordLengthFilterVisibility();
           this.resetTest();
         }
       });
@@ -189,7 +192,18 @@ class RinTypeApplication {
 
     // Roadmap Selectors
     this.dom.roadmapLevelSelect.addEventListener('change', () => this.resetTest());
-    this.dom.roadmapStepSelect.addEventListener('change', () => this.resetTest());
+    this.dom.roadmapStepSelect.addEventListener('change', () => {
+      this.updateWordLengthFilterVisibility();
+      this.resetTest();
+    });
+
+    // Word Length Filter
+    if (this.dom.wordLengthFilterSelect) {
+      this.dom.wordLengthFilterSelect.addEventListener('change', () => {
+        this.resetTest();
+        this.focusInput();
+      });
+    }
 
     // Sub-options practice mode selector
     this.dom.optionBtns.forEach(btn => {
@@ -308,6 +322,43 @@ class RinTypeApplication {
     });
   }
 
+  updateWordLengthFilterVisibility() {
+    const wordLengthEl = document.getElementById('options-word-length');
+    if (!wordLengthEl) return;
+    
+    if (this.activeMode === 'game' || this.activeMode === 'stories') {
+      wordLengthEl.style.display = 'none';
+    } else if (this.activeMode === 'roadmap') {
+      const stepKey = this.dom.roadmapStepSelect.value;
+      wordLengthEl.style.display = stepKey === 'story' ? 'none' : 'flex';
+    } else {
+      wordLengthEl.style.display = 'flex';
+    }
+  }
+
+  filterWordsByLength(list, key = 'word') {
+    const filterSelect = document.getElementById('word-length-filter-select');
+    const filterVal = filterSelect ? filterSelect.value : 'all';
+    if (filterVal === 'all') return list;
+
+    const filtered = list.filter(item => {
+      let wordStr = '';
+      if (typeof item === 'string') {
+        wordStr = item;
+      } else if (item && typeof item === 'object') {
+        wordStr = item[key] || item.word || item.text || '';
+      }
+      
+      const len = wordStr.length;
+      if (filterVal === 'short') return len >= 3 && len <= 5;
+      if (filterVal === 'medium') return len >= 6 && len <= 8;
+      if (filterVal === 'long') return len >= 9;
+      return true;
+    });
+
+    return filtered.length > 0 ? filtered : list;
+  }
+
   /**
    * Generates target text for the selected mode
    */
@@ -318,34 +369,31 @@ class RinTypeApplication {
     const targetLimit = this.practiceType === 'time' ? 50 : this.wordLimit;
 
     if (this.activeMode === 'vocabulary') {
-      // Pick random oxford/tech vocab
-      const list = [...db.vocabulary];
-      // Shuffle array
+      // Pick random oxford/tech vocab after length filter
+      const list = this.filterWordsByLength([...db.vocabulary], 'word');
       const shuffled = list.sort(() => 0.5 - Math.random());
       this.words = shuffled.slice(0, Math.min(targetLimit, shuffled.length));
       this.wordStrings = this.words.map(w => w.word);
 
     } else if (this.activeMode === 'phrases') {
-      // Pick random phrases
       const list = [...db.phrases];
       const shuffled = list.sort(() => 0.5 - Math.random());
-      // Pick a phrase and slice words out of it
       let count = 0;
       let phraseIdx = 0;
       while (count < targetLimit && phraseIdx < shuffled.length) {
         const phrase = shuffled[phraseIdx++];
-        this.words.push(phrase); // Hold ref
-        const splitWords = phrase.text.split(' ');
+        const splitWords = this.filterWordsByLength(phrase.text.split(' '), '');
+        if (splitWords.length === 0) continue;
+
+        this.words.push(phrase);
         splitWords.forEach(w => {
           this.wordStrings.push(w);
         });
         count += splitWords.length;
       }
-      // Trim to limit
       this.wordStrings = this.wordStrings.slice(0, targetLimit);
 
     } else if (this.activeMode === 'stories') {
-      // Load full story block
       const story = db.stories[this.storyIndex];
       this.words = [story];
       this.wordStrings = story.text.split(' ');
@@ -355,13 +403,14 @@ class RinTypeApplication {
       const levelData = db.roadmap[levelKey];
       
       if (stepKey === 'vocab') {
-        this.words = levelData.vocabulary;
+        this.words = this.filterWordsByLength(levelData.vocabulary, 'word');
         this.wordStrings = this.words.map(w => w.word);
       } else if (stepKey === 'phrases') {
         this.words = levelData.phrases;
         this.wordStrings = [];
         this.words.forEach(p => {
-          p.text.split(' ').forEach(w => this.wordStrings.push(w));
+          const split = this.filterWordsByLength(p.text.split(' '), '');
+          split.forEach(w => this.wordStrings.push(w));
         });
       } else if (stepKey === 'story') {
         this.words = [levelData.story];
@@ -375,14 +424,15 @@ class RinTypeApplication {
     let newWords = [];
     
     if (this.activeMode === 'vocabulary') {
-      const list = [...db.vocabulary];
+      const list = this.filterWordsByLength([...db.vocabulary], 'word');
       const shuffled = list.sort(() => 0.5 - Math.random());
       newWords = shuffled.slice(0, 20).map(w => w.word);
     } else if (this.activeMode === 'phrases') {
       const list = [...db.phrases];
       const shuffled = list.sort(() => 0.5 - Math.random());
       shuffled.slice(0, 5).forEach(p => {
-        p.text.split(' ').forEach(w => newWords.push(w));
+        const split = this.filterWordsByLength(p.text.split(' '), '');
+        split.forEach(w => newWords.push(w));
       });
     } else if (this.activeMode === 'stories') {
       const story = db.stories[Math.floor(Math.random() * db.stories.length)];
@@ -392,10 +442,12 @@ class RinTypeApplication {
       const stepKey = this.dom.roadmapStepSelect.value;
       const levelData = db.roadmap[levelKey];
       if (stepKey === 'vocab') {
-        newWords = levelData.vocabulary.map(w => w.word);
+        const filteredVocab = this.filterWordsByLength(levelData.vocabulary, 'word');
+        newWords = filteredVocab.map(w => w.word);
       } else if (stepKey === 'phrases') {
         levelData.phrases.forEach(p => {
-          p.text.split(' ').forEach(w => newWords.push(w));
+          const split = this.filterWordsByLength(p.text.split(' '), '');
+          split.forEach(w => newWords.push(w));
         });
       } else if (stepKey === 'story') {
         newWords = levelData.story.text.split(' ');
