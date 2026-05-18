@@ -1,5 +1,5 @@
 /**
- * ZenType English - Web Audio API Mechanical Keyboard Synthesizer
+ * RinType English - Web Audio API Mechanical Keyboard Synthesizer
  * Provides lag-free, high-fidelity keyboard sound effects completely offline.
  */
 class KeyboardAudioEngine {
@@ -201,4 +201,4 @@ class KeyboardAudioEngine {
 }
 
 // Global exposure
-window.ZenTypeAudio = new KeyboardAudioEngine();
+window.RinTypeAudio = new KeyboardAudioEngine();

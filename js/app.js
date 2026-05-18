@@ -1,8 +1,8 @@
 /**
- * ZenType English - Core Typing Engine & App Logic
+ * RinType English - Core Typing Engine & App Logic
  */
 
-class ZenTypeApplication {
+class RinTypeApplication {
   constructor() {
     // State management
     this.activeMode = 'vocabulary'; // vocabulary | phrases | stories
@@ -159,7 +159,7 @@ class ZenTypeApplication {
 
     // Sound toggle and selector
     this.dom.btnSoundToggle.addEventListener('click', () => {
-      const isMuted = window.ZenTypeAudio.toggleMute();
+      const isMuted = window.RinTypeAudio.toggleMute();
       this.dom.btnSoundToggle.classList.toggle('active', !isMuted);
       const icon = this.dom.btnSoundToggle.querySelector('i');
       if (isMuted) {
@@ -171,7 +171,7 @@ class ZenTypeApplication {
     });
     
     this.dom.soundSelect.addEventListener('change', (e) => {
-      window.ZenTypeAudio.setStyle(e.target.value);
+      window.RinTypeAudio.setStyle(e.target.value);
       this.focusInput();
     });
 
@@ -205,7 +205,7 @@ class ZenTypeApplication {
     // Clear history
     this.dom.btnClearHistory.addEventListener('click', () => {
       if (confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử luyện tập không?')) {
-        localStorage.removeItem('zentype_history');
+        localStorage.removeItem('rintype_history');
         this.loadHistory();
       }
       this.focusInput();
@@ -233,7 +233,7 @@ class ZenTypeApplication {
 
   setupStoryDropdown() {
     this.dom.storySelect.innerHTML = '';
-    window.ZENTYPE_DATABASE.stories.forEach((story, idx) => {
+    window.RINTYPE_DATABASE.stories.forEach((story, idx) => {
       const option = document.createElement('option');
       option.value = idx;
       option.textContent = story.title;
@@ -245,7 +245,7 @@ class ZenTypeApplication {
    * Generates target text for the selected mode
    */
   generateWords() {
-    const db = window.ZENTYPE_DATABASE;
+    const db = window.RINTYPE_DATABASE;
     this.words = [];
     this.wordStrings = [];
 
@@ -453,7 +453,7 @@ class ZenTypeApplication {
     this.updateDictionaryPanel();
     
     // Audio trigger init
-    window.ZenTypeAudio.initContext();
+    window.RinTypeAudio.initContext();
   }
 
   /**
@@ -497,7 +497,7 @@ class ZenTypeApplication {
     }
 
     // Play mechanical click style
-    window.ZenTypeAudio.playKeydown();
+    window.RinTypeAudio.playKeydown();
 
     const currentWordStr = this.wordStrings[this.wordIndex];
     const currentWordEl = this.dom.wordsWrapper.children[this.wordIndex];
@@ -707,7 +707,7 @@ class ZenTypeApplication {
    * Refreshes the translation and pronunciation information card
    */
   updateDictionaryPanel() {
-    const db = window.ZENTYPE_DATABASE;
+    const db = window.RINTYPE_DATABASE;
     
     if (this.activeMode === 'vocabulary') {
       const activeWordObj = this.words[this.wordIndex];
@@ -818,7 +818,7 @@ class ZenTypeApplication {
 
     let history = [];
     try {
-      history = JSON.parse(localStorage.getItem('zentype_history')) || [];
+      history = JSON.parse(localStorage.getItem('rintype_history')) || [];
     } catch(e) {
       history = [];
     }
@@ -827,13 +827,13 @@ class ZenTypeApplication {
     // Limit histories to 50 items
     if (history.length > 50) history.pop();
     
-    localStorage.setItem('zentype_history', JSON.stringify(history));
+    localStorage.setItem('rintype_history', JSON.stringify(history));
   }
 
   loadHistory() {
     let history = [];
     try {
-      history = JSON.parse(localStorage.getItem('zentype_history')) || [];
+      history = JSON.parse(localStorage.getItem('rintype_history')) || [];
     } catch(e) {
       history = [];
     }
@@ -889,6 +889,6 @@ class ZenTypeApplication {
 
 // Instantiate and initiate application on DOM load
 window.addEventListener('DOMContentLoaded', () => {
-  window.ZenTypeApp = new ZenTypeApplication();
-  window.ZenTypeApp.init();
+  window.RinTypeApp = new RinTypeApplication();
+  window.RinTypeApp.init();
 });

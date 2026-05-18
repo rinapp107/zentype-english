@@ -1,7 +1,7 @@
 /**
- * ZenType English - Database for Vocabularies, Phrases, and Stories
+ * RinType English - Database for Vocabularies, Phrases, and Stories
  */
-const ZENTYPE_DATABASE = {
+const RINTYPE_DATABASE = {
   vocabulary: [
     // Technology
     { word: "algorithm", ipa: "/ˈæl.ɡə.rɪ.ðəm/", partOfSpeech: "n", definition: "thuật toán", category: "Technology" },
@@ -114,7 +114,7 @@ const ZENTYPE_DATABASE = {
 
 // Export database for ES Modules or make it globally accessible
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ZENTYPE_DATABASE;
+  module.exports = RINTYPE_DATABASE;
 } else {
-  window.ZENTYPE_DATABASE = ZENTYPE_DATABASE;
+  window.RINTYPE_DATABASE = RINTYPE_DATABASE;
 }
