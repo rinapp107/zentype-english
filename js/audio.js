@@ -8,19 +8,28 @@ class KeyboardAudioEngine {
     this.isMuted = false;
     this.currentStyle = 'clicky'; // clicky, typewriter, silent, zen
     
-    // Zen melody frequencies (gorgeous pentatonic romantic loop)
+    // "Mặt Trời Của Em" - Phương Ly (Chorus vocal melody loop)
     this.zenMelody = [
-      // Phrase 1 (C Major 7 / Am)
-      261.63, 329.63, 392.00, 493.88, 523.25, 392.00, 329.63, 261.63,
-      220.00, 261.63, 329.63, 392.00, 440.00, 329.63, 261.63, 220.00,
-      // Phrase 2 (F Major 7 / G)
-      349.23, 440.00, 523.25, 659.25, 523.25, 440.00, 349.23, 261.63,
-      392.00, 493.88, 587.33, 783.99, 587.33, 493.88, 392.00, 293.66,
-      // Phrase 3 (Em / C)
-      329.63, 392.00, 493.88, 587.33, 659.25, 493.88, 392.00, 329.63,
-      523.25, 659.25, 783.99, 1046.50, 783.99, 659.25, 523.25, 392.00
+      // "Gửi làn gió mang tiếng cười"
+      392.00, 440.00, 493.88, 493.88, 440.00, 392.00, 440.00,
+      // "Đến bên người em yêu"
+      493.88, 440.00, 392.00, 329.63, 392.00,
+      // "Mặt trời kia sẽ luôn ấm áp"
+      392.00, 440.00, 493.88, 587.33, 493.88, 440.00, 493.88,
+      // "Bên em chẳng đi đâu"
+      392.00, 329.63, 293.66, 329.63, 392.00,
+      // "Là nụ cười tỏa nắng ấm áp"
+      392.00, 440.00, 493.88, 587.33, 493.88, 440.00, 493.88,
+      // "Khiến lòng này xao xuyến"
+      392.00, 329.63, 293.66, 329.63, 392.00,
+      // "Yêu thương kia gửi trao cho anh"
+      392.00, 440.00, 493.88, 493.88, 440.00, 392.00, 440.00,
+      // "Mãi không bao giờ phai"
+      493.88, 440.00, 392.00, 329.63, 392.00
     ];
     this.zenNoteIndex = 0;
+    this.backingInterval = null;
+    this.backingProgress = 0;
   }
 
   /**
@@ -71,6 +80,9 @@ class KeyboardAudioEngine {
         this.playSilentClick(time);
         break;
       case 'zen':
+        if (!this.backingInterval) {
+          this.startBackingTrack();
+        }
         this.playZenMelodyNote(time);
         break;
       case 'clicky':
@@ -423,20 +435,97 @@ class KeyboardAudioEngine {
   }
 
   /**
+   * Starts a continuous ambient backing chord progression track in the background for Zen Mode
+   */
+  startBackingTrack() {
+    if (this.backingInterval) return;
+    this.initContext();
+    if (!this.ctx) return;
+    
+    this.backingProgress = 0;
+    const playChord = () => {
+      if (this.currentStyle !== 'zen' || this.isMuted) {
+        this.stopBackingTrack();
+        return;
+      }
+      
+      // Gorgeous warm G major chord progression for "Mặt Trời Của Em" (G -> Em -> C -> D)
+      const chords = [
+        [196.00, 246.94, 293.66], // G3, B3, D4 (G Major)
+        [164.81, 196.00, 246.94], // E3, G3, B3 (E Minor)
+        [130.81, 164.81, 196.00], // C3, E3, G3 (C Major)
+        [146.83, 185.00, 220.00]  // D3, F#3, A3 (D Major)
+      ];
+      
+      const time = this.ctx.currentTime;
+      const freqList = chords[this.backingProgress];
+      this.backingProgress = (this.backingProgress + 1) % chords.length;
+      
+      freqList.forEach(freq => {
+        const osc = this.ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, time);
+        
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.0, time);
+        gain.gain.linearRampToValueAtTime(0.02, time + 1.2); // extra soft fade-in arpeggio hum
+        gain.gain.setValueAtTime(0.02, time + 3.0);
+        gain.gain.exponentialRampToValueAtTime(0.0001, time + 4.0); // slow fade-out
+        
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 600; // keep background chord track extremely low-key & smooth
+        
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        
+        osc.start(time);
+        osc.stop(time + 4.0);
+      });
+    };
+    
+    // Play immediately
+    playChord();
+    // Loop every 4 seconds
+    this.backingInterval = setInterval(playChord, 4000);
+  }
+
+  /**
+   * Stops the continuous background track
+   */
+  stopBackingTrack() {
+    if (this.backingInterval) {
+      clearInterval(this.backingInterval);
+      this.backingInterval = null;
+    }
+  }
+
+  /**
    * Mutes or unmutes the audio engine
    */
   toggleMute() {
     this.isMuted = !this.isMuted;
     this.initContext();
+    if (this.isMuted) {
+      this.stopBackingTrack();
+    } else if (this.currentStyle === 'zen') {
+      this.startBackingTrack();
+    }
     return this.isMuted;
   }
 
   /**
-   * Sets the sound style (clicky, typewriter, silent)
+   * Sets the sound style (clicky, typewriter, silent, zen)
    */
   setStyle(style) {
     this.currentStyle = style;
     this.initContext();
+    if (style === 'zen') {
+      this.startBackingTrack();
+    } else {
+      this.stopBackingTrack();
+    }
   }
 }
 
