@@ -6,6 +6,79 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize core systems
   ZenStorage.init();
   Gamification.init();
+
+  // --- Theme & Language Initialization ---
+  const applyTheme = (themeName) => {
+    if (themeName === 'minimal-light') {
+      document.body.classList.add('theme-light');
+    } else {
+      document.body.classList.remove('theme-light');
+    }
+    
+    // Update theme toggle icon
+    const themeBtn = document.getElementById('btn-theme-toggle');
+    if (themeBtn) {
+      if (themeName === 'minimal-light') {
+        themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        themeBtn.setAttribute('data-tooltip', 'Giao diện Tối');
+      } else {
+        themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        themeBtn.setAttribute('data-tooltip', 'Giao diện Sáng');
+      }
+    }
+  };
+
+  const initialSettings = ZenStorage.getSettings();
+  applyTheme(initialSettings.theme || 'minimal-light');
+
+  const btnThemeToggle = document.getElementById('btn-theme-toggle');
+  if (btnThemeToggle) {
+    btnThemeToggle.addEventListener('click', () => {
+      const currentSettings = ZenStorage.getSettings();
+      const newTheme = currentSettings.theme === 'minimal-light' ? 'minimal-dark' : 'minimal-light';
+      ZenStorage.updateSettings({ theme: newTheme });
+      applyTheme(newTheme);
+    });
+  }
+
+  // Language display and toggle
+  const activeLang = initialSettings.language || 'en';
+  const btnLangToggle = document.getElementById('btn-lang-toggle');
+  const currentLangFlag = document.getElementById('current-lang-flag');
+  const currentLangText = document.getElementById('current-lang-text');
+
+  if (activeLang === 'de') {
+    document.title = "ZenType German — Học Tiếng Đức Thông Minh";
+    const logoSub = document.querySelector('.logo-sub');
+    if (logoSub) logoSub.textContent = "Lernen → Üben → Merken";
+    
+    if (currentLangFlag) currentLangFlag.textContent = '🇩🇪';
+    if (currentLangText) currentLangText.textContent = 'DE';
+    if (btnLangToggle) btnLangToggle.setAttribute('data-tooltip', 'Đang học: Tiếng Đức (Click để đổi)');
+  } else {
+    document.title = "ZenType English — Học Tiếng Anh Thông Minh";
+    const logoSub = document.querySelector('.logo-sub');
+    if (logoSub) logoSub.textContent = "Learn → Practice → Remember";
+
+    if (currentLangFlag) currentLangFlag.textContent = '🇬🇧';
+    if (currentLangText) currentLangText.textContent = 'EN';
+    if (btnLangToggle) btnLangToggle.setAttribute('data-tooltip', 'Đang học: Tiếng Anh (Click để đổi)');
+  }
+
+  if (btnLangToggle) {
+    btnLangToggle.addEventListener('click', () => {
+      const currentSettings = ZenStorage.getSettings();
+      const nextLang = currentSettings.language === 'en' ? 'de' : 'en';
+      const nextVoice = nextLang === 'de' ? 'de-DE' : 'en-US';
+      ZenStorage.updateSettings({ 
+        language: nextLang,
+        voiceAccent: nextVoice
+      });
+      ZenStorage.init();
+      alert(`Đã chuyển sang học tiếng ${nextLang === 'de' ? 'Đức' : 'Anh'}!`);
+      location.reload();
+    });
+  }
   
   // 2. Setup navigation
   const sidebar = document.getElementById('sidebar');
@@ -164,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnSettings && modalSettings) {
     btnSettings.addEventListener('click', () => {
       const settings = ZenStorage.getSettings();
+      document.getElementById('setting-lang').value = settings.language || 'en';
       document.getElementById('setting-voice').value = settings.voiceAccent || 'en-US';
       document.getElementById('setting-daily-goal').value = settings.dailyGoal || 10;
       
@@ -184,6 +258,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Save settings on change
+    document.getElementById('setting-lang').addEventListener('change', (e) => {
+      const nextLang = e.target.value;
+      const nextVoice = nextLang === 'de' ? 'de-DE' : 'en-US';
+      ZenStorage.updateSettings({ 
+        language: nextLang,
+        voiceAccent: nextVoice
+      });
+      ZenStorage.init();
+      alert(`Đã chuyển sang học tiếng ${nextLang === 'de' ? 'Đức' : 'Anh'}!`);
+      location.reload();
+    });
+
     document.getElementById('setting-voice').addEventListener('change', (e) => {
       ZenStorage.updateSettings({ voiceAccent: e.target.value });
     });

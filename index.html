@@ -135,6 +135,17 @@
           <span>Dashboard</span>
         </div>
         <div class="header-actions">
+          <!-- Language Toggle Button -->
+          <button class="header-btn tooltip" data-tooltip="Đang học: Tiếng Anh (Click để đổi)" id="btn-lang-toggle" style="width: auto; padding: 0 var(--space-sm); gap: var(--space-xs);">
+            <span id="current-lang-flag">🇬🇧</span>
+            <span id="current-lang-text" style="font-size: 0.8rem; font-weight: 700;">EN</span>
+          </button>
+          
+          <!-- Theme Toggle Button -->
+          <button class="header-btn tooltip" data-tooltip="Đổi giao diện" id="btn-theme-toggle">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+
           <button class="header-btn tooltip" data-tooltip="Ôn tập hôm nay" id="btn-quick-review">
             <i class="fa-solid fa-brain"></i>
           </button>
@@ -189,11 +200,19 @@
         <button class="modal-close" id="close-settings"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="form-group">
+        <label class="form-label">Ngôn ngữ học</label>
+        <select class="form-select" id="setting-lang">
+          <option value="en">Tiếng Anh (English)</option>
+          <option value="de">Tiếng Đức (Deutsch)</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label class="form-label">Giọng đọc (TTS)</label>
         <select class="form-select" id="setting-voice">
           <option value="en-US">English (US)</option>
           <option value="en-GB">English (UK)</option>
           <option value="en-AU">English (AU)</option>
+          <option value="de-DE">Deutsch (DE)</option>
         </select>
       </div>
       <div class="form-group">
@@ -231,6 +250,7 @@
   <!-- JavaScript -->
   <script src="js/data.js"></script>
   <script src="js/data_advanced.js"></script>
+  <script src="js/data_de.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/gamification.js"></script>
   <script src="js/vocabulary.js"></script>

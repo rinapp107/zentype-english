@@ -10,10 +10,117 @@ const ZenStorage = {
     SETTINGS: 'zen_settings'
   },
 
+  resolveKey(key) {
+    if (key === this.keys.SETTINGS) return key;
+    try {
+      const settingsStr = localStorage.getItem(this.keys.SETTINGS);
+      if (settingsStr) {
+        const settings = JSON.parse(settingsStr);
+        const lang = settings.language || 'en';
+        if (lang === 'de') {
+          if (key === this.keys.VOCAB) return 'zen_vocab_de';
+          if (key === this.keys.PROGRESS) return 'zen_progress_de';
+          if (key === this.keys.HISTORY) return 'zen_history_de';
+        }
+      }
+    } catch (e) {
+      console.error('Error parsing settings in resolveKey', e);
+    }
+    return key;
+  },
+
+  syncNewWords() {
+    try {
+      const settingsStr = localStorage.getItem(this.keys.SETTINGS);
+      const settings = settingsStr ? JSON.parse(settingsStr) : {};
+      const activeLang = settings.language || 'en';
+      const dataObj = activeLang === 'de' ? ZenDataDE : ZenData;
+      const vocabKey = this.resolveKey(this.keys.VOCAB);
+      
+      const currentVocab = this.getVocabulary();
+      const allStaticWords = dataObj.getAllWords();
+      let updated = false;
+
+      allStaticWords.forEach(wordObj => {
+        const index = currentVocab.findIndex(v => v.word.toLowerCase() === wordObj.word.toLowerCase());
+        if (index === -1) {
+          currentVocab.push({
+            ...wordObj,
+            addedAt: new Date().toISOString(),
+            masteryLevel: 0,
+            nextReview: new Date().toISOString(),
+            reviewCount: 0,
+            correctCount: 0,
+            easeFactor: 2.5,
+            interval: 0,
+            isCustom: false
+          });
+          updated = true;
+        } else {
+          const stored = currentVocab[index];
+          const merged = {
+            ...wordObj,
+            ...stored,
+            meaning: wordObj.meaning,
+            pos: wordObj.pos,
+            phonetic: wordObj.phonetic || stored.phonetic,
+            example: wordObj.example || stored.example,
+            exampleVi: wordObj.exampleVi || stored.exampleVi,
+            structures: wordObj.structures || stored.structures,
+            collocations: wordObj.collocations || stored.collocations,
+            relatedForms: wordObj.relatedForms || stored.relatedForms,
+            isAdvanced: wordObj.isAdvanced !== undefined ? wordObj.isAdvanced : stored.isAdvanced
+          };
+          
+          if (JSON.stringify(stored) !== JSON.stringify(merged)) {
+            currentVocab[index] = merged;
+            updated = true;
+          }
+        }
+      });
+
+      if (updated) {
+        localStorage.setItem(vocabKey, JSON.stringify(currentVocab));
+        console.log(`[ZenStorage] Synced ${activeLang} vocabulary definitions successfully.`);
+      }
+    } catch (e) {
+      console.error('[ZenStorage] Error syncing vocabulary:', e);
+    }
+  },
+
   init() {
-    if (!this.get(this.keys.VOCAB)) {
-      // Khởi tạo dữ liệu mẫu nếu chưa có
-      const defaultVocab = ZenData.getAllWords().map(w => ({
+    if (!localStorage.getItem(this.keys.SETTINGS)) {
+      this.set(this.keys.SETTINGS, {
+        theme: 'minimal-light',
+        soundEnabled: true,
+        ttsEnabled: true,
+        voiceAccent: 'en-US',
+        dailyGoal: 10,
+        language: 'en'
+      });
+    } else {
+      try {
+        const settings = JSON.parse(localStorage.getItem(this.keys.SETTINGS));
+        if (!settings.language) {
+          settings.language = 'en';
+          localStorage.setItem(this.keys.SETTINGS, JSON.stringify(settings));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const vocabKey = this.resolveKey(this.keys.VOCAB);
+    const progressKey = this.resolveKey(this.keys.PROGRESS);
+    const historyKey = this.resolveKey(this.keys.HISTORY);
+
+    if (!localStorage.getItem(vocabKey)) {
+      const settingsStr = localStorage.getItem(this.keys.SETTINGS);
+      const settings = settingsStr ? JSON.parse(settingsStr) : {};
+      const activeLang = settings.language || 'en';
+      const dataObj = activeLang === 'de' ? ZenDataDE : ZenData;
+      
+      const defaultVocab = dataObj.getAllWords().map(w => ({
         ...w,
         addedAt: new Date().toISOString(),
         masteryLevel: 0,
@@ -24,11 +131,13 @@ const ZenStorage = {
         interval: 0,
         isCustom: false
       }));
-      this.set(this.keys.VOCAB, defaultVocab);
+      localStorage.setItem(vocabKey, JSON.stringify(defaultVocab));
+    } else {
+      this.syncNewWords();
     }
 
-    if (!this.get(this.keys.PROGRESS)) {
-      this.set(this.keys.PROGRESS, {
+    if (!localStorage.getItem(progressKey)) {
+      const defaultProgress = {
         totalWords: 0,
         masteredWords: 0,
         streakDays: 0,
@@ -36,28 +145,20 @@ const ZenStorage = {
         xp: 0,
         level: 1,
         badges: []
-      });
+      };
+      localStorage.setItem(progressKey, JSON.stringify(defaultProgress));
     }
 
-    if (!this.get(this.keys.HISTORY)) {
-      this.set(this.keys.HISTORY, []);
-    }
-
-    if (!this.get(this.keys.SETTINGS)) {
-      this.set(this.keys.SETTINGS, {
-        theme: 'minimal-light',
-        soundEnabled: true,
-        ttsEnabled: true,
-        voiceAccent: 'en-US',
-        dailyGoal: 10
-      });
+    if (!localStorage.getItem(historyKey)) {
+      localStorage.setItem(historyKey, JSON.stringify([]));
     }
   },
 
   // Core CRUD
   get(key, defaultValue = null) {
+    const resolvedKey = this.resolveKey(key);
     try {
-      const item = localStorage.getItem(key);
+      const item = localStorage.getItem(resolvedKey);
       return item ? JSON.parse(item) : defaultValue;
     } catch (e) {
       console.error('Error reading from localStorage', e);
@@ -66,15 +167,17 @@ const ZenStorage = {
   },
 
   set(key, value) {
+    const resolvedKey = this.resolveKey(key);
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(resolvedKey, JSON.stringify(value));
     } catch (e) {
       console.error('Error writing to localStorage', e);
     }
   },
 
   remove(key) {
-    localStorage.removeItem(key);
+    const resolvedKey = this.resolveKey(key);
+    localStorage.removeItem(resolvedKey);
   },
 
   // --- Vocabulary ---
