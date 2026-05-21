@@ -139,14 +139,44 @@ window.FlashcardModule = {
             </div>
             
             <!-- Back (Vietnamese) -->
-            <div class="flashcard-face flashcard-back flex-col justify-center align-center" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; transform: rotateY(180deg); border-radius: 12px; background: rgba(30, 41, 59, 0.8);">
+            <div class="flashcard-face flashcard-back flex-col justify-center align-center" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; transform: rotateY(180deg); border-radius: 12px; background: rgba(30, 41, 59, 0.95); overflow-y: auto; padding: 20px;">
               <div class="text-accent mb-sm">(${current.pos || '?'})</div>
-              <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--success);">${current.meaning}</h2>
+              <h2 style="font-size: ${current.isAdvanced ? '1.8rem' : '2.5rem'}; margin-bottom: 20px; color: var(--success); text-align: center;">${current.meaning}</h2>
               
               ${current.example ? `
-                <div class="p-md" style="border-top: 1px solid rgba(255,255,255,0.1); width: 80%; text-align: center;">
+                <div class="p-sm" style="border-top: 1px solid rgba(255,255,255,0.1); width: 90%; text-align: center;">
                   <div style="font-style: italic; margin-bottom: 5px;">"${current.example}"</div>
                   ${current.exampleVi ? `<div class="text-secondary" style="font-size: 0.85rem;">${current.exampleVi}</div>` : ''}
+                </div>
+              ` : ''}
+
+              ${current.isAdvanced ? `
+                <div class="flashcard-advanced mt-sm" style="font-size: 0.85rem; width: 100%; text-align: left; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                  ${current.structures && current.structures.length > 0 ? `
+                    <div class="mb-sm">
+                      <div class="text-secondary font-bold" style="font-size: 0.75rem; text-transform: uppercase;">Cấu trúc ngữ pháp:</div>
+                      <ul style="padding-left: 15px; margin-top: 5px; list-style-type: none;">
+                        ${current.structures.slice(0, 2).map(s => `
+                          <li style="margin-bottom: 8px;">
+                            <span class="text-accent font-mono">${s.formula}</span><br>
+                            ${s.meaning ? `<span class="text-secondary" style="font-size: 0.75rem;">${s.meaning}</span>` : ''}
+                          </li>
+                        `).join('')}
+                        ${current.structures.length > 2 ? `<li class="text-secondary" style="font-size: 0.75rem;">... và ${current.structures.length - 2} cấu trúc khác</li>` : ''}
+                      </ul>
+                    </div>
+                  ` : ''}
+                  
+                  ${current.collocations && current.collocations.length > 0 ? `
+                    <div class="mb-sm">
+                      <div class="text-secondary font-bold" style="font-size: 0.75rem; text-transform: uppercase;">Collocations & Cụm từ:</div>
+                      <div class="flex flex-wrap gap-xs mt-xs">
+                        ${current.collocations.slice(0, 3).map(c => `
+                          <span style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; margin-bottom: 4px;">${c}</span>
+                        `).join('')}
+                      </div>
+                    </div>
+                  ` : ''}
                 </div>
               ` : ''}
             </div>

@@ -228,6 +228,49 @@ window.VocabularyModule = {
             </div>
           ` : ''}
           
+          ${v.isAdvanced ? `
+            <div class="vocab-advanced mt-sm" style="font-size: 0.85rem; padding-top: 10px; border-top: 1px solid var(--border-primary); max-height: 150px; overflow-y: auto;">
+              ${v.structures && v.structures.length > 0 ? `
+                <div class="mb-sm">
+                  <div class="text-secondary font-bold" style="font-size: 0.75rem; text-transform: uppercase;">Cấu trúc ngữ pháp:</div>
+                  <ul style="padding-left: 15px; margin-top: 5px; list-style-type: none;">
+                    ${v.structures.map(s => `
+                      <li style="margin-bottom: 8px;">
+                        <span class="text-accent font-mono">${s.formula}</span><br>
+                        ${s.meaning ? `<span class="text-secondary">${s.meaning}</span><br>` : ''}
+                        ${s.example ? `<i>"${s.example}"</i>` : ''}
+                      </li>
+                    `).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+              
+              ${v.collocations && v.collocations.length > 0 ? `
+                <div class="mb-sm">
+                  <div class="text-secondary font-bold" style="font-size: 0.75rem; text-transform: uppercase;">Collocations & Cụm từ:</div>
+                  <div class="flex flex-wrap gap-xs mt-xs">
+                    ${v.collocations.map(c => `
+                      <span style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; margin-bottom: 4px;">${c}</span>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+              
+              ${v.relatedForms && v.relatedForms.length > 0 ? `
+                <div>
+                  <div class="text-secondary font-bold" style="font-size: 0.75rem; text-transform: uppercase;">Từ loại liên quan:</div>
+                  <ul style="padding-left: 0; margin-top: 5px; list-style-type: none;">
+                    ${v.relatedForms.map(r => `
+                      <li style="margin-bottom: 4px;">
+                        <strong class="text-primary">${r.word}</strong> <span class="text-accent" style="font-size: 0.75rem;">(${r.pos})</span>: ${r.meaning}
+                      </li>
+                    `).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+          
           <div class="vocab-progress mt-md">
             <div class="flex justify-between" style="font-size: 0.75rem; margin-bottom: 4px;">
               <span class="text-secondary">Độ ghi nhớ</span>
