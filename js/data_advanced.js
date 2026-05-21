@@ -2,8 +2,8 @@
    ZenType English — Advanced Vocabulary (From Excel)
    ============================================ */
 
-if (window.ZenData && window.ZenData.topics) {
-  window.ZenData.topics.push({
+if (typeof ZenData !== 'undefined' && ZenData.topics) {
+  ZenData.topics.push({
     id: 'advanced', 
     name: 'Từ Vựng Mở Rộng', 
     icon: 'fa-book-open', 
@@ -15,6 +15,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/prəˈməʊt/",
     "meaning": "thăng chức / thúc đẩy / quảng bá",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + promote + O + to + position",
@@ -76,6 +77,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/pəˈfɔːm/",
     "meaning": "thực hiện / thể hiện",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Performance of + N",
@@ -133,6 +135,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/trænsˈfɜː(r)/",
     "meaning": "chuyển / điều chuyển / chuyển giao",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + transfer + O + to + place/department",
@@ -189,6 +192,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈɪʃuː/",
     "meaning": "ban hành / phát hành",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + issue + N",
@@ -251,6 +255,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪˈvæljueɪt/",
     "meaning": "đánh giá, nhận xét (có phân tích)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + evaluate + N",
@@ -307,6 +312,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "vấn đề / khó khăn (nghiêm trọng)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Problem with + N",
@@ -356,6 +362,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈsɜːveɪ/",
     "meaning": "khảo sát",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + survey + N",
@@ -411,6 +418,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈmiːdieɪt/",
     "meaning": "hòa giải / làm trung gian giải quyết",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + mediate + N - Hòa giải cái gì?",
@@ -460,6 +468,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kənˈdʌkt/",
     "meaning": "tiến hành / thực hiện",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + conduct + N - Tiến hành cái gì?",
@@ -511,6 +520,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/feə(r)/",
     "meaning": "công bằng / hợp lý",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Fairly + adj - khá / tương đối",
@@ -561,6 +571,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈkɜː(r)/",
     "meaning": "xảy ra / diễn ra",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + occur (không có Object)",
@@ -601,6 +612,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈdʒekt/",
     "meaning": "từ chối / bác bỏ / không chấp nhận",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Reject + N - Từ chối cái gì?",
@@ -659,6 +671,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈzaɪn/",
     "meaning": "từ chức / nghỉ việc (tự nguyện)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + resign + from + company/position",
@@ -701,6 +714,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈzɒlv/",
     "meaning": "giải quyết vđề phức tạp, xung đột,…",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Resolve + N - Giải quyết cái gì ?",
@@ -749,6 +763,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈklærəfaɪ/",
     "meaning": "làm rõ / giải thích cho rõ",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + clarify + N",
@@ -818,6 +833,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/sɑːlv/",
     "meaning": "giải/ giải quyết bài toán, lỗi kỹ thuật..",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Solve + N - Giải cái gì?",
@@ -870,6 +886,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈtɜːmɪneɪt/",
     "meaning": "chấm dứt / kết thúc / sa thải",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + terminate + N",
@@ -929,6 +946,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈfjuːz/",
     "meaning": "từ chối (k làm / k chấp nhận)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + refuse + to V - Từ chối làm gì?",
@@ -994,6 +1012,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈvaɪəleɪt/",
     "meaning": "vi phạm (luật, quy định, nội quy…)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + violate + N",
@@ -1054,6 +1073,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/dɪˈspjuːt/",
     "meaning": "tranh chấp / tranh luận / k đồng ý",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Dispute + N",
@@ -1106,6 +1126,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/breɪk/",
     "meaning": "làm vỡ/ vi phạm/ gián đoạn/ giờ nghỉ",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + break + N",
@@ -1167,6 +1188,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "thay đổi / luân chuyển",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Turnover + rate - tỉ lệ nghỉ việc",
@@ -1215,6 +1237,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈstrɪktnəs/",
     "meaning": "sự nghiêm khắc",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Strictly + V",
@@ -1254,6 +1277,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈrevənjuː/",
     "meaning": "doanh thu (trước khi trừ chi phí)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Revenue + from + nguồn",
@@ -1291,6 +1315,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪnˈtaɪtl/",
     "meaning": "cho phép ai được hưởng cái gì",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + entitle + O + to + N",
@@ -1341,6 +1366,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈwɜːkfɔːs/",
     "meaning": "lực lượng lđộng / toàn bộ nhân viên",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Workforce in + N ",
@@ -1379,6 +1405,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈɜːdʒənsi/",
     "meaning": "sự khẩn cấp",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Urgently + V",
@@ -1422,6 +1449,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪnˈɡeɪdʒmənt/",
     "meaning": "mức độ gắn kết của nviên với cty",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Engagement of + N - sự gắn kết của ai?",
@@ -1485,6 +1513,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪˈmɜːdʒənsi/",
     "meaning": "tình huống khẩn cấp",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Emergency + noun",
@@ -1528,6 +1557,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈkɒmpenseɪt/",
     "meaning": "bồi thường / đền bù / trả công",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Compensate + O - Bồi thường cho ai?",
@@ -1586,6 +1616,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪˈmiːdiət/",
     "meaning": "ngay lập tức / tức thì",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Immediately + V",
@@ -1636,6 +1667,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈmeɪn/",
     "meaning": "vẫn còn / vẫn giữ trạng thái / còn lại",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + remain + adj",
@@ -1683,6 +1715,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈæbsənt/",
     "meaning": "vắng mặt / không có mặt",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + be + absent + from + N",
@@ -1737,6 +1770,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈmeɪnɪŋ/",
     "meaning": "mức độ gắn kết của nviên với cty",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Remaining + N",
@@ -1789,6 +1823,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈkwaɪəmənt/",
     "meaning": "Sự bắt buộc phải làm",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + require + N",
@@ -1846,6 +1881,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈkwest/",
     "meaning": "yêu cầu/ đề nghị",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + request + N - Yêu cầu cái gì?",
@@ -1904,6 +1940,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈmændeɪt/",
     "meaning": "mệnh lệnh / yêu cầu chính thức",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + be + mandatory",
@@ -1954,6 +1991,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌɡærənˈtiː/",
     "meaning": "sự bảo đảm / cam kết / bảo hành",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Guarantee + Noun - đảm bảo cái gì?",
@@ -2019,6 +2057,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈdɪsəplɪn/",
     "meaning": "kỷ luật / xử lý kỷ luật",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Disciplinary + noun",
@@ -2080,6 +2119,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈlaʊ/",
     "meaning": "cho phép / cho phép xảy ra",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Allow + O + to V - cho phép ai làm gì?",
@@ -2126,6 +2166,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈpruːv/",
     "meaning": "phê duyệt / chấp thuận / đồng ý",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Approve + N - phê duyệt cái gì?",
@@ -2184,6 +2225,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈpreznt/",
     "meaning": "trình bày / giới thiệu / đưa ra",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Present + N - trình bày cái gì?",
@@ -2249,6 +2291,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/pəˈmɪt/",
     "meaning": "cho phép",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Permit + O + to V",
@@ -2304,6 +2347,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈkɒmpenseɪt/",
     "meaning": "bồi thường / đền bù / trả công",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Compensate + O - bồi thường cho ai?",
@@ -2365,6 +2409,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈænjuəl/",
     "meaning": "hàng năm / mỗi năm",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Annual + noun - hàng năm / mỗi năm",
@@ -2406,6 +2451,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əkˈnɒlɪdʒ/",
     "meaning": "xác/ thừa /công/ ghi nhận",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Acknowledge + N ",
@@ -2463,6 +2509,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈpriːʃieɪt/",
     "meaning": "trân trọng / biết ơn",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Appreciate + N - trân trọng cái gì?",
@@ -2521,6 +2568,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈvæljuː/",
     "meaning": "coi trọng / đánh giá cao",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Value + N - coi trọng cái gì?",
@@ -2587,6 +2635,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈspekt/",
     "meaning": "tôn trọng / kính trọng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Respect + N - tôn trọng ai/ cái gì?",
@@ -2653,6 +2702,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/praɪˈɒrəti/",
     "meaning": "ưu tiên / mức độ quan trọng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + be + priority - ưu tiên là gì?",
@@ -2713,6 +2763,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/lɔːntʃ/",
     "meaning": "khởi động / ra mắt / triển khai",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Launch + N - ra mắt / triển khai cái gì?",
@@ -2768,6 +2819,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌɪntrəˈdjuːs/",
     "meaning": "giới thiệu (người)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Introduce + O + to + O",
@@ -2826,6 +2878,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kənˈtɪnjuəs/",
     "meaning": "liên tục (không ngắt quãng)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + continuously + V - liên tục làm gì?",
@@ -2884,6 +2937,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈkjuːmjəleɪt/",
     "meaning": "tích lũy / tích tụ dần theo thời gian",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Accumulate + N - tích lũy cái gì?",
@@ -2968,6 +3022,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈnæləsɪs/",
     "meaning": "sự phân tích",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Analysis of + N - phân tích cái gì?",
@@ -3033,6 +3088,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "thư xin việc / thư ứng tuyển",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Cover letter + for + vị trí",
@@ -3065,6 +3121,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈpeɪslɪp/",
     "meaning": "phiếu lương / bảng lương cá nhân",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Payslip + for + người/tháng",
@@ -3101,6 +3158,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌæplɪˈkeɪʃn/",
     "meaning": "đơn ứng tuyển / hồ sơ xin việc",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Application + for + vị trí",
@@ -3175,6 +3233,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌɔːriənˈteɪʃn/",
     "meaning": "buổi định hướng/ sự định hướng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Orientation + for + who - dành cho ai?",
@@ -3241,6 +3300,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈkændɪdət/",
     "meaning": "ứng viên",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Candidate + for + vị trí",
@@ -3282,6 +3342,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌɪndɪˈpendəns/",
     "meaning": "sự độc lập",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Verb + independently",
@@ -3336,6 +3397,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪkˈspens/",
     "meaning": "chi phí / khoản chi tiêu",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Expenses + for + mục đích  ",
@@ -3380,6 +3442,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kleɪm/",
     "meaning": "yêu cầu / đòi / kê khai / tuyên bố",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Claim + N - yêu cầu cái gì?",
@@ -3431,6 +3494,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌriːɪmˈbɜːs/",
     "meaning": "hoàn lại tiền / bồi hoàn",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Reimburse + someone + for + N",
@@ -3480,6 +3544,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/prəˈvaɪd/",
     "meaning": "cung cấp / cung ứng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Provide + N - cung cấp cái gì?",
@@ -3548,6 +3613,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/səbˈmɪt/",
     "meaning": "nộp / gửi chính thức / trình lên",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Submit + N - nộp cái gì?",
@@ -3598,6 +3664,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "ứng tuyển (job)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Apply + for + job/position",
@@ -3681,6 +3748,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/məˈtɜːnəti/",
     "meaning": "chế độ nghỉ thai sản",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Maternity leave + for + thời gian",
@@ -3754,6 +3822,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪnˈvestɪɡeɪt/",
     "meaning": "điều tra / xem xét / làm rõ",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Investigate + N - điều tra cái gì?",
@@ -3810,6 +3879,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪkˈskjuːs/",
     "meaning": "xin lỗi / miễn cho / cho phép không",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Be excused + from + N/V-ing",
@@ -3872,6 +3942,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "bàn giao / chuyển giao",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Hand over + N - bàn giao cái gì?",
@@ -3920,6 +3991,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kəmˈplaɪ/",
     "meaning": "tuân thủ / chấp hành",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Comply + with + N - tuân thủ cái gì?",
@@ -3999,6 +4071,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈkʌrənt/",
     "meaning": "dòng chảy / hiện tại",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Currently + V - hiện đang làm gì (thói quen/công việc hiện tại)",
@@ -4056,6 +4129,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/pəˈtenʃl/",
     "meaning": "tiềm năng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Potential + for + N/V-ing",
@@ -4110,6 +4184,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ədˈvɑːns/",
     "meaning": "sự tiến bộ / tiền ứng trước",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Verb + in advance - làm gì đó trước",
@@ -4177,6 +4252,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌkeɪpəˈbɪləti/",
     "meaning": "năng lực",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Capable + of + N/V-ing",
@@ -4239,6 +4315,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈbɪləti/",
     "meaning": "khả năng / năng lực",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Ability + to + V - có khả năng làm gì?",
@@ -4291,6 +4368,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈtend/",
     "meaning": "tham dự / tham gia",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Attend + N - tham dự cái gì?",
@@ -4353,6 +4431,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/dʒɔɪn/",
     "meaning": "tham gia / gia nhập",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Join + N - tham gia cái gì?",
@@ -4429,6 +4508,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈkaʊnt/",
     "meaning": "tài khoản / bản giải trình",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Account for + N - giải thích/ chiếm cái gì",
@@ -4500,6 +4580,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "trước (về thời gian)",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Before + N - trước cái gì?",
@@ -4562,6 +4643,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈredʒɪstə(r)/",
     "meaning": "đăng ký / ghi nhận / ghi danh",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Register + N - đăng ký cái gì?",
@@ -4654,6 +4736,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪkˈspleɪn/",
     "meaning": "giải thích",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Explain + N - giải thích cái gì?",
@@ -4725,6 +4808,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈdres/",
     "meaning": "xử lý / giải quyết / đề cập đến",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Address + N - xử lý/ đề cập cái gì?",
@@ -4797,6 +4881,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/aɪˈdentɪfaɪ/",
     "meaning": "xác định/ nhận diện/ phát hiện",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Identify + N - xác định cái gì?",
@@ -4868,6 +4953,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈmænə(r)/",
     "meaning": "cách thức, thái độ / tác phong",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "In a + adj + manner - theo cách / tác phong như thế nào? ",
@@ -4919,6 +5005,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪnˈhɑːns/",
     "meaning": "nâng cao, cải thiện, tăng cường",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Enhance + N - nâng cao cái gì?",
@@ -4974,6 +5061,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈʃɔːtɪdʒ/",
     "meaning": "sự thiếu hụt / thiếu",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "A shortage of + N - thiếu cái gì?",
@@ -5012,6 +5100,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kənˈsɜːn/",
     "meaning": "sự lo lắng/mối quan tâm/v.đề đáng lo",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Concern + about / over + N/V-ing",
@@ -5061,6 +5150,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪkˈstend/",
     "meaning": "kéo dài, gia hạn, mở rộng, trao/gửi…",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Extend + N - gia hạn / mở rộng cái gì?",
@@ -5129,6 +5219,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kənˈsɪstənsi/",
     "meaning": "sự nhất quán",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "S + consistently + V - liên tục / đều đặn làm gì? ",
@@ -5183,6 +5274,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌkɒmpəˈtɪʃn/",
     "meaning": "sự cạnh tranh",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Competitive + noun - mang tính cạnh tranh",
@@ -5259,6 +5351,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈhærəsmənt/",
     "meaning": "sự quấy rối, hành vi quấy rối",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Harassment + of + s.o - hành vi quấy rối ai?",
@@ -5303,6 +5396,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈkɒnfɪdənt/",
     "meaning": "tự tin, chắc chắn / tin tưởng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Confident about + N - tự tin về cái gì?",
@@ -5371,6 +5465,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌkɒnfɪˌdenʃiˈæləti/",
     "meaning": "tính bảo mật, sự giữ bí mật thông tin",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Confidentiality of + N - tính bảo mật của cái gì?",
@@ -5427,6 +5522,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈdæpt/",
     "meaning": "thích nghi, điều chỉnh để phù hợp",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Adapt to + N / V-ing - thích nghi với cái gì?",
@@ -5477,6 +5573,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kənˈstrʌkʃn/",
     "meaning": "sự xây dựng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Constructive + noun - mang tính xây dựng cái gì?",
@@ -5521,6 +5618,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈprəʊɡres/",
     "meaning": "sự tiến bộ",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Progressive + noun - mang tính tiến bộ / hiện đại",
@@ -5565,6 +5663,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/dɪˈnaɪəl/",
     "meaning": "sự phủ nhận / từ chối",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Deny + N - phủ nhận / từ chối cái gì?",
@@ -5613,6 +5712,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈprəʊtʃ/",
     "meaning": "cách tiếp cận / phương pháp",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Approach to + N / V-ing - cách tiếp cận đối với việc gì",
@@ -5659,6 +5759,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌækjuˈzeɪʃn/",
     "meaning": "sự cáo buộc",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Accuse + someone + of + N / V-ing - ",
@@ -5701,6 +5802,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "quan trọng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "It is + adj + to + V",
@@ -5746,6 +5848,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌmɪsˈkɒndʌkt/",
     "meaning": "hành vi sai trái / hành vi không đúng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Misconduct by + someone - hành vi sai phạm của ai?",
@@ -5783,6 +5886,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "Ngay khi .. thì ../  Vừa mới .. thì ..",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "No sooner +had +S +V3 +than +S +V2",
@@ -5812,6 +5916,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/prɪˈvenʃn/",
     "meaning": "sự phòng ngừa",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Prevent + someone + from + V-ing - ngăn ai làm gì ?",
@@ -5857,6 +5962,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "",
     "meaning": "2 h.động xảy ra gần ngay lập tức",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "As soon as + past simple, past simple",
@@ -5892,6 +5998,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌsætɪsˈfækʃn/",
     "meaning": "sự hài lòng, sự thỏa mãn",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Satisfaction with + N - sự hài lòng với điều gì?",
@@ -5948,6 +6055,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˌspɒnsəˈbɪləti/",
     "meaning": "trách nhiệm",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Responsible for + N / V-ing - chịu trách nhiệm về cái gì?",
@@ -5986,6 +6094,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˌkaʊntəˈbɪləti/",
     "meaning": "trách nhiệm giải trình",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Accountable for + N / V-ing - chịu trách nhiệm về điều gì?",
@@ -6030,6 +6139,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌmɪnɪmaɪˈzeɪʃn/",
     "meaning": "sự giảm thiểu",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Minimize + N - giảm thiểu điều gì?",
@@ -6094,6 +6204,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌdemənˈstreɪʃn/",
     "meaning": "sự trình bày / minh chứng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Demonstrate + N - thể hiện / chứng minh điều gì?",
@@ -6138,6 +6249,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/kəˌlæbəˈreɪʃn/",
     "meaning": "sự hợp tác, sự cộng tác",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Collaboration with + s.o - sự hợp tác với ai?",
@@ -6196,6 +6308,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌprɒdʌkˈtɪvəti/",
     "meaning": "năng suất",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Productivity + in + N/V-ing - năng suất trong việc gì?",
@@ -6254,6 +6367,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/daɪˈvɜːsəti/",
     "meaning": "sự đa dạng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Diverse + N - đa dạng về cái gì?",
@@ -6305,6 +6419,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪnˈkluːʒn/",
     "meaning": "sự hòa nhập",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Inclusive + N - mang tính hòa nhập / bao gồm",
@@ -6357,6 +6472,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ Ethics (n) /ˈeθɪk/",
     "meaning": "chuẩn mực đạo đức, đạo đức",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Unethical/Ethical + N - phi đạo đức/đạo đức trong điều gì?",
@@ -6414,6 +6530,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ɪɡˌzædʒəˈreɪʃn/",
     "meaning": "sự phóng đại",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Exaggerate + N - phóng đại điều gì?",
@@ -6457,6 +6574,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌsʌbdʒekˈtɪvəti/",
     "meaning": "tính chủ quan",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Verb + subjectively - làm gì một cách chủ quan?",
@@ -6496,6 +6614,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌɒbdʒekˈtɪvəti/",
     "meaning": "tính khách quan",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Verb + objectively - làm gì một cách khách quan?",
@@ -6533,6 +6652,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌverɪfɪˈkeɪʃn/",
     "meaning": "sự xác minh",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Verify + N - xác minh điều gì?",
@@ -6579,6 +6699,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/aɪˌdentɪfɪˈkeɪʃn/",
     "meaning": "sự nhận diện / giấy tờ tùy thân",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Identify + N - xác định / nhận diện điều gì",
@@ -6629,6 +6750,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈzɪstəns/",
     "meaning": "sự phản kháng / sức kháng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Resist + N - chống lại điều gì?",
@@ -6673,6 +6795,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˈɪnsaɪt/",
     "meaning": "sự hiểu sâu sắc / góc nhìn sâu",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Insight into + N - hiểu sâu về điều gì?",
@@ -6705,6 +6828,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌriːɪnˈfɔːsmənt/",
     "meaning": "sự củng cố / tăng cường",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Reinforce + N - củng cố điều gì?",
@@ -6749,6 +6873,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/trænsˈpærənsi/",
     "meaning": "sự minh bạch",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Transparency in + N/V-ing - sự minh bạch trong việc gì?",
@@ -6787,6 +6912,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈlaɪnmənt/",
     "meaning": "sự đồng nhất / liên kết",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Be aligned with + N - phù hợp / thống nhất với",
@@ -6825,6 +6951,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈsesmənt/",
     "meaning": "sự đánh giá",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Assessment of + N - đánh giá về cái gì?",
@@ -6878,6 +7005,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌɪntɪˈɡreɪʃn/",
     "meaning": "sự tích hợp / hòa nhập",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Integration of + N - sự tích hợp của cái gì",
@@ -6924,6 +7052,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/rɪˈspɒns/",
     "meaning": "phản hồi / phản ứng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Response to + N - phản hồi đối với điều gì?",
@@ -6975,6 +7104,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/əˈpreɪzl/",
     "meaning": "sự đánh giá / thẩm định",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Appraisal of + N - đánh giá về cái gì/ai?",
@@ -7016,6 +7146,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌsensəˈtɪvəti/",
     "meaning": "sự nhạy cảm",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Sensitive to + N - nhạy cảm với điều gì?",
@@ -7068,6 +7199,7 @@ if (window.ZenData && window.ZenData.topics) {
     "phonetic": "/ˌmɪsˈkɒndʌkt/",
     "meaning": "hành vi sai trái / hành vi không đúng",
     "isAdvanced": true,
+    "topicId": "advanced",
     "structures": [
       {
         "formula": "Misconduct by + someone - hành vi sai phạm của ai?",

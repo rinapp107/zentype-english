@@ -54,6 +54,7 @@ try {
           currentWord1 = {
             ...parsed,
             isAdvanced: true, // flag for new UI
+            topicId: 'advanced',
             structures: parseStructures(row['__EMPTY_2']),
             collocations: parseCollocations(row['__EMPTY_3']),
             relatedForms: []
@@ -67,6 +68,7 @@ try {
             advancedWords.push({
               ...parsed,
               isAdvanced: true,
+              topicId: 'advanced',
               structures: [],
               collocations: [],
               relatedForms: []
@@ -84,6 +86,7 @@ try {
           currentWord5 = {
             ...parsed,
             isAdvanced: true,
+            topicId: 'advanced',
             structures: parseStructures(row['__EMPTY_6']),
             collocations: parseCollocations(row['__EMPTY_7']),
             relatedForms: []
@@ -96,6 +99,7 @@ try {
             advancedWords.push({
               ...parsed,
               isAdvanced: true,
+              topicId: 'advanced',
               structures: [],
               collocations: [],
               relatedForms: []
@@ -111,8 +115,8 @@ try {
    ZenType English — Advanced Vocabulary (From Excel)
    ============================================ */
 
-if (window.ZenData && window.ZenData.topics) {
-  window.ZenData.topics.push({
+if (typeof ZenData !== 'undefined' && ZenData.topics) {
+  ZenData.topics.push({
     id: 'advanced', 
     name: 'Từ Vựng Mở Rộng', 
     icon: 'fa-book-open', 

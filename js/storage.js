@@ -61,6 +61,7 @@ const ZenStorage = {
           const merged = {
             ...wordObj,
             ...stored,
+            topicId: wordObj.isAdvanced ? 'advanced' : (stored.topicId || wordObj.topicId),
             meaning: wordObj.meaning,
             pos: wordObj.pos,
             phonetic: wordObj.phonetic || stored.phonetic,
