@@ -1,331 +1,336 @@
-/**
- * RinType English - Database for Vocabularies, Phrases, and Stories
- */
-const RINTYPE_DATABASE = {
-  vocabulary: [
-    // --- SHORT WORDS (3 - 5 characters) ---
-    { word: "run", ipa: "/rʌn/", partOfSpeech: "v", definition: "chạy", category: "Daily Life" },
-    { word: "code", ipa: "/kəʊd/", partOfSpeech: "n, v", definition: "mã nguồn, lập trình", category: "Technology" },
-    { word: "time", ipa: "/taɪm/", partOfSpeech: "n", definition: "thời gian", category: "Daily Life" },
-    { word: "fast", ipa: "/fɑːst/", partOfSpeech: "adj, adv", definition: "nhanh", category: "Daily Life" },
-    { word: "make", ipa: "/meɪk/", partOfSpeech: "v", definition: "làm, chế tạo", category: "Daily Life" },
-    { word: "work", ipa: "/wɜːk/", partOfSpeech: "n, v", definition: "làm việc, công việc", category: "Daily Life" },
-    { word: "play", ipa: "/pleɪ/", partOfSpeech: "v, n", definition: "chơi, vở kịch", category: "Daily Life" },
-    { word: "easy", ipa: "/ˈiː.zi/", partOfSpeech: "adj", definition: "dễ dàng", category: "Daily Life" },
-    { word: "help", ipa: "/help/", partOfSpeech: "v, n", definition: "giúp đỡ", category: "Daily Life" },
-    { word: "user", ipa: "/ˈjuː.zər/", partOfSpeech: "n", definition: "người dùng", category: "Technology" },
-    { word: "data", ipa: "/ˈdeɪ.tə/", partOfSpeech: "n", definition: "dữ liệu", category: "Technology" },
-    { word: "file", ipa: "/faɪl/", partOfSpeech: "n", definition: "tệp tin", category: "Technology" },
-    { word: "web", ipa: "/web/", partOfSpeech: "n", definition: "mạng lưới, trang mạng", category: "Technology" },
-    { word: "game", ipa: "/ɡeɪm/", partOfSpeech: "n", definition: "trò chơi", category: "Daily Life" },
-    { word: "app", ipa: "/æp/", partOfSpeech: "n", definition: "ứng dụng di động", category: "Technology" },
-    { word: "core", ipa: "/kɔːr/", partOfSpeech: "n, adj", definition: "cốt lõi", category: "Technology" },
-    { word: "page", ipa: "/peɪdʒ/", partOfSpeech: "n", definition: "trang giấy", category: "Daily Life" },
-    { word: "view", ipa: "/vjuː/", partOfSpeech: "n, v", definition: "góc nhìn, lượt xem", category: "Daily Life" },
-    { word: "task", ipa: "/tɑːsk/", partOfSpeech: "n", definition: "nhiệm vụ, tác vụ", category: "Business" },
-    { word: "life", ipa: "/laɪf/", partOfSpeech: "n", definition: "cuộc sống", category: "Daily Life" },
-    { word: "mind", ipa: "/maɪnd/", partOfSpeech: "n, v", definition: "tâm trí, chú ý", category: "Daily Life" },
-    { word: "good", ipa: "/ɡʊd/", partOfSpeech: "adj", definition: "tốt, giỏi", category: "Daily Life" },
-    { word: "best", ipa: "/best/", partOfSpeech: "adj, adv", definition: "tốt nhất", category: "Daily Life" },
-    { word: "cool", ipa: "/kuːl/", partOfSpeech: "adj", definition: "mát mẻ, ngầu", category: "Daily Life" },
-    { word: "smart", ipa: "/smɑːt/", partOfSpeech: "adj", definition: "thông minh", category: "Daily Life" },
-    { word: "hope", ipa: "/həʊp/", partOfSpeech: "v, n", definition: "hy vọng", category: "Daily Life" },
-    { word: "wish", ipa: "/wɪʃ/", partOfSpeech: "v, n", definition: "mong ước", category: "Daily Life" },
-    { word: "free", ipa: "/friː/", partOfSpeech: "adj, adv", definition: "tự do, miễn phí", category: "Daily Life" },
-    { word: "calm", ipa: "/kɑːm/", partOfSpeech: "adj, v", definition: "bình tĩnh", category: "Daily Life" },
-    { word: "pure", ipa: "/pjʊər/", partOfSpeech: "adj", definition: "tinh khiết, thuần khiết", category: "Daily Life" },
-    { word: "safe", ipa: "/seɪf/", partOfSpeech: "adj", definition: "an toàn", category: "Daily Life" },
-    { word: "true", ipa: "/truː/", partOfSpeech: "adj", definition: "đúng, chân thực", category: "Daily Life" },
-    { word: "bold", ipa: "/bəʊld/", partOfSpeech: "adj", definition: "táo bạo, dũng cảm", category: "Daily Life" },
-    { word: "hero", ipa: "/ˈhɪə.rəʊ/", partOfSpeech: "n", definition: "anh hùng", category: "Daily Life" },
-    { word: "star", ipa: "/stɑːr/", partOfSpeech: "n", definition: "ngôi sao", category: "Daily Life" },
-    { word: "ship", ipa: "/ʃɪp/", partOfSpeech: "n", definition: "con tàu, phi thuyền", category: "Daily Life" },
-    { word: "moon", ipa: "/muːn/", partOfSpeech: "n", definition: "mặt trăng", category: "Daily Life" },
-    { word: "sun", ipa: "/sʌn/", partOfSpeech: "n", definition: "mặt trời", category: "Daily Life" },
-    { word: "sky", ipa: "/skaɪ/", partOfSpeech: "n", definition: "bầu trời", category: "Daily Life" },
-    { word: "wind", ipa: "/wɪnd/", partOfSpeech: "n", definition: "cơn gió", category: "Daily Life" },
+/* ============================================
+   ZenType English — Vocabulary Data
+   200+ từ vựng chia theo 7 chủ đề
+   ============================================ */
 
-    // --- MEDIUM WORDS (6 - 8 characters) ---
-    { word: "active", ipa: "/ˈæk.tɪv/", partOfSpeech: "adj", definition: "chủ động, tích cực", category: "Daily Life" },
-    { word: "system", ipa: "/ˈsɪs.təm/", partOfSpeech: "n", definition: "hệ thống", category: "Technology" },
-    { word: "design", ipa: "/dɪˈzaɪn/", partOfSpeech: "v, n", definition: "thiết kế", category: "Technology" },
-    { word: "device", ipa: "/dɪˈvaɪs/", partOfSpeech: "n", definition: "thiết bị", category: "Technology" },
-    { word: "future", ipa: "/ˈfjuː.tʃər/", partOfSpeech: "n, adj", definition: "tương lai", category: "Daily Life" },
-    { word: "modern", ipa: "/ˈmɒd.ən/", partOfSpeech: "adj", definition: "hiện đại", category: "Daily Life" },
-    { word: "simple", ipa: "/ˈsɪm.pəl/", partOfSpeech: "adj", definition: "đơn giản", category: "Daily Life" },
-    { word: "impact", ipa: "/ˈɪm.pækt/", partOfSpeech: "n, v", definition: "sự ảnh hưởng, va chạm", category: "Daily Life" },
-    { word: "unique", ipa: "/juːˈniːk/", partOfSpeech: "adj", definition: "độc đáo, duy nhất", category: "Daily Life" },
-    { word: "stable", ipa: "/ˈsteɪ.bəl/", partOfSpeech: "adj", definition: "ổn định", category: "Daily Life" },
-    { word: "robust", ipa: "/rəʊˈbʌst/", partOfSpeech: "adj", definition: "mạnh mẽ, bền bỉ", category: "Technology" },
-    { word: "secure", ipa: "/sɪˈkjʊər/", partOfSpeech: "adj, v", definition: "an toàn, bảo mật", category: "Technology" },
-    { word: "energy", ipa: "/ˈen.ə.dʒi/", partOfSpeech: "n", definition: "năng lượng", category: "Daily Life" },
-    { word: "global", ipa: "/ˈɡləʊ.bəl/", partOfSpeech: "adj", definition: "toàn cầu", category: "Daily Life" },
-    { word: "growth", ipa: "/ɡrəʊθ/", partOfSpeech: "n", definition: "sự tăng trưởng, phát triển", category: "Business" },
-    { word: "wisdom", ipa: "/ˈwɪz.dəm/", partOfSpeech: "n", definition: "sự khôn ngoan, trí tuệ", category: "Daily Life" },
-    { word: "spirit", ipa: "/ˈspɪr.ɪt/", partOfSpeech: "n", definition: "tinh thần, tâm hồn", category: "Daily Life" },
-    { word: "nature", ipa: "/ˈneɪ.tʃər/", partOfSpeech: "n", definition: "tự nhiên, bản chất", category: "Daily Life" },
-    { word: "talent", ipa: "/ˈtæl.ənt/", partOfSpeech: "n", definition: "tài năng", category: "Daily Life" },
-    { word: "effort", ipa: "/ˈef.ət/", partOfSpeech: "n", definition: "sự nỗ lực", category: "Daily Life" },
-    { word: "action", ipa: "/ˈæk.ʃən/", partOfSpeech: "n", definition: "hành động", category: "Daily Life" },
-    { word: "result", ipa: "/rɪˈzʌlt/", partOfSpeech: "n, v", definition: "kết quả", category: "Daily Life" },
-    { word: "source", ipa: "/sɔːs/", partOfSpeech: "n", definition: "nguồn gốc, nguồn tin", category: "Technology" },
-    { word: "online", ipa: "/ˌɒnˈlaɪn/", partOfSpeech: "adj, adv", definition: "trực tuyến", category: "Technology" },
-    { word: "server", ipa: "/ˈsɜː.vər/", partOfSpeech: "n", definition: "máy chủ", category: "Technology" },
-    { word: "client", ipa: "/ˈklaɪ.ənt/", partOfSpeech: "n", definition: "khách hàng, máy trạm", category: "Business" },
-    { word: "engine", ipa: "/ˈen.dʒɪn/", partOfSpeech: "n", definition: "động cơ, bộ máy", category: "Technology" },
-    { word: "vector", ipa: "/ˈvek.tər/", partOfSpeech: "n", definition: "véc-tơ", category: "Technology" },
-    { word: "matrix", ipa: "/ˈmeɪ.trɪks/", partOfSpeech: "n", definition: "ma trận", category: "Technology" },
-    { word: "layout", ipa: "/ˈleɪ.aʊt/", partOfSpeech: "n", definition: "bố cục", category: "Technology" },
-    { word: "database", ipa: "/ˈdeɪ.tə.beɪs/", partOfSpeech: "n", definition: "cơ sở dữ liệu", category: "Technology" },
-    { word: "strategy", ipa: "/ˈstræt.ə.dʒi/", partOfSpeech: "n", definition: "chiến lược", category: "Business" },
-    { word: "practice", ipa: "/ˈpræk.tɪs/", partOfSpeech: "n, v", definition: "luyện tập, thực hành", category: "Daily Life" },
-    { word: "perfect", ipa: "/ˈpɜː.fekt/", partOfSpeech: "adj", definition: "hoàn hảo", category: "Daily Life" },
-    { word: "awesome", ipa: "/ˈɔː.səm/", partOfSpeech: "adj", definition: "tuyệt vời", category: "Daily Life" },
-
-    // --- LONG WORDS (9+ characters) ---
-    { word: "algorithm", ipa: "/ˈæl.ɡə.rɪ.ðəm/", partOfSpeech: "n", definition: "thuật toán", category: "Technology" },
-    { word: "cybersecurity", ipa: "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/", partOfSpeech: "n", definition: "an ninh mạng", category: "Technology" },
-    { word: "artificial", ipa: "/ˌɑː.tɪˈfɪʃ.əl/", partOfSpeech: "adj", definition: "nhân tạo", category: "Technology" },
-    { word: "intelligence", ipa: "/ɪnˈtel.ɪ.dʒəns/", partOfSpeech: "n", definition: "trí thông minh", category: "Technology" },
-    { word: "application", ipa: "/ˌæp.lɪˈkeɪ.ʃən/", partOfSpeech: "n", definition: "ứng dụng", category: "Technology" },
-    { word: "responsive", ipa: "/rɪˈspɒn.sɪv/", partOfSpeech: "adj", definition: "phản hồi nhanh, tương thích", category: "Technology" },
-    { word: "framework", ipa: "/ˈfreɪm.wɜːk/", partOfSpeech: "n", definition: "khung làm việc, bộ khung", category: "Technology" },
-    { word: "repository", ipa: "/rɪˈpɒz.ɪ.tər.i/", partOfSpeech: "n", definition: "kho chứa, kho mã nguồn", category: "Technology" },
-    { word: "encryption", ipa: "/ɪnˈkrɪp.ʃən/", partOfSpeech: "n", definition: "sự mã hóa", category: "Technology" },
-    { word: "collaboration", ipa: "/kəˌlæb.əˈreɪ.ʃən/", partOfSpeech: "n", definition: "sự hợp tác", category: "Business" },
-    { word: "negotiation", ipa: "/nəˌɡəʊ.ʃiˈeɪ.ʃən/", partOfSpeech: "n", definition: "sự đàm phán", category: "Business" },
-    { word: "entrepreneur", ipa: "/ˌɒn.trə.prəˈnɜːr/", partOfSpeech: "n", definition: "nhà khởi nghiệp", category: "Business" },
-    { word: "innovative", ipa: "/ˈɪn.ə.və.tɪv/", partOfSpeech: "adj", definition: "sáng tạo, đổi mới", category: "Business" },
-    { word: "productivity", ipa: "/ˌprɒd.ʌkˈtɪv.ə.ti/", partOfSpeech: "n", definition: "năng suất", category: "Business" },
-    { word: "headquarters", ipa: "/ˌhedˈkwɔː.təz/", partOfSpeech: "n", definition: "trụ sở chính", category: "Business" },
-    { word: "management", ipa: "/ˈmæn.ɪdʒ.mənt/", partOfSpeech: "n", definition: "sự quản lý, ban quản lý", category: "Business" },
-    { word: "marketing", ipa: "/ˈmɑː.kɪ.tɪŋ/", partOfSpeech: "n", definition: "tiếp thị", category: "Business" },
-    { word: "investment", ipa: "/ɪnˈvest.mənt/", partOfSpeech: "n", definition: "sự đầu tư", category: "Business" },
-    { word: "atmosphere", ipa: "/ˈæt.məs.fɪər/", partOfSpeech: "n", definition: "bầu không khí", category: "Daily Life" },
-    { word: "experience", ipa: "/ɪkˈspɪə.ri.əns/", partOfSpeech: "n, v", definition: "kinh nghiệm, trải nghiệm", category: "Daily Life" },
-    { word: "opportunity", ipa: "/ˌɒp.əˈtʃuː.nə.ti/", partOfSpeech: "n", definition: "cơ hội", category: "Daily Life" },
-    { word: "communicate", ipa: "/kəˈmjuː.nɪ.keɪt/", partOfSpeech: "v", definition: "giao tiếp", category: "Daily Life" },
-    { word: "environment", ipa: "/ɪnˈvaɪ.rən.mənt/", partOfSpeech: "n", definition: "môi trường", category: "Daily Life" },
-    { word: "destination", ipa: "/ˌdes.tɪˈneɪ.ʃən/", partOfSpeech: "n", definition: "điểm đến", category: "Daily Life" },
-    { word: "accomplish", ipa: "/əˈkʌm.plɪʃ/", partOfSpeech: "v", definition: "hoàn thành, đạt được", category: "Daily Life" },
-    { word: "appreciate", ipa: "/əˈpriː.ʃi.eɪt/", partOfSpeech: "v", definition: "trân trọng, đánh giá cao", category: "Daily Life" },
-    { word: "comfortable", ipa: "/ˈkʌm.fə.tə.bəl/", partOfSpeech: "adj", definition: "thoải mái, dễ chịu", category: "Daily Life" },
-    { word: "enthusiastic", ipa: "/ɪnˌθjuː.ziˈæs.tɪk/", partOfSpeech: "adj", definition: "nhiệt huyết, say mê", category: "Daily Life" }
+const ZenData = {
+  topics: [
+    {
+      id: 'work', name: 'Công Việc', icon: 'fa-briefcase', color: '#3b82f6',
+      words: [
+        { word: 'meeting', meaning: 'cuộc họp', phonetic: '/ˈmiːtɪŋ/', pos: 'n', example: 'We have a meeting at 10 AM.', exampleVi: 'Chúng tôi có cuộc họp lúc 10 giờ sáng.' },
+        { word: 'deadline', meaning: 'hạn chót', phonetic: '/ˈdedlaɪn/', pos: 'n', example: 'The deadline is next Friday.', exampleVi: 'Hạn chót là thứ Sáu tới.' },
+        { word: 'project', meaning: 'dự án', phonetic: '/ˈprɒdʒekt/', pos: 'n', example: 'This project will take three months.', exampleVi: 'Dự án này sẽ mất ba tháng.' },
+        { word: 'manager', meaning: 'quản lý', phonetic: '/ˈmænɪdʒər/', pos: 'n', example: 'My manager is very supportive.', exampleVi: 'Quản lý của tôi rất hỗ trợ.' },
+        { word: 'salary', meaning: 'lương', phonetic: '/ˈsæləri/', pos: 'n', example: 'He earns a good salary.', exampleVi: 'Anh ấy kiếm được mức lương tốt.' },
+        { word: 'promote', meaning: 'thăng chức', phonetic: '/prəˈmoʊt/', pos: 'v', example: 'She was promoted to director.', exampleVi: 'Cô ấy được thăng chức giám đốc.' },
+        { word: 'resign', meaning: 'từ chức', phonetic: '/rɪˈzaɪn/', pos: 'v', example: 'He decided to resign from the company.', exampleVi: 'Anh ấy quyết định từ chức.' },
+        { word: 'colleague', meaning: 'đồng nghiệp', phonetic: '/ˈkɒliːɡ/', pos: 'n', example: 'My colleagues are very friendly.', exampleVi: 'Các đồng nghiệp của tôi rất thân thiện.' },
+        { word: 'interview', meaning: 'phỏng vấn', phonetic: '/ˈɪntərvjuː/', pos: 'n', example: 'I have a job interview tomorrow.', exampleVi: 'Tôi có buổi phỏng vấn ngày mai.' },
+        { word: 'overtime', meaning: 'tăng ca', phonetic: '/ˈoʊvərtaɪm/', pos: 'n', example: 'I worked overtime last night.', exampleVi: 'Tôi đã tăng ca tối qua.' },
+        { word: 'schedule', meaning: 'lịch trình', phonetic: '/ˈskedʒuːl/', pos: 'n', example: 'Check the schedule for today.', exampleVi: 'Kiểm tra lịch trình hôm nay.' },
+        { word: 'report', meaning: 'báo cáo', phonetic: '/rɪˈpɔːrt/', pos: 'n', example: 'Please submit the report by Friday.', exampleVi: 'Vui lòng nộp báo cáo trước thứ Sáu.' },
+        { word: 'teamwork', meaning: 'làm việc nhóm', phonetic: '/ˈtiːmwɜːrk/', pos: 'n', example: 'Teamwork is essential for success.', exampleVi: 'Làm việc nhóm rất quan trọng để thành công.' },
+        { word: 'presentation', meaning: 'bài thuyết trình', phonetic: '/ˌpreznˈteɪʃn/', pos: 'n', example: 'She gave an excellent presentation.', exampleVi: 'Cô ấy đã thuyết trình rất xuất sắc.' },
+        { word: 'negotiate', meaning: 'đàm phán', phonetic: '/nɪˈɡoʊʃieɪt/', pos: 'v', example: 'We need to negotiate the contract.', exampleVi: 'Chúng ta cần đàm phán hợp đồng.' },
+        { word: 'collaborate', meaning: 'hợp tác', phonetic: '/kəˈlæbəreɪt/', pos: 'v', example: 'Let us collaborate on this project.', exampleVi: 'Hãy cùng hợp tác trong dự án này.' },
+        { word: 'feedback', meaning: 'phản hồi', phonetic: '/ˈfiːdbæk/', pos: 'n', example: 'Your feedback is very valuable.', exampleVi: 'Phản hồi của bạn rất giá trị.' },
+        { word: 'performance', meaning: 'hiệu suất', phonetic: '/pərˈfɔːrməns/', pos: 'n', example: 'His performance has improved a lot.', exampleVi: 'Hiệu suất của anh ấy đã cải thiện nhiều.' },
+        { word: 'strategy', meaning: 'chiến lược', phonetic: '/ˈstrætədʒi/', pos: 'n', example: 'We need a new marketing strategy.', exampleVi: 'Chúng ta cần chiến lược marketing mới.' },
+        { word: 'implement', meaning: 'triển khai', phonetic: '/ˈɪmplɪment/', pos: 'v', example: 'We will implement the plan next week.', exampleVi: 'Chúng tôi sẽ triển khai kế hoạch tuần sau.' },
+        { word: 'budget', meaning: 'ngân sách', phonetic: '/ˈbʌdʒɪt/', pos: 'n', example: 'The budget for this year is limited.', exampleVi: 'Ngân sách năm nay bị hạn chế.' },
+        { word: 'proposal', meaning: 'đề xuất', phonetic: '/prəˈpoʊzl/', pos: 'n', example: 'The proposal was approved by the board.', exampleVi: 'Đề xuất đã được hội đồng phê duyệt.' },
+        { word: 'contract', meaning: 'hợp đồng', phonetic: '/ˈkɒntrækt/', pos: 'n', example: 'Please sign the contract.', exampleVi: 'Vui lòng ký hợp đồng.' },
+        { word: 'supervise', meaning: 'giám sát', phonetic: '/ˈsuːpərvaɪz/', pos: 'v', example: 'She supervises a team of ten people.', exampleVi: 'Cô ấy giám sát một nhóm mười người.' },
+        { word: 'efficient', meaning: 'hiệu quả', phonetic: '/ɪˈfɪʃnt/', pos: 'adj', example: 'This method is more efficient.', exampleVi: 'Phương pháp này hiệu quả hơn.' },
+        { word: 'revenue', meaning: 'doanh thu', phonetic: '/ˈrevənjuː/', pos: 'n', example: 'Revenue increased by 20% this quarter.', exampleVi: 'Doanh thu tăng 20% trong quý này.' },
+        { word: 'delegate', meaning: 'ủy quyền', phonetic: '/ˈdelɪɡeɪt/', pos: 'v', example: 'Learn to delegate tasks effectively.', exampleVi: 'Hãy học cách ủy quyền công việc hiệu quả.' },
+        { word: 'priority', meaning: 'ưu tiên', phonetic: '/praɪˈɒrəti/', pos: 'n', example: 'Safety is our top priority.', exampleVi: 'An toàn là ưu tiên hàng đầu của chúng tôi.' },
+        { word: 'productivity', meaning: 'năng suất', phonetic: '/ˌprɒdʌkˈtɪvəti/', pos: 'n', example: 'We need to increase productivity.', exampleVi: 'Chúng ta cần tăng năng suất.' },
+        { word: 'recruitment', meaning: 'tuyển dụng', phonetic: '/rɪˈkruːtmənt/', pos: 'n', example: 'The recruitment process takes two weeks.', exampleVi: 'Quy trình tuyển dụng mất hai tuần.' },
+      ]
+    },
+    {
+      id: 'communication', name: 'Giao Tiếp', icon: 'fa-comments', color: '#10b981',
+      words: [
+        { word: 'greet', meaning: 'chào hỏi', phonetic: '/ɡriːt/', pos: 'v', example: 'He greeted everyone warmly.', exampleVi: 'Anh ấy chào mọi người nồng nhiệt.' },
+        { word: 'introduce', meaning: 'giới thiệu', phonetic: '/ˌɪntrəˈdjuːs/', pos: 'v', example: 'Let me introduce myself.', exampleVi: 'Hãy để tôi giới thiệu bản thân.' },
+        { word: 'apologize', meaning: 'xin lỗi', phonetic: '/əˈpɒlədʒaɪz/', pos: 'v', example: 'I apologize for being late.', exampleVi: 'Tôi xin lỗi vì đến trễ.' },
+        { word: 'compliment', meaning: 'khen ngợi', phonetic: '/ˈkɒmplɪmənt/', pos: 'v', example: 'She complimented my work.', exampleVi: 'Cô ấy khen ngợi công việc của tôi.' },
+        { word: 'suggest', meaning: 'đề nghị', phonetic: '/səˈdʒest/', pos: 'v', example: 'I suggest we take a break.', exampleVi: 'Tôi đề nghị chúng ta nghỉ giải lao.' },
+        { word: 'agree', meaning: 'đồng ý', phonetic: '/əˈɡriː/', pos: 'v', example: 'I agree with your opinion.', exampleVi: 'Tôi đồng ý với ý kiến của bạn.' },
+        { word: 'disagree', meaning: 'không đồng ý', phonetic: '/ˌdɪsəˈɡriː/', pos: 'v', example: 'I respectfully disagree.', exampleVi: 'Tôi tôn trọng nhưng không đồng ý.' },
+        { word: 'explain', meaning: 'giải thích', phonetic: '/ɪkˈspleɪn/', pos: 'v', example: 'Can you explain this to me?', exampleVi: 'Bạn có thể giải thích điều này cho tôi không?' },
+        { word: 'promise', meaning: 'hứa', phonetic: '/ˈprɒmɪs/', pos: 'v', example: 'I promise to help you.', exampleVi: 'Tôi hứa sẽ giúp bạn.' },
+        { word: 'recommend', meaning: 'giới thiệu, khuyên', phonetic: '/ˌrekəˈmend/', pos: 'v', example: 'I recommend this restaurant.', exampleVi: 'Tôi giới thiệu nhà hàng này.' },
+        { word: 'confirm', meaning: 'xác nhận', phonetic: '/kənˈfɜːrm/', pos: 'v', example: 'Please confirm your attendance.', exampleVi: 'Vui lòng xác nhận sự tham dự.' },
+        { word: 'request', meaning: 'yêu cầu', phonetic: '/rɪˈkwest/', pos: 'v', example: 'I would like to request a day off.', exampleVi: 'Tôi muốn xin nghỉ một ngày.' },
+        { word: 'conversation', meaning: 'cuộc trò chuyện', phonetic: '/ˌkɒnvərˈseɪʃn/', pos: 'n', example: 'We had a great conversation.', exampleVi: 'Chúng tôi đã có cuộc trò chuyện tuyệt vời.' },
+        { word: 'opinion', meaning: 'ý kiến', phonetic: '/əˈpɪnjən/', pos: 'n', example: 'What is your opinion on this?', exampleVi: 'Ý kiến của bạn về việc này là gì?' },
+        { word: 'polite', meaning: 'lịch sự', phonetic: '/pəˈlaɪt/', pos: 'adj', example: 'She is always polite.', exampleVi: 'Cô ấy luôn lịch sự.' },
+        { word: 'interrupt', meaning: 'ngắt lời', phonetic: '/ˌɪntəˈrʌpt/', pos: 'v', example: 'Please do not interrupt me.', exampleVi: 'Xin đừng ngắt lời tôi.' },
+        { word: 'persuade', meaning: 'thuyết phục', phonetic: '/pərˈsweɪd/', pos: 'v', example: 'He persuaded me to join the team.', exampleVi: 'Anh ấy thuyết phục tôi tham gia nhóm.' },
+        { word: 'appreciate', meaning: 'đánh giá cao', phonetic: '/əˈpriːʃieɪt/', pos: 'v', example: 'I appreciate your help.', exampleVi: 'Tôi đánh giá cao sự giúp đỡ của bạn.' },
+        { word: 'misunderstand', meaning: 'hiểu lầm', phonetic: '/ˌmɪsʌndərˈstænd/', pos: 'v', example: 'I think you misunderstood me.', exampleVi: 'Tôi nghĩ bạn đã hiểu lầm tôi.' },
+        { word: 'encourage', meaning: 'khuyến khích', phonetic: '/ɪnˈkʌrɪdʒ/', pos: 'v', example: 'She encouraged me to try again.', exampleVi: 'Cô ấy khuyến khích tôi thử lại.' },
+        { word: 'respond', meaning: 'phản hồi', phonetic: '/rɪˈspɒnd/', pos: 'v', example: 'He did not respond to my email.', exampleVi: 'Anh ấy không phản hồi email của tôi.' },
+        { word: 'express', meaning: 'bày tỏ', phonetic: '/ɪkˈspres/', pos: 'v', example: 'She expressed her gratitude.', exampleVi: 'Cô ấy bày tỏ lòng biết ơn.' },
+        { word: 'communicate', meaning: 'giao tiếp', phonetic: '/kəˈmjuːnɪkeɪt/', pos: 'v', example: 'We need to communicate better.', exampleVi: 'Chúng ta cần giao tiếp tốt hơn.' },
+        { word: 'clarify', meaning: 'làm rõ', phonetic: '/ˈklærəfaɪ/', pos: 'v', example: 'Could you clarify this point?', exampleVi: 'Bạn có thể làm rõ điểm này không?' },
+        { word: 'discuss', meaning: 'thảo luận', phonetic: '/dɪˈskʌs/', pos: 'v', example: 'Let us discuss the plan.', exampleVi: 'Hãy thảo luận về kế hoạch.' },
+        { word: 'fluent', meaning: 'lưu loát', phonetic: '/ˈfluːənt/', pos: 'adj', example: 'She is fluent in three languages.', exampleVi: 'Cô ấy nói lưu loát ba ngôn ngữ.' },
+        { word: 'gesture', meaning: 'cử chỉ', phonetic: '/ˈdʒestʃər/', pos: 'n', example: 'He made a friendly gesture.', exampleVi: 'Anh ấy có một cử chỉ thân thiện.' },
+        { word: 'awkward', meaning: 'lúng túng', phonetic: '/ˈɔːkwərd/', pos: 'adj', example: 'There was an awkward silence.', exampleVi: 'Có một khoảng im lặng lúng túng.' },
+        { word: 'sincere', meaning: 'chân thành', phonetic: '/sɪnˈsɪr/', pos: 'adj', example: 'He gave a sincere apology.', exampleVi: 'Anh ấy đã xin lỗi chân thành.' },
+        { word: 'hesitate', meaning: 'do dự', phonetic: '/ˈhezɪteɪt/', pos: 'v', example: 'Do not hesitate to ask questions.', exampleVi: 'Đừng do dự khi đặt câu hỏi.' },
+      ]
+    },
+    {
+      id: 'travel', name: 'Du Lịch', icon: 'fa-plane', color: '#f59e0b',
+      words: [
+        { word: 'airport', meaning: 'sân bay', phonetic: '/ˈeərpɔːrt/', pos: 'n', example: 'We arrived at the airport early.', exampleVi: 'Chúng tôi đến sân bay sớm.' },
+        { word: 'passport', meaning: 'hộ chiếu', phonetic: '/ˈpæspɔːrt/', pos: 'n', example: 'Do not forget your passport.', exampleVi: 'Đừng quên hộ chiếu.' },
+        { word: 'luggage', meaning: 'hành lý', phonetic: '/ˈlʌɡɪdʒ/', pos: 'n', example: 'My luggage is very heavy.', exampleVi: 'Hành lý của tôi rất nặng.' },
+        { word: 'boarding', meaning: 'lên máy bay', phonetic: '/ˈbɔːrdɪŋ/', pos: 'n', example: 'Boarding begins at gate 5.', exampleVi: 'Lên máy bay bắt đầu ở cổng 5.' },
+        { word: 'sightseeing', meaning: 'ngắm cảnh', phonetic: '/ˈsaɪtsiːɪŋ/', pos: 'n', example: 'We went sightseeing in Paris.', exampleVi: 'Chúng tôi đi ngắm cảnh ở Paris.' },
+        { word: 'accommodation', meaning: 'chỗ ở', phonetic: '/əˌkɒməˈdeɪʃn/', pos: 'n', example: 'We booked accommodation online.', exampleVi: 'Chúng tôi đặt chỗ ở trực tuyến.' },
+        { word: 'destination', meaning: 'điểm đến', phonetic: '/ˌdestɪˈneɪʃn/', pos: 'n', example: 'What is your travel destination?', exampleVi: 'Điểm đến du lịch của bạn là gì?' },
+        { word: 'itinerary', meaning: 'hành trình', phonetic: '/aɪˈtɪnəreri/', pos: 'n', example: 'Here is our travel itinerary.', exampleVi: 'Đây là hành trình du lịch của chúng tôi.' },
+        { word: 'reservation', meaning: 'đặt chỗ', phonetic: '/ˌrezərˈveɪʃn/', pos: 'n', example: 'I have a reservation for two.', exampleVi: 'Tôi có đặt chỗ cho hai người.' },
+        { word: 'departure', meaning: 'khởi hành', phonetic: '/dɪˈpɑːrtʃər/', pos: 'n', example: 'The departure time is 8 AM.', exampleVi: 'Giờ khởi hành là 8 giờ sáng.' },
+        { word: 'arrival', meaning: 'đến nơi', phonetic: '/əˈraɪvl/', pos: 'n', example: 'Our arrival was delayed.', exampleVi: 'Chuyến đến của chúng tôi bị trễ.' },
+        { word: 'currency', meaning: 'tiền tệ', phonetic: '/ˈkʌrənsi/', pos: 'n', example: 'What currency do they use?', exampleVi: 'Họ sử dụng tiền tệ gì?' },
+        { word: 'souvenir', meaning: 'quà lưu niệm', phonetic: '/ˌsuːvəˈnɪr/', pos: 'n', example: 'I bought some souvenirs.', exampleVi: 'Tôi đã mua vài món quà lưu niệm.' },
+        { word: 'explore', meaning: 'khám phá', phonetic: '/ɪkˈsplɔːr/', pos: 'v', example: 'We explored the old town.', exampleVi: 'Chúng tôi khám phá phố cổ.' },
+        { word: 'delay', meaning: 'trì hoãn', phonetic: '/dɪˈleɪ/', pos: 'n', example: 'There was a two-hour delay.', exampleVi: 'Có sự trì hoãn hai tiếng.' },
+        { word: 'customs', meaning: 'hải quan', phonetic: '/ˈkʌstəmz/', pos: 'n', example: 'We passed through customs quickly.', exampleVi: 'Chúng tôi qua hải quan nhanh chóng.' },
+        { word: 'guidebook', meaning: 'sách hướng dẫn', phonetic: '/ˈɡaɪdbʊk/', pos: 'n', example: 'I bought a guidebook for Japan.', exampleVi: 'Tôi mua sách hướng dẫn cho Nhật Bản.' },
+        { word: 'excursion', meaning: 'chuyến tham quan', phonetic: '/ɪkˈskɜːrʒn/', pos: 'n', example: 'We joined a boat excursion.', exampleVi: 'Chúng tôi tham gia chuyến tham quan bằng thuyền.' },
+        { word: 'scenic', meaning: 'phong cảnh đẹp', phonetic: '/ˈsiːnɪk/', pos: 'adj', example: 'We drove along a scenic route.', exampleVi: 'Chúng tôi lái xe dọc tuyến đường phong cảnh đẹp.' },
+        { word: 'adventure', meaning: 'phiêu lưu', phonetic: '/ədˈventʃər/', pos: 'n', example: 'Traveling is a great adventure.', exampleVi: 'Du lịch là một cuộc phiêu lưu tuyệt vời.' },
+        { word: 'backpack', meaning: 'ba lô', phonetic: '/ˈbækpæk/', pos: 'n', example: 'She travels with just a backpack.', exampleVi: 'Cô ấy đi du lịch chỉ với một ba lô.' },
+        { word: 'landmark', meaning: 'địa danh', phonetic: '/ˈlændmɑːrk/', pos: 'n', example: 'The Eiffel Tower is a famous landmark.', exampleVi: 'Tháp Eiffel là một địa danh nổi tiếng.' },
+        { word: 'journey', meaning: 'hành trình', phonetic: '/ˈdʒɜːrni/', pos: 'n', example: 'The journey took five hours.', exampleVi: 'Hành trình mất năm tiếng.' },
+        { word: 'immigration', meaning: 'nhập cảnh', phonetic: '/ˌɪmɪˈɡreɪʃn/', pos: 'n', example: 'We went through immigration control.', exampleVi: 'Chúng tôi đi qua kiểm soát nhập cảnh.' },
+        { word: 'terminal', meaning: 'nhà ga', phonetic: '/ˈtɜːrmɪnl/', pos: 'n', example: 'Our flight departs from terminal 2.', exampleVi: 'Chuyến bay khởi hành từ nhà ga 2.' },
+        { word: 'sunscreen', meaning: 'kem chống nắng', phonetic: '/ˈsʌnskriːn/', pos: 'n', example: 'Apply sunscreen before going out.', exampleVi: 'Thoa kem chống nắng trước khi ra ngoài.' },
+        { word: 'abroad', meaning: 'nước ngoài', phonetic: '/əˈbrɔːd/', pos: 'adv', example: 'She studied abroad for two years.', exampleVi: 'Cô ấy du học hai năm.' },
+        { word: 'cruise', meaning: 'du thuyền', phonetic: '/kruːz/', pos: 'n', example: 'We took a cruise around the islands.', exampleVi: 'Chúng tôi đi du thuyền quanh các đảo.' },
+        { word: 'visa', meaning: 'thị thực', phonetic: '/ˈviːzə/', pos: 'n', example: 'You need a visa to enter this country.', exampleVi: 'Bạn cần thị thực để vào nước này.' },
+        { word: 'map', meaning: 'bản đồ', phonetic: '/mæp/', pos: 'n', example: 'Can you show me on the map?', exampleVi: 'Bạn có thể chỉ trên bản đồ không?' },
+      ]
+    },
+    {
+      id: 'restaurant', name: 'Nhà Hàng', icon: 'fa-utensils', color: '#ef4444',
+      words: [
+        { word: 'menu', meaning: 'thực đơn', phonetic: '/ˈmenjuː/', pos: 'n', example: 'Can I see the menu, please?', exampleVi: 'Cho tôi xem thực đơn được không?' },
+        { word: 'order', meaning: 'gọi món', phonetic: '/ˈɔːrdər/', pos: 'v', example: 'Are you ready to order?', exampleVi: 'Bạn sẵn sàng gọi món chưa?' },
+        { word: 'appetizer', meaning: 'món khai vị', phonetic: '/ˈæpɪtaɪzər/', pos: 'n', example: 'We had soup as an appetizer.', exampleVi: 'Chúng tôi ăn súp khai vị.' },
+        { word: 'dessert', meaning: 'món tráng miệng', phonetic: '/dɪˈzɜːrt/', pos: 'n', example: 'I will have cake for dessert.', exampleVi: 'Tôi sẽ ăn bánh tráng miệng.' },
+        { word: 'waiter', meaning: 'bồi bàn', phonetic: '/ˈweɪtər/', pos: 'n', example: 'The waiter was very polite.', exampleVi: 'Bồi bàn rất lịch sự.' },
+        { word: 'bill', meaning: 'hóa đơn', phonetic: '/bɪl/', pos: 'n', example: 'Can I have the bill, please?', exampleVi: 'Cho tôi hóa đơn được không?' },
+        { word: 'tip', meaning: 'tiền boa', phonetic: '/tɪp/', pos: 'n', example: 'We left a generous tip.', exampleVi: 'Chúng tôi để lại tiền boa hào phóng.' },
+        { word: 'spicy', meaning: 'cay', phonetic: '/ˈspaɪsi/', pos: 'adj', example: 'This dish is very spicy.', exampleVi: 'Món này rất cay.' },
+        { word: 'delicious', meaning: 'ngon', phonetic: '/dɪˈlɪʃəs/', pos: 'adj', example: 'The food was delicious.', exampleVi: 'Đồ ăn rất ngon.' },
+        { word: 'ingredient', meaning: 'nguyên liệu', phonetic: '/ɪnˈɡriːdiənt/', pos: 'n', example: 'What are the main ingredients?', exampleVi: 'Nguyên liệu chính là gì?' },
+        { word: 'vegetarian', meaning: 'chay', phonetic: '/ˌvedʒəˈteriən/', pos: 'adj', example: 'Do you have vegetarian options?', exampleVi: 'Bạn có món chay không?' },
+        { word: 'portion', meaning: 'phần ăn', phonetic: '/ˈpɔːrʃn/', pos: 'n', example: 'The portions are very generous.', exampleVi: 'Phần ăn rất đầy đặn.' },
+        { word: 'chef', meaning: 'đầu bếp', phonetic: '/ʃef/', pos: 'n', example: 'The chef prepared a special meal.', exampleVi: 'Đầu bếp chuẩn bị bữa ăn đặc biệt.' },
+        { word: 'recipe', meaning: 'công thức', phonetic: '/ˈresəpi/', pos: 'n', example: 'Can you share this recipe?', exampleVi: 'Bạn có thể chia sẻ công thức này không?' },
+        { word: 'beverage', meaning: 'đồ uống', phonetic: '/ˈbevərɪdʒ/', pos: 'n', example: 'What beverage would you like?', exampleVi: 'Bạn muốn đồ uống gì?' },
+        { word: 'cuisine', meaning: 'ẩm thực', phonetic: '/kwɪˈziːn/', pos: 'n', example: 'I love Vietnamese cuisine.', exampleVi: 'Tôi yêu ẩm thực Việt Nam.' },
+        { word: 'takeaway', meaning: 'đồ mang đi', phonetic: '/ˈteɪkəweɪ/', pos: 'n', example: 'I ordered takeaway for dinner.', exampleVi: 'Tôi gọi đồ mang đi cho bữa tối.' },
+        { word: 'seasoning', meaning: 'gia vị', phonetic: '/ˈsiːznɪŋ/', pos: 'n', example: 'Add some seasoning to the dish.', exampleVi: 'Thêm gia vị vào món ăn.' },
+        { word: 'appetizing', meaning: 'hấp dẫn (đồ ăn)', phonetic: '/ˈæpɪtaɪzɪŋ/', pos: 'adj', example: 'The food looks very appetizing.', exampleVi: 'Đồ ăn trông rất hấp dẫn.' },
+        { word: 'grill', meaning: 'nướng', phonetic: '/ɡrɪl/', pos: 'v', example: 'We grilled some chicken.', exampleVi: 'Chúng tôi nướng gà.' },
+        { word: 'roast', meaning: 'quay', phonetic: '/roʊst/', pos: 'v', example: 'Roast the vegetables in the oven.', exampleVi: 'Quay rau trong lò nướng.' },
+        { word: 'stir-fry', meaning: 'xào', phonetic: '/ˈstɜːr fraɪ/', pos: 'v', example: 'Stir-fry the noodles with vegetables.', exampleVi: 'Xào mì với rau.' },
+        { word: 'steam', meaning: 'hấp', phonetic: '/stiːm/', pos: 'v', example: 'Steam the fish for ten minutes.', exampleVi: 'Hấp cá trong mười phút.' },
+        { word: 'bland', meaning: 'nhạt', phonetic: '/blænd/', pos: 'adj', example: 'This soup is too bland.', exampleVi: 'Món súp này quá nhạt.' },
+        { word: 'leftovers', meaning: 'đồ ăn thừa', phonetic: '/ˈleftˌoʊvərz/', pos: 'n', example: 'We ate the leftovers for lunch.', exampleVi: 'Chúng tôi ăn đồ thừa cho bữa trưa.' },
+        { word: 'allergy', meaning: 'dị ứng', phonetic: '/ˈælərdʒi/', pos: 'n', example: 'I have a nut allergy.', exampleVi: 'Tôi bị dị ứng hạt.' },
+        { word: 'feast', meaning: 'bữa tiệc', phonetic: '/fiːst/', pos: 'n', example: 'They prepared a feast for the guests.', exampleVi: 'Họ chuẩn bị bữa tiệc cho khách.' },
+        { word: 'course', meaning: 'món (trong bữa)', phonetic: '/kɔːrs/', pos: 'n', example: 'The dinner has three courses.', exampleVi: 'Bữa tối có ba món.' },
+        { word: 'tablecloth', meaning: 'khăn trải bàn', phonetic: '/ˈteɪblklɒθ/', pos: 'n', example: 'The tablecloth is white and clean.', exampleVi: 'Khăn trải bàn trắng và sạch.' },
+        { word: 'savor', meaning: 'thưởng thức', phonetic: '/ˈseɪvər/', pos: 'v', example: 'Savor every bite of this dish.', exampleVi: 'Hãy thưởng thức từng miếng của món này.' },
+      ]
+    },
+    {
+      id: 'cafe', name: 'Cafe', icon: 'fa-mug-hot', color: '#8b5cf6',
+      words: [
+        { word: 'espresso', meaning: 'cà phê đậm đặc', phonetic: '/eˈspresəʊ/', pos: 'n', example: 'I would like a double espresso.', exampleVi: 'Tôi muốn một ly espresso đôi.' },
+        { word: 'latte', meaning: 'cà phê sữa', phonetic: '/ˈlɑːteɪ/', pos: 'n', example: 'She ordered a vanilla latte.', exampleVi: 'Cô ấy gọi một ly latte vani.' },
+        { word: 'cappuccino', meaning: 'cà phê kem sữa', phonetic: '/ˌkæpuˈtʃiːnoʊ/', pos: 'n', example: 'A cappuccino with extra foam please.', exampleVi: 'Một ly cappuccino thêm bọt sữa.' },
+        { word: 'brew', meaning: 'pha', phonetic: '/bruː/', pos: 'v', example: 'The coffee is freshly brewed.', exampleVi: 'Cà phê được pha mới.' },
+        { word: 'barista', meaning: 'nhân viên pha chế', phonetic: '/bəˈriːstə/', pos: 'n', example: 'The barista made my coffee perfectly.', exampleVi: 'Nhân viên pha chế pha cà phê rất hoàn hảo.' },
+        { word: 'pastry', meaning: 'bánh ngọt', phonetic: '/ˈpeɪstri/', pos: 'n', example: 'I had a pastry with my coffee.', exampleVi: 'Tôi ăn bánh ngọt cùng cà phê.' },
+        { word: 'blend', meaning: 'pha trộn', phonetic: '/blend/', pos: 'v', example: 'This is a special coffee blend.', exampleVi: 'Đây là hỗn hợp cà phê đặc biệt.' },
+        { word: 'caffeine', meaning: 'chất caffein', phonetic: '/ˈkæfiːn/', pos: 'n', example: 'I need some caffeine to wake up.', exampleVi: 'Tôi cần caffein để tỉnh táo.' },
+        { word: 'decaf', meaning: 'không caffein', phonetic: '/ˈdiːkæf/', pos: 'adj', example: 'Do you have decaf coffee?', exampleVi: 'Bạn có cà phê không caffein không?' },
+        { word: 'sugar', meaning: 'đường', phonetic: '/ˈʃʊɡər/', pos: 'n', example: 'No sugar in my coffee, please.', exampleVi: 'Không đường trong cà phê, xin cảm ơn.' },
+        { word: 'cream', meaning: 'kem', phonetic: '/kriːm/', pos: 'n', example: 'Would you like cream with that?', exampleVi: 'Bạn có muốn thêm kem không?' },
+        { word: 'iced', meaning: 'đá', phonetic: '/aɪst/', pos: 'adj', example: 'I prefer iced coffee in summer.', exampleVi: 'Tôi thích cà phê đá vào mùa hè.' },
+        { word: 'mocha', meaning: 'cà phê mô-ca', phonetic: '/ˈmɒkə/', pos: 'n', example: 'A mocha combines coffee and chocolate.', exampleVi: 'Mocha kết hợp cà phê và sô-cô-la.' },
+        { word: 'aroma', meaning: 'hương thơm', phonetic: '/əˈroʊmə/', pos: 'n', example: 'The aroma of fresh coffee is wonderful.', exampleVi: 'Hương thơm cà phê mới tuyệt vời.' },
+        { word: 'grind', meaning: 'xay', phonetic: '/ɡraɪnd/', pos: 'v', example: 'We grind the beans fresh every day.', exampleVi: 'Chúng tôi xay hạt mới mỗi ngày.' },
+        { word: 'sweetener', meaning: 'chất tạo ngọt', phonetic: '/ˈswiːtnər/', pos: 'n', example: 'Would you like a sweetener?', exampleVi: 'Bạn có muốn chất tạo ngọt không?' },
+        { word: 'takeout', meaning: 'mang đi', phonetic: '/ˈteɪkaʊt/', pos: 'n', example: 'Is this for here or takeout?', exampleVi: 'Dùng tại đây hay mang đi?' },
+        { word: 'ceramic', meaning: 'sứ', phonetic: '/səˈræmɪk/', pos: 'adj', example: 'I prefer a ceramic mug.', exampleVi: 'Tôi thích ly sứ hơn.' },
+        { word: 'flavor', meaning: 'hương vị', phonetic: '/ˈfleɪvər/', pos: 'n', example: 'What flavor would you like?', exampleVi: 'Bạn muốn hương vị gì?' },
+        { word: 'refill', meaning: 'rót thêm', phonetic: '/ˈriːfɪl/', pos: 'v', example: 'Can I get a refill, please?', exampleVi: 'Cho tôi rót thêm được không?' },
+        { word: 'syrup', meaning: 'xi-rô', phonetic: '/ˈsɪrəp/', pos: 'n', example: 'Add some caramel syrup.', exampleVi: 'Thêm xi-rô caramel.' },
+        { word: 'teapot', meaning: 'ấm trà', phonetic: '/ˈtiːpɒt/', pos: 'n', example: 'Bring a teapot of green tea.', exampleVi: 'Mang một ấm trà xanh.' },
+        { word: 'herbal', meaning: 'thảo mộc', phonetic: '/ˈhɜːrbl/', pos: 'adj', example: 'I prefer herbal tea.', exampleVi: 'Tôi thích trà thảo mộc.' },
+        { word: 'smoothie', meaning: 'sinh tố', phonetic: '/ˈsmuːði/', pos: 'n', example: 'I ordered a mango smoothie.', exampleVi: 'Tôi gọi một ly sinh tố xoài.' },
+        { word: 'cozy', meaning: 'ấm cúng', phonetic: '/ˈkoʊzi/', pos: 'adj', example: 'This cafe is very cozy.', exampleVi: 'Quán cafe này rất ấm cúng.' },
+        { word: 'ambiance', meaning: 'không khí', phonetic: '/ˈæmbiəns/', pos: 'n', example: 'The ambiance here is relaxing.', exampleVi: 'Không khí ở đây rất thư giãn.' },
+        { word: 'matcha', meaning: 'trà xanh Nhật', phonetic: '/ˈmætʃə/', pos: 'n', example: 'Matcha latte is my favorite.', exampleVi: 'Latte trà xanh là yêu thích của tôi.' },
+        { word: 'muffin', meaning: 'bánh muffin', phonetic: '/ˈmʌfɪn/', pos: 'n', example: 'I will have a blueberry muffin.', exampleVi: 'Tôi sẽ lấy một cái bánh muffin việt quất.' },
+        { word: 'croissant', meaning: 'bánh sừng bò', phonetic: '/krwɑːˈsɒ̃/', pos: 'n', example: 'A fresh croissant for breakfast.', exampleVi: 'Một chiếc bánh sừng bò mới cho bữa sáng.' },
+        { word: 'whipped', meaning: 'đánh bông', phonetic: '/wɪpt/', pos: 'adj', example: 'Add whipped cream on top.', exampleVi: 'Thêm kem đánh bông lên trên.' },
+      ]
+    },
+    {
+      id: 'ielts', name: 'IELTS', icon: 'fa-graduation-cap', color: '#06b6d4',
+      words: [
+        { word: 'academic', meaning: 'học thuật', phonetic: '/ˌækəˈdemɪk/', pos: 'adj', example: 'She has an academic background in science.', exampleVi: 'Cô ấy có nền tảng học thuật về khoa học.' },
+        { word: 'research', meaning: 'nghiên cứu', phonetic: '/rɪˈsɜːrtʃ/', pos: 'n', example: 'The research was published last month.', exampleVi: 'Nghiên cứu được công bố tháng trước.' },
+        { word: 'hypothesis', meaning: 'giả thuyết', phonetic: '/haɪˈpɒθəsɪs/', pos: 'n', example: 'The hypothesis was proven correct.', exampleVi: 'Giả thuyết đã được chứng minh đúng.' },
+        { word: 'conclusion', meaning: 'kết luận', phonetic: '/kənˈkluːʒn/', pos: 'n', example: 'In conclusion, the data supports the theory.', exampleVi: 'Kết luận, dữ liệu hỗ trợ lý thuyết.' },
+        { word: 'evidence', meaning: 'bằng chứng', phonetic: '/ˈevɪdəns/', pos: 'n', example: 'There is strong evidence to support this claim.', exampleVi: 'Có bằng chứng mạnh mẽ hỗ trợ tuyên bố này.' },
+        { word: 'analyze', meaning: 'phân tích', phonetic: '/ˈænəlaɪz/', pos: 'v', example: 'We need to analyze the data carefully.', exampleVi: 'Chúng ta cần phân tích dữ liệu cẩn thận.' },
+        { word: 'significant', meaning: 'đáng kể', phonetic: '/sɪɡˈnɪfɪkənt/', pos: 'adj', example: 'There was a significant increase.', exampleVi: 'Có sự tăng trưởng đáng kể.' },
+        { word: 'contribute', meaning: 'đóng góp', phonetic: '/kənˈtrɪbjuːt/', pos: 'v', example: 'Many factors contribute to success.', exampleVi: 'Nhiều yếu tố đóng góp vào thành công.' },
+        { word: 'phenomenon', meaning: 'hiện tượng', phonetic: '/fɪˈnɒmɪnən/', pos: 'n', example: 'This is a natural phenomenon.', exampleVi: 'Đây là hiện tượng tự nhiên.' },
+        { word: 'perspective', meaning: 'quan điểm', phonetic: '/pərˈspektɪv/', pos: 'n', example: 'From a different perspective, the situation looks better.', exampleVi: 'Từ quan điểm khác, tình hình trông tốt hơn.' },
+        { word: 'methodology', meaning: 'phương pháp luận', phonetic: '/ˌmeθəˈdɒlədʒi/', pos: 'n', example: 'The methodology used was rigorous.', exampleVi: 'Phương pháp luận được sử dụng rất chặt chẽ.' },
+        { word: 'sustainable', meaning: 'bền vững', phonetic: '/səˈsteɪnəbl/', pos: 'adj', example: 'We need sustainable development.', exampleVi: 'Chúng ta cần phát triển bền vững.' },
+        { word: 'controversy', meaning: 'tranh cãi', phonetic: '/ˈkɒntrəvɜːrsi/', pos: 'n', example: 'The topic sparked controversy.', exampleVi: 'Chủ đề gây ra tranh cãi.' },
+        { word: 'elaborate', meaning: 'trình bày chi tiết', phonetic: '/ɪˈlæbəreɪt/', pos: 'v', example: 'Could you elaborate on that point?', exampleVi: 'Bạn có thể trình bày chi tiết về điểm đó?' },
+        { word: 'fluctuate', meaning: 'dao động', phonetic: '/ˈflʌktʃueɪt/', pos: 'v', example: 'Prices fluctuate throughout the year.', exampleVi: 'Giá cả dao động trong suốt năm.' },
+        { word: 'tendency', meaning: 'xu hướng', phonetic: '/ˈtendənsi/', pos: 'n', example: 'There is a tendency to overeat.', exampleVi: 'Có xu hướng ăn quá nhiều.' },
+        { word: 'impact', meaning: 'tác động', phonetic: '/ˈɪmpækt/', pos: 'n', example: 'Climate change has a huge impact.', exampleVi: 'Biến đổi khí hậu có tác động lớn.' },
+        { word: 'demonstrate', meaning: 'chứng minh', phonetic: '/ˈdemənstreɪt/', pos: 'v', example: 'The experiment demonstrates the theory.', exampleVi: 'Thí nghiệm chứng minh lý thuyết.' },
+        { word: 'inequality', meaning: 'bất bình đẳng', phonetic: '/ˌɪnɪˈkwɒləti/', pos: 'n', example: 'Income inequality is a global issue.', exampleVi: 'Bất bình đẳng thu nhập là vấn đề toàn cầu.' },
+        { word: 'infrastructure', meaning: 'cơ sở hạ tầng', phonetic: '/ˈɪnfrəstrʌktʃər/', pos: 'n', example: 'The country needs better infrastructure.', exampleVi: 'Đất nước cần cơ sở hạ tầng tốt hơn.' },
+        { word: 'consequently', meaning: 'do đó', phonetic: '/ˈkɒnsɪkwentli/', pos: 'adv', example: 'He failed the exam; consequently, he had to retake it.', exampleVi: 'Anh ấy trượt kỳ thi; do đó phải thi lại.' },
+        { word: 'demographic', meaning: 'nhân khẩu học', phonetic: '/ˌdeməˈɡræfɪk/', pos: 'adj', example: 'Demographic changes affect the economy.', exampleVi: 'Thay đổi nhân khẩu học ảnh hưởng đến kinh tế.' },
+        { word: 'paradigm', meaning: 'mô hình', phonetic: '/ˈpærədaɪm/', pos: 'n', example: 'A new paradigm in education has emerged.', exampleVi: 'Một mô hình mới trong giáo dục đã xuất hiện.' },
+        { word: 'empirical', meaning: 'thực nghiệm', phonetic: '/ɪmˈpɪrɪkl/', pos: 'adj', example: 'The theory is based on empirical evidence.', exampleVi: 'Lý thuyết dựa trên bằng chứng thực nghiệm.' },
+        { word: 'coherent', meaning: 'mạch lạc', phonetic: '/koʊˈhɪrənt/', pos: 'adj', example: 'Write a coherent essay.', exampleVi: 'Viết một bài luận mạch lạc.' },
+        { word: 'ambiguous', meaning: 'mơ hồ', phonetic: '/æmˈbɪɡjuəs/', pos: 'adj', example: 'The instructions were ambiguous.', exampleVi: 'Hướng dẫn rất mơ hồ.' },
+        { word: 'prevalent', meaning: 'phổ biến', phonetic: '/ˈprevələnt/', pos: 'adj', example: 'Obesity is prevalent in developed countries.', exampleVi: 'Béo phì phổ biến ở các nước phát triển.' },
+        { word: 'constraint', meaning: 'hạn chế', phonetic: '/kənˈstreɪnt/', pos: 'n', example: 'Budget constraints limited the project.', exampleVi: 'Hạn chế ngân sách giới hạn dự án.' },
+        { word: 'feasible', meaning: 'khả thi', phonetic: '/ˈfiːzəbl/', pos: 'adj', example: 'Is this plan feasible?', exampleVi: 'Kế hoạch này có khả thi không?' },
+        { word: 'diverse', meaning: 'đa dạng', phonetic: '/daɪˈvɜːrs/', pos: 'adj', example: 'We have a diverse team.', exampleVi: 'Chúng tôi có một đội ngũ đa dạng.' },
+      ]
+    },
+    {
+      id: 'toeic', name: 'TOEIC', icon: 'fa-building', color: '#ec4899',
+      words: [
+        { word: 'invoice', meaning: 'hóa đơn', phonetic: '/ˈɪnvɔɪs/', pos: 'n', example: 'Please send the invoice by email.', exampleVi: 'Vui lòng gửi hóa đơn qua email.' },
+        { word: 'shipment', meaning: 'lô hàng', phonetic: '/ˈʃɪpmənt/', pos: 'n', example: 'The shipment will arrive next week.', exampleVi: 'Lô hàng sẽ đến tuần sau.' },
+        { word: 'inventory', meaning: 'hàng tồn kho', phonetic: '/ˈɪnvəntɔːri/', pos: 'n', example: 'We need to check the inventory.', exampleVi: 'Chúng ta cần kiểm tra hàng tồn kho.' },
+        { word: 'warranty', meaning: 'bảo hành', phonetic: '/ˈwɒrənti/', pos: 'n', example: 'The product has a one-year warranty.', exampleVi: 'Sản phẩm có bảo hành một năm.' },
+        { word: 'refund', meaning: 'hoàn tiền', phonetic: '/ˈriːfʌnd/', pos: 'n', example: 'I would like a refund, please.', exampleVi: 'Tôi muốn được hoàn tiền.' },
+        { word: 'headquarters', meaning: 'trụ sở chính', phonetic: '/ˈhedkwɔːrtərz/', pos: 'n', example: 'The headquarters is in New York.', exampleVi: 'Trụ sở chính ở New York.' },
+        { word: 'annual', meaning: 'hàng năm', phonetic: '/ˈænjuəl/', pos: 'adj', example: 'The annual report was published.', exampleVi: 'Báo cáo hàng năm đã được công bố.' },
+        { word: 'comply', meaning: 'tuân thủ', phonetic: '/kəmˈplaɪ/', pos: 'v', example: 'You must comply with the regulations.', exampleVi: 'Bạn phải tuân thủ quy định.' },
+        { word: 'vendor', meaning: 'nhà cung cấp', phonetic: '/ˈvendər/', pos: 'n', example: 'We selected a new vendor.', exampleVi: 'Chúng tôi chọn nhà cung cấp mới.' },
+        { word: 'acquisition', meaning: 'mua lại', phonetic: '/ˌækwɪˈzɪʃn/', pos: 'n', example: 'The acquisition was completed last month.', exampleVi: 'Thương vụ mua lại hoàn thành tháng trước.' },
+        { word: 'liability', meaning: 'trách nhiệm pháp lý', phonetic: '/ˌlaɪəˈbɪləti/', pos: 'n', example: 'The company denied any liability.', exampleVi: 'Công ty từ chối mọi trách nhiệm pháp lý.' },
+        { word: 'merger', meaning: 'sáp nhập', phonetic: '/ˈmɜːrdʒər/', pos: 'n', example: 'The merger created a larger company.', exampleVi: 'Việc sáp nhập tạo ra công ty lớn hơn.' },
+        { word: 'audit', meaning: 'kiểm toán', phonetic: '/ˈɔːdɪt/', pos: 'n', example: 'The annual audit found no issues.', exampleVi: 'Kiểm toán hàng năm không phát hiện vấn đề.' },
+        { word: 'subsidiary', meaning: 'công ty con', phonetic: '/səbˈsɪdiəri/', pos: 'n', example: 'They opened a subsidiary in Asia.', exampleVi: 'Họ mở công ty con ở châu Á.' },
+        { word: 'dividend', meaning: 'cổ tức', phonetic: '/ˈdɪvɪdend/', pos: 'n', example: 'Shareholders received a dividend.', exampleVi: 'Cổ đông nhận được cổ tức.' },
+        { word: 'procurement', meaning: 'mua sắm', phonetic: '/prəˈkjʊərmənt/', pos: 'n', example: 'The procurement department handles purchases.', exampleVi: 'Bộ phận mua sắm xử lý các đơn hàng.' },
+        { word: 'lease', meaning: 'hợp đồng thuê', phonetic: '/liːs/', pos: 'n', example: 'We signed a five-year lease.', exampleVi: 'Chúng tôi ký hợp đồng thuê năm năm.' },
+        { word: 'tariff', meaning: 'thuế quan', phonetic: '/ˈtærɪf/', pos: 'n', example: 'New tariffs were imposed on imports.', exampleVi: 'Thuế quan mới áp dụng cho hàng nhập khẩu.' },
+        { word: 'quota', meaning: 'hạn ngạch', phonetic: '/ˈkwoʊtə/', pos: 'n', example: 'The sales team exceeded their quota.', exampleVi: 'Đội bán hàng vượt hạn ngạch.' },
+        { word: 'commodity', meaning: 'hàng hóa', phonetic: '/kəˈmɒdəti/', pos: 'n', example: 'Oil is a valuable commodity.', exampleVi: 'Dầu là hàng hóa có giá trị.' },
+        { word: 'reimburse', meaning: 'hoàn trả', phonetic: '/ˌriːɪmˈbɜːrs/', pos: 'v', example: 'The company will reimburse travel expenses.', exampleVi: 'Công ty sẽ hoàn trả chi phí đi lại.' },
+        { word: 'transaction', meaning: 'giao dịch', phonetic: '/trænˈzækʃn/', pos: 'n', example: 'Each transaction is recorded.', exampleVi: 'Mỗi giao dịch đều được ghi lại.' },
+        { word: 'brochure', meaning: 'tờ rơi', phonetic: '/broʊˈʃʊr/', pos: 'n', example: 'Please take a brochure.', exampleVi: 'Vui lòng lấy một tờ rơi.' },
+        { word: 'wholesale', meaning: 'bán sỉ', phonetic: '/ˈhoʊlseɪl/', pos: 'adj', example: 'We buy at wholesale prices.', exampleVi: 'Chúng tôi mua với giá sỉ.' },
+        { word: 'retail', meaning: 'bán lẻ', phonetic: '/ˈriːteɪl/', pos: 'adj', example: 'The retail price is higher.', exampleVi: 'Giá bán lẻ cao hơn.' },
+        { word: 'voucher', meaning: 'phiếu giảm giá', phonetic: '/ˈvaʊtʃər/', pos: 'n', example: 'Use this voucher for a discount.', exampleVi: 'Dùng phiếu giảm giá này để được chiết khấu.' },
+        { word: 'shareholder', meaning: 'cổ đông', phonetic: '/ˈʃerhoʊldər/', pos: 'n', example: 'Shareholders approved the plan.', exampleVi: 'Cổ đông phê duyệt kế hoạch.' },
+        { word: 'itinerary', meaning: 'lịch trình', phonetic: '/aɪˈtɪnəreri/', pos: 'n', example: 'Here is the business itinerary.', exampleVi: 'Đây là lịch trình công tác.' },
+        { word: 'forthcoming', meaning: 'sắp tới', phonetic: '/ˌfɔːrθˈkʌmɪŋ/', pos: 'adj', example: 'Details will be in the forthcoming report.', exampleVi: 'Chi tiết sẽ có trong báo cáo sắp tới.' },
+        { word: 'allocate', meaning: 'phân bổ', phonetic: '/ˈæləkeɪt/', pos: 'v', example: 'We need to allocate more resources.', exampleVi: 'Chúng ta cần phân bổ thêm nguồn lực.' },
+      ]
+    }
   ],
 
   phrases: [
-    {
-      text: "Actions speak louder than words.",
-      translation: "Hành động có giá trị hơn lời nói.",
-      category: "Idioms"
-    },
-    {
-      text: "Every cloud has a silver lining.",
-      translation: "Trong cái rủi có cái may (Sau cơn mưa trời lại sáng).",
-      category: "Idioms"
-    },
-    {
-      text: "Break a leg! You will do great today.",
-      translation: "Chúc may mắn! Bạn sẽ làm rất tốt hôm nay.",
-      category: "Idioms"
-    },
-    {
-      text: "Better late than never, but better never late.",
-      translation: "Muộn còn hơn không, nhưng không muộn vẫn tốt hơn.",
-      category: "Phrases"
-    },
-    {
-      text: "It is not rocket science, you can easily do it.",
-      translation: "Nó không quá phức tạp đâu, bạn có thể dễ dàng làm được.",
-      category: "Phrases"
-    },
-    {
-      text: "Could you please clarify this point for me?",
-      translation: "Bạn có thể vui lòng làm rõ điểm này giúp tôi được không?",
-      category: "Professional"
-    },
-    {
-      text: "We need to think outside the box for this campaign.",
-      translation: "Chúng ta cần tư duy đột phá cho chiến dịch này.",
-      category: "Professional"
-    },
-    {
-      text: "Failure is simply the opportunity to begin again more intelligently.",
-      translation: "Thất bại đơn giản là cơ hội để bắt đầu lại một cách thông minh hơn.",
-      category: "Inspirational"
-    },
-    {
-      text: "The only way to do great work is to love what you do.",
-      translation: "Cách duy nhất để làm nên những điều vĩ đại là yêu việc bạn làm.",
-      category: "Inspirational"
-    },
-    {
-      text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-      translation: "Thành công không phải là điểm dừng, thất bại không phải là dấu chấm hết: lòng dũng cảm tiếp bước mới là điều quan trọng.",
-      category: "Inspirational"
-    }
+    { en: 'How are you doing?', vi: 'Bạn có khỏe không?', topic: 'communication', level: 'beginner' },
+    { en: 'Nice to meet you.', vi: 'Rất vui được gặp bạn.', topic: 'communication', level: 'beginner' },
+    { en: 'Could you repeat that?', vi: 'Bạn có thể nhắc lại được không?', topic: 'communication', level: 'beginner' },
+    { en: 'I would like to order.', vi: 'Tôi muốn gọi món.', topic: 'restaurant', level: 'beginner' },
+    { en: 'Can I have the bill, please?', vi: 'Cho tôi hóa đơn được không?', topic: 'restaurant', level: 'beginner' },
+    { en: 'Where is the nearest station?', vi: 'Trạm gần nhất ở đâu?', topic: 'travel', level: 'beginner' },
+    { en: 'I have a meeting at 3 PM.', vi: 'Tôi có cuộc họp lúc 3 giờ chiều.', topic: 'work', level: 'beginner' },
+    { en: 'The deadline is next Friday.', vi: 'Hạn chót là thứ Sáu tới.', topic: 'work', level: 'beginner' },
+    { en: 'Could you please send me the report?', vi: 'Bạn vui lòng gửi cho tôi báo cáo?', topic: 'work', level: 'intermediate' },
+    { en: 'I apologize for the inconvenience.', vi: 'Tôi xin lỗi vì sự bất tiện.', topic: 'communication', level: 'intermediate' },
+    { en: 'In my opinion, this is a great idea.', vi: 'Theo ý kiến tôi, đây là ý tưởng tuyệt vời.', topic: 'communication', level: 'intermediate' },
+    { en: 'Can I get a latte with oat milk?', vi: 'Cho tôi một ly latte sữa yến mạch được không?', topic: 'cafe', level: 'intermediate' },
+    { en: 'I would like to check in, please.', vi: 'Tôi muốn làm thủ tục nhận phòng.', topic: 'travel', level: 'intermediate' },
+    { en: 'Do you have any vegetarian options?', vi: 'Bạn có món chay nào không?', topic: 'restaurant', level: 'intermediate' },
+    { en: 'The flight has been delayed by two hours.', vi: 'Chuyến bay bị trì hoãn hai tiếng.', topic: 'travel', level: 'intermediate' },
+    { en: 'We need to discuss the budget allocation.', vi: 'Chúng ta cần thảo luận phân bổ ngân sách.', topic: 'work', level: 'advanced' },
+    { en: 'Could you elaborate on that point?', vi: 'Bạn có thể trình bày chi tiết hơn?', topic: 'ielts', level: 'advanced' },
+    { en: 'The data suggests a significant trend.', vi: 'Dữ liệu cho thấy xu hướng đáng kể.', topic: 'ielts', level: 'advanced' },
+    { en: 'The shipment is expected to arrive by Friday.', vi: 'Lô hàng dự kiến đến vào thứ Sáu.', topic: 'toeic', level: 'advanced' },
+    { en: 'We should schedule a follow-up meeting.', vi: 'Chúng ta nên lên lịch họp tiếp theo.', topic: 'work', level: 'intermediate' },
+    { en: 'What time does the cafe open?', vi: 'Quán cafe mở cửa lúc mấy giờ?', topic: 'cafe', level: 'beginner' },
+    { en: 'I really appreciate your help.', vi: 'Tôi thực sự đánh giá cao sự giúp đỡ của bạn.', topic: 'communication', level: 'intermediate' },
+    { en: 'Let me introduce you to my colleague.', vi: 'Để tôi giới thiệu bạn với đồng nghiệp.', topic: 'work', level: 'intermediate' },
+    { en: 'This restaurant has excellent reviews.', vi: 'Nhà hàng này có đánh giá rất tốt.', topic: 'restaurant', level: 'intermediate' },
+    { en: 'Is this seat taken?', vi: 'Chỗ này có ai ngồi chưa?', topic: 'cafe', level: 'beginner' },
   ],
 
-  stories: [
-    {
-      title: "The Power of Consistency",
-      text: "Consistency is the key to unlocking your full potential. Doing small things every single day adds up to massive results over time. If you improve by just one percent every day, you will be thirty-seven times better by the end of a year. Do not wait for intense inspiration; instead, build simple habits that keep you moving forward even when you feel tired.",
-      translation: "Sự kiên trì chính là chìa khóa để mở khóa toàn bộ tiềm năng của bạn. Làm những việc nhỏ nhặt mỗi ngày sẽ tích lũy thành những kết quả khổng lồ theo thời gian. Nếu bạn tiến bộ chỉ một phần trăm mỗi ngày, bạn sẽ tốt hơn gấp ba mươi bảy lần vào cuối năm. Đừng chờ đợi nguồn cảm hứng mãnh liệt; thay vào đó, hãy xây dựng những thói quen đơn giản để giữ cho bạn luôn tiến về phía trước ngay cả khi bạn cảm thấy mệt mỏi."
-    },
-    {
-      title: "Learning from Mistakes",
-      text: "Mistakes are not signs of weakness; they are proof that you are trying. Every expert was once a beginner who made countless errors. The most successful people in the world are those who fail the most, because they dare to take risks and learn from their failures. Embrace your errors, analyze them, and use them as stepping stones to climb higher in your journey of personal growth.",
-      translation: "Sai lầm không phải là dấu hiệu của sự yếu đuối; chúng là bằng chứng cho thấy bạn đang cố gắng. Mỗi chuyên gia đều từng là một người mới bắt đầu mắc vô số sai sót. Những người thành công nhất trên thế giới là những người thất bại nhiều nhất, bởi vì họ dám chấp nhận rủi ro và học hỏi từ những thất bại đó. Hãy đón nhận những sai lầm, phân tích chúng và biến chúng thành những viên đá đệm để leo cao hơn trên hành trình phát triển cá nhân của bạn."
-    },
-    {
-      title: "The Speed of Light",
-      text: "Light travels at an incredible speed of nearly three hundred thousand kilometers per second. It takes only eight minutes for light emitted from the surface of the Sun to reach our planet Earth. When we look up at the stars at night, we are actually looking back in time, seeing light that left those celestial bodies hundreds or thousands of years ago. The universe is a vast time machine.",
-      translation: "Ánh sáng truyền đi với tốc độ đáng kinh ngạc gần ba trăm nghìn km mỗi giây. Chỉ mất tám phút để ánh sáng phát ra từ bề mặt Mặt trời tới Trái đất của chúng ta. Khi chúng ta ngước nhìn những ngôi sao vào ban đêm, thực chất chúng ta đang nhìn ngược thời gian, nhìn thấy ánh sáng đã rời khỏi các thiên thể đó từ hàng trăm hay hàng ngàn năm trước. Vũ trụ là một cỗ máy thời gian khổng lồ."
-    }
+  sentences: [
+    { en: 'The quick brown fox jumps over the lazy dog.', vi: 'Con cáo nâu nhanh nhẹn nhảy qua con chó lười.', topic: 'general' },
+    { en: 'Practice makes perfect, so keep trying every day.', vi: 'Luyện tập tạo nên sự hoàn hảo, hãy tiếp tục cố gắng mỗi ngày.', topic: 'general' },
+    { en: 'Learning a new language opens doors to new opportunities.', vi: 'Học một ngôn ngữ mới mở ra cánh cửa cho những cơ hội mới.', topic: 'general' },
+    { en: 'Good morning everyone, today we will discuss the quarterly results.', vi: 'Chào buổi sáng mọi người, hôm nay chúng ta sẽ thảo luận kết quả quý.', topic: 'work' },
+    { en: 'Could you please pass the salt and pepper?', vi: 'Bạn vui lòng đưa giúp muối và tiêu?', topic: 'restaurant' },
+    { en: 'The weather forecast says it will rain tomorrow afternoon.', vi: 'Dự báo thời tiết nói rằng ngày mai chiều sẽ mưa.', topic: 'general' },
+    { en: 'I have been studying English for three years now.', vi: 'Tôi đã học tiếng Anh được ba năm rồi.', topic: 'general' },
+    { en: 'Excuse me, could you tell me how to get to the museum?', vi: 'Xin lỗi, bạn có thể chỉ cho tôi đường đến bảo tàng?', topic: 'travel' },
+    { en: 'The company plans to expand into international markets next year.', vi: 'Công ty dự định mở rộng sang thị trường quốc tế năm sau.', topic: 'work' },
+    { en: 'She recommended a wonderful book about personal development.', vi: 'Cô ấy giới thiệu một cuốn sách tuyệt vời về phát triển bản thân.', topic: 'communication' },
+    { en: 'The research indicates that regular exercise improves mental health.', vi: 'Nghiên cứu chỉ ra rằng tập thể dục đều đặn cải thiện sức khỏe tinh thần.', topic: 'ielts' },
+    { en: 'All employees must attend the safety training session next Monday.', vi: 'Tất cả nhân viên phải tham dự buổi đào tạo an toàn vào thứ Hai tới.', topic: 'toeic' },
+    { en: 'Would you like your coffee with milk or black?', vi: 'Bạn muốn cà phê có sữa hay đen?', topic: 'cafe' },
+    { en: 'The hotel offers complimentary breakfast for all guests.', vi: 'Khách sạn cung cấp bữa sáng miễn phí cho tất cả khách.', topic: 'travel' },
+    { en: 'Technology is changing the way we communicate with each other.', vi: 'Công nghệ đang thay đổi cách chúng ta giao tiếp với nhau.', topic: 'general' },
   ],
 
-  roadmap: {
-    starter: {
-      levelName: "Cấp 1: Starter (Mới Bắt Đầu - A1)",
-      description: "Luyện gõ các từ vựng và câu chào hỏi giao tiếp căn bản nhất hàng ngày.",
-      vocabulary: [
-        { word: "hello", ipa: "/həˈləʊ/", partOfSpeech: "excl", definition: "xin chào", category: "Greetings" },
-        { word: "morning", ipa: "/ˈmɔː.nɪŋ/", partOfSpeech: "n", definition: "buổi sáng", category: "Time" },
-        { word: "please", ipa: "/pliːz/", partOfSpeech: "excl, v", definition: "vui lòng, xin mời", category: "Essentials" },
-        { word: "friend", ipa: "/frend/", partOfSpeech: "n", definition: "người bạn", category: "Social" },
-        { word: "family", ipa: "/ˈfæm.əl.i/", partOfSpeech: "n", definition: "gia đình", category: "Social" },
-        { word: "father", ipa: "/ˈfɑː.ðər/", partOfSpeech: "n", definition: "người cha", category: "Social" },
-        { word: "mother", ipa: "/ˈmʌð.ər/", partOfSpeech: "n", definition: "người mẹ", category: "Social" },
-        { word: "house", ipa: "/haʊs/", partOfSpeech: "n", definition: "ngôi nhà", category: "Home" },
-        { word: "water", ipa: "/ˈwɔː.tər/", partOfSpeech: "n", definition: "nước", category: "Daily" },
-        { word: "happy", ipa: "/ˈhæp.i/", partOfSpeech: "adj", definition: "hạnh phúc, vui vẻ", category: "Feelings" }
-      ],
-      phrases: [
-        { text: "How are you doing today?", translation: "Hôm nay bạn thế nào?", category: "Greetings" },
-        { text: "Nice to meet you here.", translation: "Rất vui được gặp bạn ở đây.", category: "Greetings" },
-        { text: "Have a wonderful day ahead.", translation: "Chúc bạn một ngày tuyệt vời phía trước.", category: "Wishes" },
-        { text: "Thank you very much indeed.", translation: "Thành thật cảm ơn bạn rất nhiều.", category: "Greetings" }
-      ],
-      story: {
-        title: "A Happy Family (A1)",
-        text: "A happy family lives in a small and beautiful house. Every morning, they have breakfast together and share sweet smiles. They love learning new things and helping their friends. Life is simple but wonderful when you appreciate every single moment.",
-        translation: "Một gia đình hạnh phúc sống trong một ngôi nhà nhỏ và xinh đẹp. Mỗi buổi sáng, họ cùng nhau ăn sáng và trao nhau những nụ cười ngọt ngào. Họ thích học hỏi những điều mới và giúp đỡ bạn bè của mình. Cuộc sống tuy đơn giản nhưng thật tuyệt vời khi bạn trân trọng từng khoảnh khắc."
-      }
-    },
-    elementary: {
-      levelName: "Cấp 2: Elementary (Cơ Bản - A2)",
-      description: "Mở rộng từ vựng về công việc, thói quen và hoạt động vui chơi giải trí.",
-      vocabulary: [
-        { word: "kitchen", ipa: "/ˈkɪtʃ.ən/", partOfSpeech: "n", definition: "nhà bếp", category: "Home" },
-        { word: "breakfast", ipa: "/ˈbrek.fəst/", partOfSpeech: "n", definition: "bữa ăn sáng", category: "Daily" },
-        { word: "together", ipa: "/təˈɡeð.ər/", partOfSpeech: "adv", definition: "cùng nhau", category: "Social" },
-        { word: "computer", ipa: "/kəmˈpjuː.tər/", partOfSpeech: "n", definition: "máy vi tính", category: "Work" },
-        { word: "routine", ipa: "/ruːˈtiːn/", partOfSpeech: "n, adj", definition: "thói quen thường nhật", category: "Daily" },
-        { word: "doctor", ipa: "/ˈdɒk.tər/", partOfSpeech: "n", definition: "bác sĩ", category: "Jobs" },
-        { word: "teacher", ipa: "/ˈtiː.tʃər/", partOfSpeech: "n", definition: "giáo viên", category: "Jobs" },
-        { word: "meeting", ipa: "/ˈmiː.tɪŋ/", partOfSpeech: "n", definition: "cuộc họp", category: "Work" },
-        { word: "holiday", ipa: "/ˈhɒl.ə.deɪ/", partOfSpeech: "n", definition: "ngày nghỉ, kỳ nghỉ", category: "Leisure" },
-        { word: "travel", ipa: "/ˈtræv.əl/", partOfSpeech: "v, n", definition: "du lịch, đi lại", category: "Leisure" }
-      ],
-      phrases: [
-        { text: "What is your favorite hobby?", translation: "Sở thích yêu thích của bạn là gì?", category: "Conversation" },
-        { text: "I usually go for a run in the evening.", translation: "Tôi thường đi chạy bộ vào buổi tối.", category: "Habits" },
-        { text: "She works as a software engineer.", translation: "Cô ấy làm việc như một kỹ sư phần mềm.", category: "Work" },
-        { text: "We need to buy some fresh vegetables.", translation: "Chúng ta cần mua một ít rau củ quả tươi.", category: "Shopping" }
-      ],
-      story: {
-        title: "The Busy Office (A2)",
-        text: "Every Monday, the office becomes very active and busy. Doctors, teachers, and engineers start their routines. They use computers to manage their tasks and prepare for important meetings. When the work is done, they enjoy their hobbies or travel with friends to relax.",
-        translation: "Mỗi thứ Hai, văn phòng đều trở nên hoạt động náo nhiệt và bận rộn. Các bác sĩ, giáo viên và kỹ sư bắt đầu công việc thường nhật của họ. Họ sử dụng máy tính để quản lý các tác vụ và chuẩn bị cho các cuộc họp quan trọng. Khi công việc hoàn thành, họ tận hưởng sở thích của mình hoặc đi du lịch cùng bạn bè để thư giãn."
-      }
-    },
-    intermediate: {
-      levelName: "Cấp 3: Intermediate (Trung Cấp - B1)",
-      description: "Luyện tiếng Anh công sở chuyên nghiệp, thuyết trình và giải quyết thử thách.",
-      vocabulary: [
-        { word: "management", ipa: "/ˈmæn.ɪdʒ.mənt/", partOfSpeech: "n", definition: "sự quản lý, ban quản lý", category: "Business" },
-        { word: "investment", ipa: "/ɪnˈvest.mənt/", partOfSpeech: "n", definition: "sự đầu tư", category: "Business" },
-        { word: "strategy", ipa: "/ˈstræt.ə.dʒi/", partOfSpeech: "n", definition: "chiến lược", category: "Business" },
-        { word: "marketing", ipa: "/ˈmɑː.kɪ.tɪŋ/", partOfSpeech: "n", definition: "tiếp thị, marketing", category: "Business" },
-        { word: "innovative", ipa: "/ˈɪn.ə.və.tɪv/", partOfSpeech: "adj", definition: "sáng tạo, đổi mới", category: "Business" },
-        { word: "productivity", ipa: "/ˌprɒd.ʌkˈtɪv.ə.ti/", partOfSpeech: "n", definition: "năng suất", category: "Work" },
-        { word: "collaborate", ipa: "/kəˈlæb.ə.reɪt/", partOfSpeech: "v", definition: "hợp tác", category: "Professional" },
-        { word: "negotiate", ipa: "/nəˈɡəʊ.ʃi.eɪt/", partOfSpeech: "v", definition: "thương lượng, đàm phán", category: "Professional" },
-        { word: "schedule", ipa: "/ˈʃedʒ.uːl/", partOfSpeech: "n, v", definition: "lịch trình, thời khóa biểu", category: "Work" },
-        { word: "challenge", ipa: "/ˈtʃæl.ɪndʒ/", partOfSpeech: "n, v", definition: "thử thách, thách thức", category: "Growth" }
-      ],
-      phrases: [
-        { text: "We must find a practical solution to this challenge.", translation: "Chúng ta phải tìm ra giải pháp thiết thực cho thách thức này.", category: "Work" },
-        { text: "Active collaboration is the key to corporate growth.", translation: "Hợp tác chủ động là chìa khóa cho sự phát triển của doanh nghiệp.", category: "Business" },
-        { text: "Customer feedback helps us improve our services.", translation: "Phản hồi của khách hàng giúp chúng tôi cải thiện dịch vụ của mình.", category: "Business" },
-        { text: "He explained the new business strategy in detail.", translation: "Anh ấy đã giải thích chi tiết về chiến lược kinh doanh mới.", category: "Professional" }
-      ],
-      story: {
-        title: "Solving Challenges Together (B1)",
-        text: "To succeed in business, every single employee must cooperate and think about creative solutions. Good management builds strong strategies, while active customer feedback points out areas of improvement. With pure confidence and a standard workflow, we can turn any massive challenge into a great opportunity for progress.",
-        translation: "Để thành công trong kinh doanh, mỗi nhân viên đều phải hợp tác và nghĩ ra những giải pháp sáng tạo. Ban quản lý giỏi xây dựng các chiến lược vững chắc, trong khi phản hồi tích cực từ khách hàng chỉ ra những lĩnh vực cần cải thiện. Với sự tự tin thuần khiết và quy trình làm việc chuẩn mực, chúng ta có thể biến mọi thách thức lớn thành cơ hội tuyệt vời để tiến bộ."
-      }
-    },
-    "upper-intermediate": {
-      levelName: "Cấp 4: Upper-Intermediate (Khá - B2)",
-      description: "Tiếp cận từ vựng kỹ thuật, công nghệ thông tin và phát triển bền vững.",
-      vocabulary: [
-        { word: "algorithm", ipa: "/ˈæl.ɡə.rɪ.ðəm/", partOfSpeech: "n", definition: "thuật toán", category: "Tech" },
-        { word: "responsive", ipa: "/rɪˈspɒn.sɪv/", partOfSpeech: "adj", definition: "phản hồi nhanh, tương thích", category: "Tech" },
-        { word: "artificial", ipa: "/ˌɑː.tɪˈfɪʃ.əl/", partOfSpeech: "adj", definition: "nhân tạo", category: "Tech" },
-        { word: "intelligence", ipa: "/ɪnˈtel.ɪ.dʒəns/", partOfSpeech: "n", definition: "trí thông minh", category: "Tech" },
-        { word: "framework", ipa: "/ˈfreɪm.wɜːk/", partOfSpeech: "n", definition: "khung làm việc, bộ khung", category: "Tech" },
-        { word: "repository", ipa: "/rɪˈpɒz.ɪ.tər.i/", partOfSpeech: "n", definition: "kho chứa, kho mã nguồn", category: "Tech" },
-        { word: "encryption", ipa: "/ɪnˈkrɪp.ʃən/", partOfSpeech: "n", definition: "sự mã hóa bảo mật", category: "Tech" },
-        { word: "cybersecurity", ipa: "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/", partOfSpeech: "n", definition: "an ninh mạng", category: "Tech" },
-        { word: "sustainable", ipa: "/səˈsteɪ.nə.bəl/", partOfSpeech: "adj", definition: "bền vững", category: "Environment" },
-        { word: "conservation", ipa: "/ˌkɒn.səˈveɪ.ʃən/", partOfSpeech: "n", definition: "sự bảo tồn, gìn giữ", category: "Environment" }
-      ],
-      phrases: [
-        { text: "Artificial intelligence is changing the modern labor market.", translation: "Trí tuệ nhân tạo đang thay đổi thị trường lao động hiện đại.", category: "Trends" },
-        { text: "Our development team has pushed the final code repository.", translation: "Đội ngũ phát triển của chúng tôi đã đẩy kho chứa mã nguồn cuối cùng.", category: "Coding" },
-        { text: "Responsive web design ensures standard cross-device layouts.", translation: "Thiết kế web tương thích đảm bảo bố cục chuẩn trên các thiết bị.", category: "Design" },
-        { text: "Cybersecurity encryption keeps personal database records fully secure.", translation: "Mã hóa an ninh mạng giữ cho các hồ sơ cơ sở dữ liệu cá nhân hoàn toàn an toàn.", category: "Security" }
-      ],
-      story: {
-        title: "The Green Tech Revolution (B2)",
-        text: "Sustainable technology combined with artificial intelligence is creating a modern green revolution. Developers build smart algorithms and framework templates to optimize resource usage and encourage environmental conservation. High encryption and responsive designs make these apps safe, robust, and accessible across the globalized world.",
-        translation: "Công nghệ bền vững kết hợp với trí tuệ nhân tạo đang tạo ra một cuộc cách mạng xanh hiện đại. Các nhà phát triển xây dựng các thuật toán thông minh và các mẫu khung làm việc để tối ưu hóa việc sử dụng tài nguyên và khuyến khích bảo tồn môi trường. Độ mã hóa cao và thiết kế tương thích giúp các ứng dụng này an toàn, mạnh mẽ và có thể tiếp cận được trên toàn thế giới toàn cầu hóa."
-      }
-    },
-    master: {
-      levelName: "Cấp 5: Advanced Master (Thành Thạo - C1/C2)",
-      description: "Thử thách đỉnh cao với chủ đề triết học, vật lý thiên văn và phát triển bản thân.",
-      vocabulary: [
-        { word: "consistency", ipa: "/kənˈsɪs.tən.si/", partOfSpeech: "n", definition: "sự nhất quán, kiên định", category: "Mindset" },
-        { word: "enthusiasm", ipa: "/ɪnˈθjuː.zi.æz.əm/", partOfSpeech: "n", definition: "sự hăng hái, nhiệt huyết", category: "Mindset" },
-        { word: "astrophysics", ipa: "/ˌæs.trəʊˈfɪz.ɪks/", partOfSpeech: "n", definition: "vật lý thiên văn", category: "Science" },
-        { word: "celestial", ipa: "/sɪˈles.tʃəl/", partOfSpeech: "adj", definition: "thuộc về thiên thể, bầu trời", category: "Science" },
-        { word: "philosophy", ipa: "/fɪˈlɒs.ə.fi/", partOfSpeech: "n", definition: "triết học, triết lý", category: "Wisdom" },
-        { word: "consciousness", ipa: "/ˈkɒn.ʃəs.nəs/", partOfSpeech: "n", definition: "ý thức, nhận thức sâu", category: "Wisdom" },
-        { word: "sophisticated", ipa: "/səˈfɪs.tɪ.keɪ.tɪd/", partOfSpeech: "adj", definition: "tinh vi, phức tạp, sành sỏi", category: "Academic" },
-        { word: "perseverance", ipa: "/ˌpɜː.sɪˈvɪə.rəns/", partOfSpeech: "n", definition: "sự kiên trì vượt khó", category: "Mindset" },
-        { word: "transformation", ipa: "/ˌtræns.fəˈmeɪ.ʃən/", partOfSpeech: "n", definition: "sự biến đổi, lột xác", category: "Growth" },
-        { word: "authenticity", ipa: "/ˌɔː.θenˈtɪs.ə.ti/", partOfSpeech: "n", definition: "tính chân thực, xác thực", category: "Wisdom" }
-      ],
-      phrases: [
-        { text: "Perseverance and meticulous practice unlock the true gates of mastery.", translation: "Sự kiên trì và thực hành tỉ mỉ sẽ mở ra những cánh cổng thực sự của sự thành thạo.", category: "Wisdom" },
-        { text: "Astrophysics reveals the sophisticated secrets of the celestial universe.", translation: "Vật lý thiên văn tiết lộ những bí mật tinh vi của vũ trụ thiên thể.", category: "Science" },
-        { text: "A phenomenal shift in perspective leads to ultimate self-transformation.", translation: "Một sự thay đổi phi thường trong góc nhìn dẫn đến sự biến đổi bản thân tối thượng.", category: "Growth" },
-        { text: "Consistency builds the sturdy foundation of every magnificent achievement.", translation: "Sự nhất quán xây dựng nên nền móng vững chắc cho mọi thành tựu lộng lẫy.", category: "Wisdom" }
-      ],
-      story: {
-        title: "The Cosmic Journey of Consciousness (C1/C2)",
-        text: "Human consciousness has always explored the abstract depths of the celestial universe. Through sophisticated astrophysics and philosophical inquiry, we seek to understand our tiny position within the majestic cosmos. Meticulous observation and continuous transformation drive the dynamic progress of our modern civilization. Ultimate mastery is not a final destination, but an ongoing quest for pure truth and authenticity.",
-        translation: "Ý thức con người luôn khám phá những chiều sâu trừu tượng của vũ trụ thiên thể. Thông qua vật lý thiên văn tinh vi và tìm tòi triết học, chúng ta tìm cách hiểu vị trí nhỏ bé của mình trong vũ trụ hùng vĩ. Sự quan sát tỉ mỉ và sự biến đổi liên tục thúc đẩy sự tiến bộ năng động của nền văn minh hiện đại của chúng ta. Sự thành thạo tối thượng không phải là điểm đến cuối cùng, mà là một cuộc tìm kiếm không ngừng cho sự thật thuần khiết và tính chân thực."
-      }
-    }
+  // Helper methods
+  getTopicById(id) {
+    return this.topics.find(t => t.id === id);
+  },
+  getWordsByTopic(topicId) {
+    const topic = this.getTopicById(topicId);
+    return topic ? topic.words : [];
+  },
+  getRandomWords(count, topicId) {
+    let pool = topicId ? this.getWordsByTopic(topicId) : this.getAllWords();
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  },
+  searchWords(query) {
+    const q = query.toLowerCase();
+    return this.getAllWords().filter(w =>
+      w.word.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q)
+    );
+  },
+  getAllWords() {
+    return this.topics.flatMap(t => t.words.map(w => ({ ...w, topicId: t.id, topicName: t.name, topicColor: t.color })));
+  },
+  getPhrasesByTopic(topicId) {
+    return topicId ? this.phrases.filter(p => p.topic === topicId) : this.phrases;
+  },
+  getRandomPhrases(count, topicId) {
+    const pool = this.getPhrasesByTopic(topicId);
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, pool.length));
+  },
+  getRandomSentences(count, topicId) {
+    let pool = topicId ? this.sentences.filter(s => s.topic === topicId) : this.sentences;
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(count, pool.length));
   }
 };
-
-// Export database for ES Modules or make it globally accessible
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = RINTYPE_DATABASE;
-} else {
-  window.RINTYPE_DATABASE = RINTYPE_DATABASE;
-}

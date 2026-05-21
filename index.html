@@ -1,437 +1,247 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="minimal-light">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RinType English - Luyện Gõ Phím Kết Hợp Học Tiếng Anh Cao Cấp</title>
-  <meta name="description" content="RinType English là ứng dụng web cao cấp giúp bạn vừa luyện tốc độ gõ phím (Typing Test), vừa nâng cao vốn từ vựng, mẫu câu giao tiếp tiếng Anh kèm phát âm và dịch nghĩa trực quan.">
-  <meta name="keywords" content="luyện gõ phím, typing test, học tiếng anh, 10-finger typing, wpm, gõ phím nhanh, rintype">
+  <title>ZenType English — Học Tiếng Anh Thông Minh</title>
+  <meta name="description" content="ZenType English là nền tảng học tiếng Anh thông minh với từ vựng, quiz, flashcard, luyện nghe-nói, spaced repetition và mini games. Học ít nhưng nhớ lâu!">
+  <meta name="keywords" content="học tiếng anh, vocabulary, quiz, flashcard, speaking, listening, spaced repetition, zentype">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Main CSS Stylesheet -->
+  <!-- Main CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- App Wrapper -->
+  <!-- App Container -->
   <div class="app-container">
-    
-    <!-- Header -->
-    <header class="app-header">
-      <div class="logo-section">
-        <div class="logo-glow"></div>
-        <i class="fa-solid fa-keyboard logo-icon"></i>
-        <h1>RinType <span class="logo-accent">English</span></h1>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="logo-icon"><i class="fa-solid fa-language"></i></div>
+          <div>
+            <h1>ZenType</h1>
+            <span class="logo-sub">Learn → Practice → Remember</span>
+          </div>
+        </div>
       </div>
-      
-      <!-- Toolbar Controls -->
-      <div class="toolbar-controls">
-        <!-- Sound Style Controller -->
-        <div class="control-group">
-          <button class="icon-btn tooltip" id="btn-sound-toggle" data-tooltip="Tắt/Bật Âm Thanh">
-            <i class="fa-solid fa-volume-high"></i>
+
+      <!-- Level & XP -->
+      <div class="sidebar-level" id="sidebar-level">
+        <div class="level-info">
+          <div class="level-badge">
+            <i class="fa-solid fa-crown"></i>
+            <span>Level <span id="sidebar-level-num">1</span></span>
+          </div>
+          <span class="xp-text"><span id="sidebar-xp">0</span> / <span id="sidebar-xp-next">100</span> XP</span>
+        </div>
+        <div class="xp-bar">
+          <div class="xp-bar-fill" id="sidebar-xp-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="sidebar-stats">
+        <div class="sidebar-stat">
+          <span class="stat-num" id="sidebar-streak">0</span>
+          <span class="stat-label">🔥 Streak</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="stat-num" id="sidebar-words">0</span>
+          <span class="stat-label">📚 Từ</span>
+        </div>
+        <div class="sidebar-stat">
+          <span class="stat-num" id="sidebar-review">0</span>
+          <span class="stat-label">📝 Ôn</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Trang chính</div>
+        <div class="nav-item active" data-page="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </div>
+        <div class="nav-item" data-page="vocabulary">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Từ Vựng</span>
+        </div>
+
+        <div class="nav-section-title">Luyện tập</div>
+        <div class="nav-item" data-page="quiz">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Trắc Nghiệm</span>
+        </div>
+        <div class="nav-item" data-page="flashcard">
+          <i class="fa-solid fa-clone"></i>
+          <span>Flashcard</span>
+        </div>
+        <div class="nav-item" data-page="typing">
+          <i class="fa-solid fa-keyboard"></i>
+          <span>Bài Tập Viết</span>
+        </div>
+        <div class="nav-item" data-page="translate">
+          <i class="fa-solid fa-language"></i>
+          <span>Dịch Câu</span>
+        </div>
+
+        <div class="nav-section-title">Kỹ năng</div>
+        <div class="nav-item" data-page="listening">
+          <i class="fa-solid fa-headphones"></i>
+          <span>Luyện Nghe</span>
+        </div>
+        <div class="nav-item" data-page="speaking">
+          <i class="fa-solid fa-microphone"></i>
+          <span>Luyện Nói</span>
+        </div>
+        <div class="nav-item" data-page="spaced-repetition">
+          <i class="fa-solid fa-brain"></i>
+          <span>Ôn Tập Thông Minh</span>
+          <span class="nav-badge" id="review-badge" style="display:none">0</span>
+        </div>
+
+        <div class="nav-section-title">Giải trí</div>
+        <div class="nav-item" data-page="minigames">
+          <i class="fa-solid fa-gamepad"></i>
+          <span>Mini Games</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Sidebar Backdrop (Mobile) -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content-wrapper">
+
+      <!-- Top Header -->
+      <header class="top-header">
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="page-title" id="page-title">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </div>
+        <div class="header-actions">
+          <button class="header-btn tooltip" data-tooltip="Ôn tập hôm nay" id="btn-quick-review">
+            <i class="fa-solid fa-brain"></i>
           </button>
-          <select id="sound-select" class="custom-select" title="Loại Âm Thanh">
-            <option value="clicky">Keyboard Clicky</option>
-            <option value="typewriter">Typewriter Retro</option>
-            <option value="silent">Silent Switch</option>
-            <option value="zen">Zen Melody (Gõ Ra Nhạc) 🎵</option>
-          </select>
-        </div>
-
-        <!-- TTS Voice Controller -->
-        <div class="control-group">
-          <button class="icon-btn tooltip" id="btn-tts-toggle" data-tooltip="Tự động phát âm khi gõ từ">
-            <i class="fa-solid fa-ear-listen text-accent"></i>
+          <button class="header-btn tooltip" data-tooltip="Cài đặt" id="btn-settings">
+            <i class="fa-solid fa-gear"></i>
           </button>
-          <select id="voice-accent" class="custom-select" title="Giọng Đọc">
-            <option value="en-US">English (US)</option>
-            <option value="en-GB">English (UK)</option>
-          </select>
         </div>
+      </header>
 
-        <!-- Theme Selection Grid -->
-        <div class="control-group">
-          <i class="fa-solid fa-palette theme-icon"></i>
-          <select id="theme-select" class="custom-select" title="Đổi Giao Diện">
-            <option value="minimal-light">Sáng Tối Giản</option>
-            <option value="sakura-blossom">Hoa Anh Đào</option>
-            <option value="cream-mocha">Kem Cà Phê</option>
-            <option value="mint-fresh">Bạc Hà Tươi</option>
-            <option value="ocean-breeze">Gió Biển Xanh</option>
-          </select>
+      <!-- Dynamic Main Content -->
+      <main id="main-content">
+        <!-- Content rendered by JS modules -->
+        <div class="empty-state" id="loading-state">
+          <div class="spinner" style="margin: 0 auto var(--space-lg);"></div>
+          <h3>Đang tải...</h3>
         </div>
-      </div>
-    </header>
+      </main>
 
-    <!-- Navigation / Mode Selection -->
-    <nav class="mode-navigation">
-      <div class="nav-tabs">
-        <button class="nav-tab active" data-mode="vocabulary" id="tab-vocab">
-          <i class="fa-solid fa-book-open"></i> Từ Vựng (Vocabulary)
-        </button>
-        <button class="nav-tab" data-mode="phrases" id="tab-phrases">
-          <i class="fa-solid fa-quote-left"></i> Mẫu Câu (Phrases)
-        </button>
-        <button class="nav-tab" data-mode="stories" id="tab-stories">
-          <i class="fa-solid fa-newspaper"></i> Truyện Ngắn (Stories)
-        </button>
-        <button class="nav-tab" data-mode="roadmap" id="tab-roadmap">
-          <i class="fa-solid fa-graduation-cap"></i> Lộ Trình (Roadmap)
-        </button>
-        <button class="nav-tab" data-mode="game" id="tab-game">
-          <i class="fa-solid fa-gamepad"></i> Trò Chơi (Typing Game)
-        </button>
-      </div>
+    </div>
 
-      <!-- Context Sub-options -->
-      <div class="sub-options">
-        <div class="option-container active" id="options-count">
-          <span class="option-label">Chế độ luyện:</span>
-          <button class="option-btn active" data-type="words" data-value="10">10 Từ</button>
-          <button class="option-btn" data-type="words" data-value="25">25 Từ</button>
-          <button class="option-btn" data-type="words" data-value="50">50 Từ</button>
-          <span class="option-separator" style="opacity: 0.3; margin: 0 5px;">|</span>
-          <button class="option-btn" data-type="time" data-value="15">15 Giây</button>
-          <button class="option-btn" data-type="time" data-value="30">30 Giây</button>
-          <button class="option-btn" data-type="time" data-value="60">60 Giây</button>
-        </div>
-        <div class="option-container" id="options-stories" style="display: none;">
-          <span class="option-label">Chọn câu chuyện:</span>
-          <select id="story-select" class="custom-select">
-            <!-- Dynamic stories injected from data.js -->
-          </select>
-        </div>
-        <div class="option-container" id="options-roadmap" style="display: none;">
-          <span class="option-label">Lộ trình:</span>
-          <select id="roadmap-level-select" class="custom-select" style="margin-right: 8px;">
-            <option value="starter">Cấp 1: Starter (Mới Bắt Đầu - A1)</option>
-            <option value="elementary">Cấp 2: Elementary (Cơ Bản - A2)</option>
-            <option value="intermediate">Cấp 3: Intermediate (Trung Cấp - B1)</option>
-            <option value="upper-intermediate">Cấp 4: Upper-Intermediate (Khá - B2)</option>
-            <option value="master">Cấp 5: Advanced Master (Thành Thạo - C1/C2)</option>
-          </select>
-          <select id="roadmap-step-select" class="custom-select">
-            <option value="vocab">Bước 1: Luyện Từ Vựng</option>
-            <option value="phrases">Bước 2: Luyện Mẫu Câu</option>
-            <option value="story">Bước 3: Luyện Đọc Hiểu</option>
-          </select>
-        </div>
-        
-        <!-- Word Length Filter Option -->
-        <div class="option-container" id="options-word-length" style="margin-left: auto; display: flex; align-items: center;">
-          <span class="option-label"><i class="fa-solid fa-arrows-left-right"></i> Độ dài từ:</span>
-          <select id="word-length-filter-select" class="custom-select" style="min-width: 140px; cursor: pointer; height: 32px; font-size: 0.85rem; padding: 4px 8px; border-radius: 6px;">
-            <option value="all" selected>🌐 Tất cả độ dài</option>
-            <option value="short">🟢 Từ ngắn (3 - 5 chữ)</option>
-            <option value="medium">🟡 Vừa (6 - 8 chữ)</option>
-            <option value="long">🔴 Từ dài (9+ chữ)</option>
-          </select>
-        </div>
-      </div>
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="bottom-nav-item active" data-page="dashboard">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Tổng quan</span>
+      </button>
+      <button class="bottom-nav-item" data-page="vocabulary">
+        <i class="fa-solid fa-book-open"></i>
+        <span>Từ vựng</span>
+      </button>
+      <button class="bottom-nav-item" data-page="quiz">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Quiz</span>
+      </button>
+      <button class="bottom-nav-item" data-page="flashcard">
+        <i class="fa-solid fa-clone"></i>
+        <span>Flashcard</span>
+      </button>
+      <button class="bottom-nav-item" data-page="minigames">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Games</span>
+      </button>
     </nav>
-
-    <!-- Main Workspace -->
-    <main class="main-workspace">
-      
-      <!-- Game Arena Container (Space Shooter) -->
-      <section class="game-arena-container" id="game-arena-section" style="display: none;">
-        <div class="game-hud">
-          <div class="game-hud-item"><i class="fa-solid fa-star"></i> Điểm: <span id="game-score">0</span></div>
-          <div class="game-hud-item" style="flex-grow: 0.5; max-width: 250px;">
-            <i class="fa-solid fa-heart text-incorrect"></i> HP: 
-            <div class="game-hp-bar-container" style="background: #1e293b; border: 1px solid #334155; border-radius: 4px; height: 12px; flex-grow: 1; margin: 0 8px; overflow: hidden; display: inline-block; vertical-align: middle;">
-              <div class="game-hp-bar-fill" id="game-hp-fill" style="width: 100%; height: 100%; background: #22c55e; transition: width 0.2s ease, background-color 0.2s ease;"></div>
-            </div>
-            <span id="game-hp-text" style="font-size: 0.85rem; font-weight: 700;">100</span>
-          </div>
-          <div class="game-hud-item" style="color: #f59e0b;"><i class="fa-solid fa-coins"></i> Vàng: <span id="game-coins-hud">0</span></div>
-          <div class="game-hud-item"><i class="fa-solid fa-stairs"></i> Cấp độ: <span id="game-level">1</span></div>
-        </div>
-        
-        <div class="game-canvas-wrapper">
-          <canvas id="game-canvas" width="800" height="500"></canvas>
-          
-          <!-- Game Start Overlay -->
-          <div class="game-overlay" id="game-start-overlay">
-            <h2>🚀 CHIẾN TRƯỜNG GÕ PHÍM VŨ TRỤ</h2>
-            
-            <div class="game-tab-controls" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; width: 100%;">
-              <button class="game-overlay-tab active" id="btn-tab-battle" style="background: #3b82f6; color: #fff; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit; transition: all 0.2s ease;">🚀 Chuẩn Bị</button>
-              <button class="game-overlay-tab" id="btn-tab-shop" style="background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit; transition: all 0.2s ease; display: flex; align-items: center; gap: 6px;">
-                <i class="fa-solid fa-screwdriver-wrench text-accent"></i> Nhà Xưởng Nâng Cấp
-              </button>
-            </div>
-            
-            <!-- Panel 1: Battle Prep -->
-            <div id="game-battle-panel" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-              <p>Gõ chính xác các từ hiển thị trên thiên thạch đang rơi để phóng laser tiêu diệt chúng!</p>
-              <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 15px;">Từ vựng tự động đồng bộ theo Cấp độ Lộ Trình bạn đang chọn.</p>
-              
-              <!-- Difficulty & Word Length Selection -->
-               <div class="game-difficulty-container" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
-                 <div style="display: flex; align-items: center; gap: 8px;">
-                   <span style="font-size: 0.95rem; color: #94a3b8;">Độ khó:</span>
-                   <select id="game-difficulty-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
-                     <option value="easy">🟢 DỄ (Không trừ HP gõ sai)</option>
-                     <option value="medium" selected>🟡 TRUNG BÌNH (Trừ 2 HP)</option>
-                     <option value="hard">🔴 KHÓ (Trừ 5 HP, rơi cực nhanh)</option>
-                   </select>
-                 </div>
-                 <div style="display: flex; align-items: center; gap: 8px;">
-                   <span style="font-size: 0.95rem; color: #94a3b8;">Độ dài từ:</span>
-                   <select id="game-word-length-select" class="custom-select" style="background: #1e293b; color: #fff; border-color: #334155; padding: 6px 12px; border-radius: 6px; cursor: pointer; outline: none; font-family: inherit;">
-                     <option value="all" selected>🌐 Tất cả độ dài</option>
-                     <option value="short">🟢 Từ ngắn (3 - 5 ký tự)</option>
-                     <option value="medium">🟡 Từ vừa (6 - 8 ký tự)</option>
-                     <option value="long">🔴 Từ dài (9+ ký tự)</option>
-                   </select>
-                 </div>
-               </div>
-              
-              <button class="game-start-btn" id="btn-start-game">BẮT ĐẦU CHIẾN ĐẤU</button>
-            </div>
-            
-            <!-- Panel 2: Upgrade Hangar -->
-            <div id="game-shop-panel" style="width: 100%; display: none; flex-direction: column; align-items: center;">
-              <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); padding: 8px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                <i class="fa-solid fa-coins" style="color: #eab308; font-size: 1.3rem;"></i>
-                <span style="font-size: 0.95rem; color: #e2e8f0; font-weight: 500;">Tiền vàng tích lũy:</span>
-                <span id="shop-coin-count" style="font-size: 1.4rem; color: #f59e0b; font-weight: 800; font-family: 'JetBrains Mono', monospace;">0</span>
-              </div>
-              
-              <div class="shop-upgrades-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; max-height: 250px; overflow-y: auto; padding: 4px; margin-bottom: 15px;">
-                
-                <!-- Laser Weapon Card -->
-                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
-                  <div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                      <i class="fa-solid fa-bolt" style="color: #60a5fa;"></i>
-                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Pháo Laser Bắn Tỉa</strong>
-                    </div>
-                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Nâng cấp từ tia đơn lên bắn đôi, tia ba plasma, và hyper-laser sấm sét cực khủng!</p>
-                  </div>
-                  <button id="btn-upgrade-laser" style="width: 100%; border: none; outline: none; background: #2563eb; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
-                    <span>Cấp <span id="laser-upgrade-level">1</span></span>
-                    <span id="laser-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 100</span>
-                  </button>
-                </div>
-                
-                <!-- Shield Armor Card -->
-                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
-                  <div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                      <i class="fa-solid fa-shield-halved" style="color: #34d399;"></i>
-                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Giáp Lá Chắn Nano</strong>
-                    </div>
-                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Giảm sát thương khi va chạm thiên thạch đáy và giảm hẳn sát thương phạt khi gõ sai phím.</p>
-                  </div>
-                  <button id="btn-upgrade-shield" style="width: 100%; border: none; outline: none; background: #059669; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
-                    <span>Cấp <span id="shield-upgrade-level">1</span></span>
-                    <span id="shield-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 80</span>
-                  </button>
-                </div>
-                
-                <!-- Engine Max HP Card -->
-                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
-                  <div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                      <i class="fa-solid fa-heart-pulse" style="color: #f87171;"></i>
-                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Bể Máu Tối Đa</strong>
-                    </div>
-                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Tăng giới hạn HP tối đa từ 100 lên 120 và 150 để chống chọi các màn chơi dồn dập.</p>
-                  </div>
-                  <button id="btn-upgrade-hp" style="width: 100%; border: none; outline: none; background: #dc2626; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
-                    <span>Cấp <span id="hp-upgrade-level">1</span></span>
-                    <span id="hp-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 100</span>
-                  </button>
-                </div>
-                
-                <!-- Chronos Booster Card -->
-                <div class="shop-card" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; justify-content: space-between; text-align: left; transition: all 0.2s;">
-                  <div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                      <i class="fa-solid fa-wand-magic-sparkles" style="color: #c084fc;"></i>
-                      <strong style="color: #f1f5f9; font-size: 0.95rem;">Lõi Bổ Trợ Thời Gian</strong>
-                    </div>
-                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 8px 0; line-height: 1.3;">Tăng thời gian Đóng Băng và tăng tỷ lệ rơi ra các hạt năng lượng Capsules.</p>
-                  </div>
-                  <button id="btn-upgrade-booster" style="width: 100%; border: none; outline: none; background: #7c3aed; color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background-color 0.2s;">
-                    <span>Cấp <span id="booster-upgrade-level">1</span></span>
-                    <span id="booster-upgrade-cost" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-coins" style="color: #eab308; font-size: 0.8rem;"></i> 80</span>
-                  </button>
-                </div>
-                
-              </div>
-              <p style="font-size: 0.75rem; color: #64748b; margin: 0;">Bắn hạ các thiên thạch trong trận đấu để tích lũy thêm tiền vàng nâng cấp phi thuyền!</p>
-            </div>
-          </div>
-          
-          <!-- Game Over Overlay -->
-          <div class="game-overlay" id="game-over-overlay" style="display: none;">
-            <h2>💥 TÀU BỊ TIÊU DIỆT (GAME OVER)</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 10px;">Điểm số của bạn: <span id="game-final-score" class="text-accent font-weight-bold" style="font-size: 1.8rem;">0</span></p>
-            <p style="margin-bottom: 25px;">Kỷ lục cao nhất: <span id="game-high-score" class="font-weight-bold">0</span></p>
-            <button class="game-start-btn" id="btn-restart-game">CHƠI LẠI NGAY</button>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Live Stats HUD -->
-      <section class="stats-hud">
-        <div class="stat-card" id="hud-wpm">
-          <div class="stat-icon-wrapper wpm-accent">
-            <i class="fa-solid fa-gauge-high"></i>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value" id="live-wpm">0</span>
-            <span class="stat-title">WPM (Tốc độ)</span>
-          </div>
-        </div>
-
-        <div class="stat-card" id="hud-accuracy">
-          <div class="stat-icon-wrapper accuracy-accent">
-            <i class="fa-solid fa-crosshairs"></i>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value" id="live-accuracy">100%</span>
-            <span class="stat-title">Độ Chính Xác</span>
-          </div>
-        </div>
-
-        <div class="stat-card" id="hud-timer">
-          <div class="stat-icon-wrapper timer-accent">
-            <i class="fa-solid fa-clock"></i>
-          </div>
-          <div class="stat-details">
-            <span class="stat-value" id="live-timer">0s</span>
-            <span class="stat-title">Thời Gian</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Active Dictionary Lookup / IPA Info Panel -->
-      <section class="dictionary-card" id="dict-card">
-        <div class="dict-main">
-          <div class="word-header">
-            <h3 id="dict-word">Ready</h3>
-            <span class="part-of-speech" id="dict-pos">adj</span>
-            <span class="ipa" id="dict-ipa">/ˈred.i/</span>
-            <button class="tts-speak-btn tooltip" id="btn-speak-word" data-tooltip="Nghe Phát Âm">
-              <i class="fa-solid fa-volume-high"></i>
-            </button>
-          </div>
-          <p class="definition" id="dict-definition">Sẵn sàng để bắt đầu luyện tập gõ phím.</p>
-        </div>
-        <div class="dict-hint">
-          <i class="fa-solid fa-circle-info"></i>
-          <span>Gõ từ đầu tiên để kích hoạt bộ đo đếm thời gian.</span>
-        </div>
-      </section>
-
-      <!-- Typing Arena -->
-      <section class="typing-arena-container">
-        <!-- Textarea / Input Receiver (Hidden, but focuses typing) -->
-        <input type="text" id="typing-input" class="hidden-input" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus>
-        
-        <!-- Focus Overlay -->
-        <div class="focus-overlay" id="focus-prompt">
-          <div class="overlay-content">
-            <i class="fa-solid fa-mouse-pointer cursor-pulse"></i>
-            <p>Nhấp vào đây để tiếp tục gõ phím</p>
-          </div>
-        </div>
-
-        <!-- Scrollable Monospaced Text Container -->
-        <div class="typing-box" id="typing-box">
-          <!-- Floating smooth caret -->
-          <div class="typing-caret" id="typing-caret"></div>
-          <!-- Target text spans injected by app.js -->
-          <div class="words-wrapper" id="words-wrapper"></div>
-        </div>
-
-        <!-- Reset Button -->
-        <button class="reset-btn" id="btn-reset" title="Bắt đầu lại (Nhấn Tab + Enter)">
-          <i class="fa-solid fa-rotate-left"></i> Chạy Lại (Reset)
-        </button>
-      </section>
-
-
-      <!-- History & Stats Analytics Dashboard -->
-      <section class="analytics-dashboard">
-        <div class="dashboard-header">
-          <h2><i class="fa-solid fa-chart-line"></i> Lịch Sử Luyện Tập & Tiến Trình</h2>
-          <button class="clear-history-btn" id="btn-clear-history" title="Xóa toàn bộ lịch sử">
-            <i class="fa-solid fa-trash-can"></i> Xóa Lịch Sử
-          </button>
-        </div>
-
-        <div class="history-grid">
-          <!-- Overview Cards -->
-          <div class="overview-stats">
-            <div class="mini-card">
-              <span class="mini-label">Tổng bài test</span>
-              <span class="mini-value" id="stats-total-tests">0</span>
-            </div>
-            <div class="mini-card">
-              <span class="mini-label">WPM cao nhất</span>
-              <span class="mini-value text-accent" id="stats-peak-wpm">0</span>
-            </div>
-            <div class="mini-card">
-              <span class="mini-label">WPM Trung bình</span>
-              <span class="mini-value" id="stats-avg-wpm">0</span>
-            </div>
-            <div class="mini-card">
-              <span class="mini-label">Độ chính xác TB</span>
-              <span class="mini-value" id="stats-avg-accuracy">0%</span>
-            </div>
-          </div>
-
-          <!-- History Table -->
-          <div class="history-table-wrapper">
-            <table class="history-table" id="history-table">
-              <thead>
-                <tr>
-                  <th>Thời Gian</th>
-                  <th>Chế Độ</th>
-                  <th>Tốc Độ (WPM)</th>
-                  <th>Độ Chính Xác</th>
-                  <th>Thời Lượng</th>
-                </tr>
-              </thead>
-              <tbody id="history-table-body">
-                <!-- Dynamic history rows injected by app.js -->
-                <tr class="empty-row">
-                  <td colspan="5">Chưa có dữ liệu lịch sử. Hãy hoàn thành bài test đầu tiên!</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="app-footer">
-      <p>&copy; 2026 RinType English. Designed for pure typing excellence and fast learning.</p>
-    </footer>
 
   </div>
 
-  <!-- Sound effect templates / hidden controls if needed -->
-  
-  <!-- JavaScript Scripts -->
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fa-solid fa-gear"></i> Cài Đặt</h3>
+        <button class="modal-close" id="close-settings"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Giọng đọc (TTS)</label>
+        <select class="form-select" id="setting-voice">
+          <option value="en-US">English (US)</option>
+          <option value="en-GB">English (UK)</option>
+          <option value="en-AU">English (AU)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mục tiêu hàng ngày (từ)</label>
+        <select class="form-select" id="setting-daily-goal">
+          <option value="5">5 từ / ngày</option>
+          <option value="10" selected>10 từ / ngày</option>
+          <option value="20">20 từ / ngày</option>
+          <option value="30">30 từ / ngày</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Âm thanh</label>
+        <div class="flex gap-md">
+          <button class="btn btn-secondary" id="setting-sound-toggle">
+            <i class="fa-solid fa-volume-high"></i> Bật
+          </button>
+        </div>
+      </div>
+      <hr style="border-color: var(--border-primary); margin: var(--space-lg) 0;">
+      <div class="form-group">
+        <label class="form-label">Dữ liệu</label>
+        <div class="flex gap-md">
+          <button class="btn btn-secondary" id="setting-export"><i class="fa-solid fa-download"></i> Xuất dữ liệu</button>
+          <button class="btn btn-secondary" id="setting-import"><i class="fa-solid fa-upload"></i> Nhập dữ liệu</button>
+        </div>
+        <input type="file" id="import-file" accept=".json" style="display:none">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-danger w-full" id="setting-reset"><i class="fa-solid fa-trash"></i> Xóa toàn bộ dữ liệu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
   <script src="js/data.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/game.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/gamification.js"></script>
+  <script src="js/vocabulary.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/flashcard.js"></script>
+  <script src="js/typing.js"></script>
+  <script src="js/translate.js"></script>
+  <script src="js/listening.js"></script>
+  <script src="js/speaking.js"></script>
+  <script src="js/spaced-repetition.js"></script>
+  <script src="js/minigames.js"></script>
+  <script src="js/dashboard.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
