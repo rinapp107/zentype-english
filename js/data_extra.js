@@ -1,0 +1,172 @@
+/* ============================================
+   ZenType English — Extra Vocabulary (Oxford, IELTS, TOEIC)
+   ============================================ */
+
+if (typeof ZenData !== 'undefined' && ZenData.topics) {
+  // Topic 1: Oxford Cơ Bản (CEFR A1-A2)
+  ZenData.topics.push({
+    id: 'oxford_basic',
+    name: 'Oxford Cơ Bản',
+    icon: 'fa-graduation-cap',
+    color: '#06b6d4',
+    words: [
+      { word: 'ability', pos: 'n', phonetic: '/əˈbɪləti/', meaning: 'khả năng / năng lực', example: 'She has the ability to pass the exam.', exampleVi: 'Cô ấy có khả năng đỗ kỳ thi.' },
+      { word: 'abroad', pos: 'adv', phonetic: '/əˈbrɔːd/', meaning: 'nước ngoài / ở nước ngoài', example: 'He wants to study abroad next year.', exampleVi: 'Anh ấy muốn đi du học vào năm tới.' },
+      { word: 'accept', pos: 'v', phonetic: '/əkˈsept/', meaning: 'chấp nhận / nhận', example: 'They decided to accept our offer.', exampleVi: 'Họ đã quyết định chấp nhận lời đề nghị của chúng tôi.' },
+      { word: 'accident', pos: 'n', phonetic: '/ˈæksɪdənt/', meaning: 'tai nạn / rủi ro', example: 'She had a minor car accident.', exampleVi: 'Cô ấy gặp một tai nạn xe hơi nhỏ.' },
+      { word: 'achieve', pos: 'v', phonetic: '/əˈtʃiːv/', meaning: 'đạt được / hoàn thành', example: 'You can achieve anything with hard work.', exampleVi: 'Bạn có thể đạt được bất kỳ điều gì bằng cách làm việc chăm chỉ.' },
+      { word: 'active', pos: 'adj', phonetic: '/ˈæktɪv/', meaning: 'năng động / chủ động', example: 'He is an active member of the club.', exampleVi: 'Anh ấy là một thành viên năng động của câu lạc bộ.' },
+      { word: 'admire', pos: 'v', phonetic: '/ədˈmaɪə(r)/', meaning: 'ngưỡng mộ / khâm phục', example: 'I admire her dedication to her job.', exampleVi: 'Tôi ngưỡng mộ sự tận tụy của cô ấy với công việc.' },
+      { word: 'admit', pos: 'v', phonetic: '/ədˈmɪt/', meaning: 'thừa nhận / nhận vào', example: 'He admitted that he made a mistake.', exampleVi: 'Anh ấy thừa nhận rằng anh ấy đã mắc lỗi.' },
+      { word: 'advice', pos: 'n', phonetic: '/ədˈvaɪs/', meaning: 'lời khuyên / chỉ bảo', example: 'Let me give you a piece of advice.', exampleVi: 'Để tôi cho bạn một lời khuyên.' },
+      { word: 'afford', pos: 'v', phonetic: '/əˈfɔːd/', meaning: 'có đủ khả năng chi trả / đủ điều kiện', example: 'We cannot afford to buy a new house.', exampleVi: 'Chúng tôi không thể đủ tiền mua một ngôi nhà mới.' },
+      { word: 'agreeable', pos: 'adj', phonetic: '/əˈɡriːəbl/', meaning: 'dễ chịu / dễ thương', example: 'They spent an agreeable evening together.', exampleVi: 'Họ đã trải qua một buổi tối dễ chịu cùng nhau.' },
+      { word: 'allow', pos: 'v', phonetic: '/əˈlaʊ/', meaning: 'cho phép / chấp nhận', example: 'Pets are not allowed in the building.', exampleVi: 'Thú cưng không được phép ở trong tòa nhà.' },
+      { word: 'amount', pos: 'n', phonetic: '/əˈmaʊnt/', meaning: 'số lượng / tổng số', example: 'A large amount of money was spent.', exampleVi: 'Một số tiền lớn đã được chi tiêu.' },
+      { word: 'ancient', pos: 'adj', phonetic: '/ˈeɪnʃənt/', meaning: 'cổ xưa / cổ đại', example: 'We visited an ancient temple.', exampleVi: 'Chúng tôi đã đến thăm một ngôi đền cổ kính.' },
+      { word: 'anger', pos: 'n', phonetic: '/ˈæŋɡə(r)/', meaning: 'sự tức giận / phẫn nộ', example: 'He could not control his anger.', exampleVi: 'Anh ấy đã không thể kiểm soát sự tức giận của mình.' },
+      { word: 'anxious', pos: 'adj', phonetic: '/ˈæŋkʃəs/', meaning: 'lo lắng / bất an', example: 'She felt anxious about the interview.', exampleVi: 'Cô ấy cảm thấy lo lắng về buổi phỏng vấn.' },
+      { word: 'appearance', pos: 'n', phonetic: '/əˈpɪərəns/', meaning: 'ngoại hình / sự xuất hiện', example: 'Do not judge a book by its appearance.', exampleVi: 'Đừng đánh giá một cuốn sách qua vẻ bề ngoài.' },
+      { word: 'apply', pos: 'v', phonetic: '/əˈplaɪ/', meaning: 'nộp đơn / áp dụng', example: 'You should apply for this scholarship.', exampleVi: 'Bạn nên nộp đơn xin học bổng này.' },
+      { word: 'argue', pos: 'v', phonetic: '/ˈɑːɡjuː/', meaning: 'tranh luận / cãi vã', example: 'They always argue about money.', exampleVi: 'Họ luôn tranh cãi về tiền bạc.' },
+      { word: 'arrange', pos: 'v', phonetic: '/əˈreɪndʒ/', meaning: 'sắp xếp / thu xếp', example: 'I will arrange a meeting with them.', exampleVi: 'Tôi sẽ sắp xếp một cuộc họp với họ.' },
+      { word: 'assistant', pos: 'n', phonetic: '/əˈsɪstənt/', meaning: 'trợ lý / người phụ tá', example: 'She works as an administrative assistant.', exampleVi: 'Cô ấy làm việc như một trợ lý hành chính.' },
+      { word: 'assume', pos: 'v', phonetic: '/əˈsjuːm/', meaning: 'giả định / thừa nhận', example: 'Let us assume that the story is true.', exampleVi: 'Hãy giả định rằng câu chuyện đó là sự thật.' },
+      { word: 'attack', pos: 'v', phonetic: '/əˈtæk/', meaning: 'tấn công / công kích', example: 'The virus attacks the immune system.', exampleVi: 'Virus tấn công hệ thống miễn dịch.' },
+      { word: 'audience', pos: 'n', phonetic: '/ˈɔːdiəns/', meaning: 'khán giả / thính giả', example: 'The audience clapped at the end.', exampleVi: 'Khán giả đã vỗ tay ở phần cuối.' },
+      { word: 'average', pos: 'adj', phonetic: '/ˈævərɪdʒ/', meaning: 'trung bình / bình thường', example: 'The average temperature here is 25°C.', exampleVi: 'Nhiệt độ trung bình ở đây là 25 độ C.' },
+      { word: 'avoid', pos: 'v', phonetic: '/əˈvɔɪd/', meaning: 'tránh / né tránh', example: 'Try to avoid eating fast food.', exampleVi: 'Hãy cố gắng tránh ăn thức ăn nhanh.' },
+      { word: 'awake', pos: 'adj', phonetic: '/əˈweɪk/', meaning: 'tỉnh giấc / thức giấc', example: 'The noise kept me awake all night.', exampleVi: 'Tiếng ồn khiến tôi thức trắng cả đêm.' },
+      { word: 'balance', pos: 'n', phonetic: '/ˈbæləns/', meaning: 'sự cân bằng / số dư', example: 'You need to find a balance in life.', exampleVi: 'Bạn cần tìm một sự cân bằng trong cuộc sống.' },
+      { word: 'barren', pos: 'adj', phonetic: '/ˈbærən/', meaning: 'cằn cỗi / khô cằn', example: 'The land was barren and dry.', exampleVi: 'Đất đai cằn cỗi và khô hạn.' },
+      { word: 'beautiful', pos: 'adj', phonetic: '/ˈbjuːtɪfl/', meaning: 'đẹp / xinh đẹp', example: 'It is a beautiful sunny day.', exampleVi: 'Đó là một ngày nắng đẹp.' },
+      { word: 'begin', pos: 'v', phonetic: '/bɪˈɡɪn/', meaning: 'bắt đầu / khởi động', example: 'Let us begin the lesson now.', exampleVi: 'Hãy bắt đầu bài học ngay bây giờ.' },
+      { word: 'behavior', pos: 'n', phonetic: '/bɪˈheɪvjə(r)/', meaning: 'hành vi / cách cư xử', example: 'His aggressive behavior was shocking.', exampleVi: 'Hành vi hung hãn của anh ấy thật gây sốc.' },
+      { word: 'believe', pos: 'v', phonetic: '/bɪˈliːv/', meaning: 'tin tưởng / cho rằng', example: 'I believe everything will be fine.', exampleVi: 'Tôi tin mọi thứ sẽ ổn cả thôi.' },
+      { word: 'benefit', pos: 'n', phonetic: '/ˈbenɪfɪt/', meaning: 'lợi ích / phúc lợi', example: 'Regular exercise has many benefits.', exampleVi: 'Tập thể dục thường xuyên mang lại nhiều lợi ích.' },
+      { word: 'blame', pos: 'v', phonetic: '/bleɪm/', meaning: 'đổ lỗi / trách móc', example: 'Do not blame me for your mistakes.', exampleVi: 'Đừng đổ lỗi cho tôi về những sai lầm của bạn.' },
+      { word: 'borrow', pos: 'v', phonetic: '/ˈbɒrəʊ/', meaning: 'mượn / vay', example: 'Can I borrow your pen for a minute?', exampleVi: 'Tôi có thể mượn bút của bạn một lát không?' },
+      { word: 'bother', pos: 'v', phonetic: '/ˈbɒðə(r)/', meaning: 'làm phiền / bận tâm', example: 'I am sorry to bother you at home.', exampleVi: 'Tôi xin lỗi vì đã làm phiền bạn tại nhà.' },
+      { word: 'brave', pos: 'adj', phonetic: '/breɪv/', meaning: 'dũng cảm / gan dạ', example: 'The brave firefighter saved the child.', exampleVi: 'Người lính cứu hỏa dũng cảm đã cứu đứa trẻ.' },
+      { word: 'brief', pos: 'adj', phonetic: '/briːf/', meaning: 'ngắn gọn / tóm tắt', example: 'He gave a brief description of the event.', exampleVi: 'Anh ấy đã đưa ra một mô tả ngắn gọn về sự kiện.' },
+      { word: 'bright', pos: 'adj', phonetic: '/braɪt/', meaning: 'sáng sủa / thông minh', example: 'She has a bright future ahead.', exampleVi: 'Cô ấy có một tương lai tươi sáng phía trước.' },
+      { word: 'broad', pos: 'adj', phonetic: '/brɔːd/', meaning: 'rộng rãi / bao quát', example: 'The river is very broad at this point.', exampleVi: 'Con sông rất rộng ở điểm này.' },
+      { word: 'build', pos: 'v', phonetic: '/bɪld/', meaning: 'xây dựng / dựng lên', example: 'They plan to build a new hospital here.', exampleVi: 'Họ dự định xây dựng một bệnh viện mới ở đây.' },
+      { word: 'busy', pos: 'adj', phonetic: '/ˈbɪzi/', meaning: 'bận rộn / náo nhiệt', example: 'I am too busy to go out tonight.', exampleVi: 'Tôi quá bận để đi chơi tối nay.' },
+      { word: 'calm', pos: 'adj', phonetic: '/kɑːm/', meaning: 'bình tĩnh / êm đềm', example: 'Try to remain calm under pressure.', exampleVi: 'Hãy cố gắng giữ bình tĩnh dưới áp lực.' },
+      { word: 'careful', pos: 'adj', phonetic: '/ˈkeəfl/', meaning: 'cẩn thận / chu đáo', example: 'Be careful when crossing the street.', exampleVi: 'Hãy cẩn thận khi băng qua đường.' },
+      { word: 'celebrate', pos: 'v', phonetic: '/ˈselɪbreɪt/', meaning: 'kỷ niệm / ăn mừng', example: 'We celebrated his promotion last night.', exampleVi: 'Chúng tôi đã ăn mừng sự thăng chức của anh ấy tối qua.' },
+      { word: 'certain', pos: 'adj', phonetic: '/ˈsɜːtn/', meaning: 'chắc chắn / nào đó', example: 'Are you certain about the meeting time?', exampleVi: 'Bạn có chắc chắn về thời gian họp không?' },
+      { word: 'challenge', pos: 'n', phonetic: '/ˈtʃælɪndʒ/', meaning: 'thử thách / thách thức', example: 'Learning English is a big challenge.', exampleVi: 'Học tiếng Anh là một thử thách lớn.' },
+      { word: 'chance', pos: 'n', phonetic: '/tʃɑːns/', meaning: 'cơ hội / sự ngẫu nhiên', example: 'This is your last chance to sign up.', exampleVi: 'Đây là cơ hội cuối cùng để bạn đăng ký.' },
+      { word: 'change', pos: 'v', phonetic: '/tʃeɪndʒ/', meaning: 'thay đổi / biến đổi', example: 'You need to change your password.', exampleVi: 'Bạn cần thay đổi mật khẩu của mình.' },
+      { word: 'cheap', pos: 'adj', phonetic: '/tʃiːp/', meaning: 'rẻ tiền / kém chất lượng', example: 'The tickets were surprisingly cheap.', exampleVi: 'Vé rẻ đến mức đáng ngạc nhiên.' },
+      { word: 'choice', pos: 'n', phonetic: '/tʃɔɪs/', meaning: 'sự lựa chọn / quyết định', example: 'We have no other choice but to wait.', exampleVi: 'Chúng tôi không có lựa chọn nào khác ngoài việc chờ đợi.' }
+    ]
+  });
+
+  // Topic 2: Oxford Trung Cấp (CEFR B1-B2)
+  ZenData.topics.push({
+    id: 'oxford_inter',
+    name: 'Oxford Trung Cấp',
+    icon: 'fa-book-open-reader',
+    color: '#f59e0b',
+    words: [
+      { word: 'abandon', pos: 'v', phonetic: '/əˈbændən/', meaning: 'bỏ rơi / từ bỏ', example: 'They had to abandon the sinking ship.', exampleVi: 'Họ phải bỏ lại con tàu đang chìm.' },
+      { word: 'absorb', pos: 'v', phonetic: '/əbˈzɔːb/', meaning: 'hấp thụ / tiếp thu', example: 'Plants absorb carbon dioxide from the air.', exampleVi: 'Thực vật hấp thụ khí carbon dioxide từ không khí.' },
+      { word: 'academic', pos: 'adj', phonetic: '/ˌækəˈdemɪk/', meaning: 'thuộc học thuật / nghiên cứu', example: 'She has outstanding academic records.', exampleVi: 'Cô ấy có thành tích học tập xuất sắc.' },
+      { word: 'accurate', pos: 'adj', phonetic: '/ˈækjərət/', meaning: 'chính xác / xác đáng', example: 'The report was accurate and detailed.', exampleVi: 'Bản báo cáo đã chính xác và chi tiết.' },
+      { word: 'accuse', pos: 'v', phonetic: '/əˈkjuːz/', meaning: 'buộc tội / tố cáo', example: 'He was accused of stealing the money.', exampleVi: 'Anh ấy bị buộc tội ăn cắp tiền.' },
+      { word: 'acquire', pos: 'v', phonetic: '/əˈkwaɪə(r)/', meaning: 'đạt được / thâu tóm', example: 'She acquired a lot of knowledge in college.', exampleVi: 'Cô ấy đã tích lũy được nhiều kiến thức ở đại học.' },
+      { word: 'adjust', pos: 'v', phonetic: '/əˈdʒʌst/', meaning: 'điều chỉnh / thích nghi', example: 'It took him time to adjust to the new job.', exampleVi: 'Anh ấy mất thời gian để thích nghi với công việc mới.' },
+      { word: 'advocate', pos: 'v', phonetic: '/ˈædvəkeɪt/', meaning: 'ủng hộ / biện hộ', example: 'They advocate for environmental protection.', exampleVi: 'Họ ủng hộ việc bảo vệ môi trường.' },
+      { word: 'affect', pos: 'v', phonetic: '/əˈfekt/', meaning: 'ảnh hưởng / tác động', example: 'The disease affects the lungs directly.', exampleVi: 'Căn bệnh ảnh hưởng trực tiếp đến phổi.' },
+      { word: 'alternative', pos: 'n', phonetic: '/ɔːlˈtɜːnətɪv/', meaning: 'sự lựa chọn thay thế / phương án', example: 'We have no alternative but to go on.', exampleVi: 'Chúng tôi không có giải pháp thay thế nào khác ngoài tiếp tục.' },
+      { word: 'analyze', pos: 'v', phonetic: '/ˈænəlaɪz/', meaning: 'phân tích / nghiên cứu kỹ', example: 'Scientists analyzed the water samples.', exampleVi: 'Các nhà khoa học đã phân tích các mẫu nước.' },
+      { word: 'apparent', pos: 'adj', phonetic: '/əˈpærənt/', meaning: 'rõ ràng / hiển nhiên', example: 'It was apparent that he was lying.', exampleVi: 'Rõ ràng là anh ấy đang nói dối.' },
+      { word: 'approach', pos: 'n', phonetic: '/əˈprəʊtʃ/', meaning: 'cách tiếp cận / phương pháp', example: 'We need a new approach to the problem.', exampleVi: 'Chúng ta cần một cách tiếp cận mới đối với vấn đề.' },
+      { word: 'approve', pos: 'v', phonetic: '/əˈpruːv/', meaning: 'tán thành / phê duyệt', example: 'The board approved the budget proposal.', exampleVi: 'Hội đồng quản trị đã phê duyệt đề xuất ngân sách.' },
+      { word: 'aspect', pos: 'n', phonetic: '/ˈæspekt/', meaning: 'khía cạnh / khía diện', example: 'Every aspect of the project was reviewed.', exampleVi: 'Mọi khía cạnh của dự án đều đã được xem xét.' },
+      { word: 'assert', pos: 'v', phonetic: '/əˈsɜːt/', meaning: 'khẳng định / xác nhận', example: 'She asserted her independence early on.', exampleVi: 'Cô ấy đã khẳng định sự độc lập của mình ngay từ sớm.' },
+      { word: 'assume', pos: 'v', phonetic: '/əˈsjuːm/', meaning: 'cho là / giả định', example: 'Do not assume that everyone is friendly.', exampleVi: 'Đừng mặc định rằng ai cũng thân thiện.' },
+      { word: 'attempt', pos: 'n', phonetic: '/əˈtempt/', meaning: 'sự cố gắng / nỗ lực', example: 'This is his third attempt to pass.', exampleVi: 'Đây là nỗ lực thứ ba của anh ấy để vượt qua.' },
+      { word: 'attitude', pos: 'n', phonetic: '/ˈætɪtjuːd/', meaning: 'thái độ / quan điểm', example: 'She has a very positive attitude.', exampleVi: 'Cô ấy có một thái độ rất tích cực.' },
+      { word: 'attribute', pos: 'v', phonetic: '/əˈtrɪbjuːt/', meaning: 'quy cho / gán cho', example: 'They attribute their success to teamwork.', exampleVi: 'Họ quy sự thành công của mình là nhờ làm việc nhóm.' },
+      { word: 'authority', pos: 'n', phonetic: '/ɔːˈθɒrəti/', meaning: 'thẩm quyền / chính quyền', example: 'She is an authority on modern art.', exampleVi: 'Cô ấy là một chuyên gia có thẩm quyền về nghệ thuật hiện đại.' },
+      { word: 'brief', pos: 'v', phonetic: '/briːf/', meaning: 'tóm tắt thông tin / phổ biến', example: 'The captain briefed the crew on the mission.', exampleVi: 'Đội trưởng đã phổ biến nhiệm vụ cho phi hành đoàn.' },
+      { word: 'capacity', pos: 'n', phonetic: '/kəˈpæsəti/', meaning: 'sức chứa / năng lực', example: 'The theater was filled to capacity.', exampleVi: 'Nhà hát đã được lấp đầy chỗ trống.' },
+      { word: 'circumstance', pos: 'n', phonetic: '/ˈsɜːkəmstəns/', meaning: 'hoàn cảnh / trường hợp', example: 'Under no circumstances should you leave.', exampleVi: 'Trong bất kỳ hoàn cảnh nào bạn cũng không được rời đi.' },
+      { word: 'collapse', pos: 'v', phonetic: '/kəˈlæps/', meaning: 'sụp đổ / đổ gục', example: 'The old building collapsed during the storm.', exampleVi: 'Tòa nhà cũ đã sụp đổ trong cơn bão.' },
+      { word: 'commit', pos: 'v', phonetic: '/kəˈmɪt/', meaning: 'cam kết / phạm lỗi', example: 'They committed to improving services.', exampleVi: 'Họ đã cam kết cải thiện dịch vụ.' },
+      { word: 'compensate', pos: 'v', phonetic: '/ˈkɒmpenseɪt/', meaning: 'bồi thường / đền bù', example: 'The company compensated them for the delay.', exampleVi: 'Công ty đã bồi thường cho họ vì sự chậm trễ.' },
+      { word: 'comprehensive', pos: 'adj', phonetic: '/ˌkɒmprɪˈhensɪv/', meaning: 'toàn diện / bao quát', example: 'We offer a comprehensive training program.', exampleVi: 'Chúng tôi cung cấp một chương trình đào tạo toàn diện.' },
+      { word: 'concentrate', pos: 'v', phonetic: '/ˈkɒnsntreɪt/', meaning: 'tập trung / tụ họp', example: 'I need to concentrate on my work.', exampleVi: 'Tôi cần tập trung vào công việc của mình.' }
+    ]
+  });
+
+  // Topic 3: IELTS Học Thuật (CEFR B2-C1)
+  ZenData.topics.push({
+    id: 'ielts_academic',
+    name: 'IELTS Học Thuật',
+    icon: 'fa-brain',
+    color: '#a855f7',
+    words: [
+      { word: 'accumulate', pos: 'v', phonetic: '/əˈkjuːmjəleɪt/', meaning: 'tích lũy / gom góp', example: 'Dust began to accumulate on the shelves.', exampleVi: 'Bụi bắt đầu tích tụ trên các kệ sách.' },
+      { word: 'advocate', pos: 'n', phonetic: '/ˈædvəkət/', meaning: 'người ủng hộ / người bào chữa', example: 'She is a strong advocate for human rights.', exampleVi: 'Cô ấy là một người ủng hộ mạnh mẽ cho nhân quyền.' },
+      { word: 'ambiguous', pos: 'adj', phonetic: '/æmˈbɪɡjuəs/', meaning: 'mơ hồ / lưỡng nghĩa', example: 'His instructions were ambiguous and unclear.', exampleVi: 'Những chỉ dẫn của anh ấy rất mơ hồ và không rõ ràng.' },
+      { word: 'anticipate', pos: 'v', phonetic: '/ænˈtɪsɪpeɪt/', meaning: 'dự báo / lường trước', example: 'We anticipate a sharp increase in sales.', exampleVi: 'Chúng tôi dự báo doanh số sẽ tăng mạnh.' },
+      { word: 'bias', pos: 'n', phonetic: '/ˈbaɪəs/', meaning: 'sự thiên vị / thành kiến', example: 'The judge showed bias against the defendant.', exampleVi: 'Thẩm phán đã thể hiện sự thiên vị đối với bị cáo.' },
+      { word: 'clarify', pos: 'v', phonetic: '/ˈklærəfaɪ/', meaning: 'làm rõ / sáng tỏ', example: 'Could you clarify the main objective?', exampleVi: 'Bạn có thể làm rõ mục tiêu chính không?' },
+      { word: 'coherent', pos: 'adj', phonetic: '/kəʊˈhɪərənt/', meaning: 'mạch lạc / chặt chẽ', example: 'She failed to present a coherent argument.', exampleVi: 'Cô ấy đã thất bại trong việc trình bày một lập luận mạch lạc.' },
+      { word: 'coincide', pos: 'v', phonetic: '/ˌkəʊɪnˈsaɪd/', meaning: 'trùng hợp / xảy ra cùng lúc', example: 'My holiday coincides with his wedding.', exampleVi: 'Kỳ nghỉ của tôi trùng với lễ cưới của anh ấy.' },
+      { word: 'contradict', pos: 'v', phonetic: '/ˌkɒntrəˈdɪkt/', meaning: 'mâu thuẫn / phủ nhận', example: 'His testimony contradicts the evidence.', exampleVi: 'Lời khai của anh ấy mâu thuẫn với các chứng cứ.' },
+      { word: 'crucial', pos: 'adj', phonetic: '/ˈkruːʃl/', meaning: 'chủ chốt / tối quan trọng', example: 'This decision is crucial for our future.', exampleVi: 'Quyết định này là tối quan trọng đối với tương lai của chúng ta.' },
+      { word: 'deviate', pos: 'v', phonetic: '/ˈdiːvieɪt/', meaning: 'lệch lạc / đi chệch', example: 'Do not deviate from the original plan.', exampleVi: 'Đừng đi chệch khỏi kế hoạch ban đầu.' },
+      { word: 'diminish', pos: 'v', phonetic: '/dɪˈmɪnɪʃ/', meaning: 'giảm bớt / thu nhỏ', example: 'Our supply of water is diminishing fast.', exampleVi: 'Nguồn cung cấp nước của chúng ta đang cạn kiệt nhanh chóng.' },
+      { word: 'empirical', pos: 'adj', phonetic: '/ɪmˈpɪrɪkl/', meaning: 'mang tính thực nghiệm / thực tế', example: 'There is no empirical evidence to support this.', exampleVi: 'Không có bằng chứng thực nghiệm nào để hỗ trợ điều này.' },
+      { word: 'fluctuate', pos: 'v', phonetic: '/ˈflʌktʃueɪt/', meaning: 'dao động / biến động', example: 'Prices fluctuate according to demand.', exampleVi: 'Giá cả biến động tùy theo nhu cầu.' },
+      { word: 'hypothesize', pos: 'v', phonetic: '/haɪˈpɒθəsaɪz/', meaning: 'đưa ra giả thuyết / giả thiết', example: 'Scientists hypothesize that the planet had water.', exampleVi: 'Các nhà khoa học đưa ra giả thuyết rằng hành tinh này từng có nước.' },
+      { word: 'implement', pos: 'v', phonetic: '/ˈɪmplɪment/', meaning: 'triển khai / thực thi', example: 'We need to implement these changes immediately.', exampleVi: 'Chúng ta cần triển khai những thay đổi này ngay lập tức.' },
+      { word: 'implicit', pos: 'adj', phonetic: '/ɪmˈplɪsɪt/', meaning: 'ngầm hiểu / ẩn ý', example: 'There was an implicit agreement between them.', exampleVi: 'Có một sự đồng thuận ngầm giữa họ.' },
+      { word: 'inevitable', pos: 'adj', phonetic: '/ɪnˈevɪtəbl/', meaning: 'không thể tránh khỏi / tất yếu', example: 'Change is an inevitable part of life.', exampleVi: 'Thay đổi là một phần tất yếu của cuộc sống.' },
+      { word: 'infrastructure', pos: 'n', phonetic: '/ˈɪnfrəstrʌktʃə(r)/', meaning: 'cơ sở hạ tầng / hạ tầng', example: 'The government plans to invest in infrastructure.', exampleVi: 'Chính phủ dự định đầu tư vào cơ sở hạ tầng.' },
+      { word: 'inherent', pos: 'adj', phonetic: '/ɪnˈhɪərənt/', meaning: 'vốn có / cố hữu', example: 'Every business decision has inherent risks.', exampleVi: 'Mỗi quyết định kinh doanh đều có những rủi ro vốn có.' },
+      { word: 'isolate', pos: 'v', phonetic: '/ˈaɪsəleɪt/', meaning: 'cô lập / tách biệt', example: 'Patients were isolated to prevent infection.', exampleVi: 'Bệnh nhân đã bị cô lập để ngăn ngừa lây nhiễm.' },
+      { word: 'justify', pos: 'v', phonetic: '/ˈdʒʌstɪfaɪ/', meaning: 'bào chữa / giải trình', example: 'How do you justify such high expenses?', exampleVi: 'Làm thế nào bạn giải trình cho chi phí cao như vậy?' },
+      { word: 'maximize', pos: 'v', phonetic: '/ˈmæksɪmaɪz/', meaning: 'tối đa hóa / tận dụng triệt để', example: 'We aim to maximize profits this quarter.', exampleVi: 'Chúng tôi đặt mục tiêu tối đa hóa lợi nhuận trong quý này.' },
+      { word: 'notion', pos: 'n', phonetic: '/ˈnəʊʃn/', meaning: 'khái niệm / quan niệm', example: 'She has a vague notion of what she wants.', exampleVi: 'Cô ấy có một quan niệm mơ hồ về những gì cô ấy muốn.' }
+    ]
+  });
+
+  // Topic 4: TOEIC Thương Mại (Business English)
+  ZenData.topics.push({
+    id: 'toeic_business',
+    name: 'TOEIC Thương Mại',
+    icon: 'fa-briefcase',
+    color: '#ec4899',
+    words: [
+      { word: 'agenda', pos: 'n', phonetic: '/əˈdʒendə/', meaning: 'chương trình nghị sự / lịch trình họp', example: 'What is the next item on the agenda?', exampleVi: 'Đâu là nội dung tiếp theo trong chương trình họp?' },
+      { word: 'allocate', pos: 'v', phonetic: '/ˈæləkeɪt/', meaning: 'phân bổ / cấp phát', example: 'The budget was allocated to different departments.', exampleVi: 'Ngân sách đã được phân bổ cho các phòng ban khác nhau.' },
+      { word: 'collaboration', pos: 'n', phonetic: '/kəˌlæbəˈreɪʃn/', meaning: 'sự cộng tác / hợp tác', example: 'This project is a collaboration with a tech firm.', exampleVi: 'Dự án này là một sự hợp tác với một công ty công nghệ.' },
+      { word: 'commence', pos: 'v', phonetic: '/kəˈmens/', meaning: 'bắt đầu / khởi sự', example: 'The conference will commence at 9 AM sharp.', exampleVi: 'Hội nghị sẽ bắt đầu vào lúc đúng 9 giờ sáng.' },
+      { word: 'contract', pos: 'n', phonetic: '/ˈkɒntrækt/', meaning: 'hợp đồng / khế ước', example: 'Please sign the contract by Friday.', exampleVi: 'Vui lòng ký hợp đồng trước thứ Sáu.' },
+      { word: 'deficit', pos: 'n', phonetic: '/ˈdefɪsɪt/', meaning: 'thâm hụt / thiếu hụt', example: 'The country is running a trade deficit.', exampleVi: 'Đất nước đang rơi vào tình trạng thâm hụt thương mại.' },
+      { word: 'delegate', pos: 'v', phonetic: '/ˈdelɪɡeɪt/', meaning: 'ủy thác / giao việc', example: 'A good manager knows how to delegate tasks.', exampleVi: 'Một người quản lý giỏi biết cách giao phó công việc.' },
+      { word: 'evaluate', pos: 'v', phonetic: '/ɪˈvæljueɪt/', meaning: 'đánh giá / định giá', example: 'We need to evaluate the performance of our staff.', exampleVi: 'Chúng ta cần đánh giá hiệu suất của nhân viên.' },
+      { word: 'executive', pos: 'n', phonetic: '/ɪɡˈzekjətɪv/', meaning: 'ủy viên điều hành / giám đốc điều hành', example: 'She is a top executive in an advertising agency.', exampleVi: 'Cô ấy là một giám đốc điều hành cấp cao trong công ty quảng cáo.' },
+      { word: 'expedite', pos: 'v', phonetic: '/ˈekspədaɪt/', meaning: 'xúc tiến / thúc đẩy nhanh', example: 'We need to expedite the delivery process.', exampleVi: 'Chúng ta cần đẩy nhanh quá trình giao hàng.' },
+      { word: 'fluctuation', pos: 'n', phonetic: '/ˌflʌktʃuˈeɪʃn/', meaning: 'sự biến động / dao động', example: 'Market fluctuations are common in spring.', exampleVi: 'Biến động thị trường rất phổ biến vào mùa xuân.' },
+      { word: 'invoice', pos: 'n', phonetic: '/ˈɪnvɔɪs/', meaning: 'hóa đơn / biên lai', example: 'I will send you the invoice tomorrow.', exampleVi: 'Tôi sẽ gửi cho bạn hóa đơn vào ngày mai.' },
+      { word: 'liable', pos: 'adj', phonetic: '/ˈlaɪəbl/', meaning: 'chịu trách nhiệm pháp lý / có khả năng xảy ra', example: 'The store is not liable for lost items.', exampleVi: 'Cửa hàng không chịu trách nhiệm đối với đồ đạc bị mất.' },
+      { word: 'merger', pos: 'n', phonetic: '/ˈmɜːdʒə(r)/', meaning: 'sự sáp nhập / hợp nhất', example: 'The merger of the two banks was completed.', exampleVi: 'Việc sáp nhập của hai ngân hàng đã hoàn thành.' },
+      { word: 'negotiate', pos: 'v', phonetic: '/nɪˈɡəʊʃieɪt/', meaning: 'thương lượng / đàm phán', example: 'They are trying to negotiate a deal.', exampleVi: 'Họ đang cố gắng đàm phán một thỏa thuận.' },
+      { word: 'outcome', pos: 'n', phonetic: '/ˈaʊtkʌm/', meaning: 'kết quả / đầu ra', example: 'We are waiting for the final outcome of the audit.', exampleVi: 'Chúng tôi đang đợi kết quả cuối cùng của cuộc kiểm toán.' },
+      { word: 'patent', pos: 'n', phonetic: '/ˈpætnt/', meaning: 'bằng sáng chế / bản quyền', example: 'They filed a patent for their new engine.', exampleVi: 'Họ đã nộp đơn đăng ký bằng sáng chế cho động cơ mới của mình.' },
+      { word: 'recruitment', pos: 'n', phonetic: '/rɪˈkruːtmənt/', meaning: 'sự tuyển dụng / bổ nhiệm', example: 'Our recruitment policy needs an update.', exampleVi: 'Chính sách tuyển dụng của chúng ta cần được cập nhật.' },
+      { word: 'refund', pos: 'n', phonetic: '/ˈriːfʌnd/', meaning: 'khoản hoàn trả lại tiền / bồi tiền', example: 'You are entitled to a full refund.', exampleVi: 'Bạn có quyền nhận một khoản hoàn trả đầy đủ.' },
+      { word: 'revenue', pos: 'n', phonetic: '/ˈrevənjuː/', meaning: 'doanh thu / lợi tức', example: 'The company generated substantial revenue.', exampleVi: 'Công ty đã tạo ra doanh thu đáng kể.' },
+      { word: 'subsidiary', pos: 'n', phonetic: '/səbˈsɪdiəri/', meaning: 'công ty con / chi nhánh', example: 'They opened a new subsidiary in Tokyo.', exampleVi: 'Họ đã mở một công ty con mới tại Tokyo.' },
+      { word: 'transaction', pos: 'n', phonetic: '/trænˈzækʃn/', meaning: 'giao dịch / vụ làm ăn', example: 'The online transaction was successful.', exampleVi: 'Giao dịch trực tuyến đã thành công.' }
+    ]
+  });
+}

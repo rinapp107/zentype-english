@@ -138,6 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.DashboardModule) DashboardModule.render(mainContent);
             else renderPlaceholder(mainContent, 'Dashboard');
             break;
+          case 'roadmap':
+            if (window.RoadmapModule) RoadmapModule.render(mainContent);
+            else renderPlaceholder(mainContent, 'Lộ Trình 365 Ngày');
+            break;
           case 'vocabulary':
             if (window.VocabularyModule) VocabularyModule.render(mainContent);
             else renderPlaceholder(mainContent, 'Từ Vựng');
