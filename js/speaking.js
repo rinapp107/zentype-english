@@ -89,7 +89,7 @@ window.SpeakingModule = {
 
   generateExercises() {
     if (this.mode === 'word') {
-      const allWords = ZenData.getAllWords();
+      const allWords = window.getActiveZenData().getAllWords();
       const shuffled = [...allWords].sort(() => Math.random() - 0.5);
       this.exercises = shuffled.slice(0, 10).map(w => ({
         target: w.word,
@@ -97,7 +97,7 @@ window.SpeakingModule = {
         translation: w.meaning
       }));
     } else {
-      const shuffled = [...ZenData.sentences].sort(() => Math.random() - 0.5);
+      const shuffled = [...window.getActiveZenData().sentences].sort(() => Math.random() - 0.5);
       this.exercises = shuffled.slice(0, 5).map(s => ({
         target: s.en,
         phonetic: null,
@@ -224,6 +224,8 @@ window.SpeakingModule = {
       this.recognition.stop();
     } else {
       try {
+        const settings = ZenStorage.getSettings();
+        this.recognition.lang = settings?.voiceAccent || 'en-US';
         this.recognition.start();
       } catch(e) {
         // Handle case where it's already started

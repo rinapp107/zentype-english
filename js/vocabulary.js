@@ -9,7 +9,7 @@ window.VocabularyModule = {
   render(container) {
     this.container = container;
     const vocab = ZenStorage.getVocabulary();
-    const topics = ZenData.topics;
+    const topics = getActiveZenData().topics;
 
     container.innerHTML = `
       <div class="vocab-header flex justify-between align-center mb-lg animate-slide-down">
@@ -193,7 +193,7 @@ window.VocabularyModule = {
     // Render cards
     grid.innerHTML = vocab.map((v, index) => {
       const isMastered = v.masteryLevel >= 80;
-      const topic = ZenData.getTopicById(v.topicId);
+      const topic = getActiveZenData().getTopicById(v.topicId);
       const topicName = topic ? topic.name : 'Chung';
       const topicColor = topic ? topic.color : 'var(--primary)';
       
@@ -390,7 +390,7 @@ window.VocabularyModule = {
     let pool = vocab.filter(v => v.word.toLowerCase() !== correctWordStr.toLowerCase());
     
     if (pool.length < count) {
-      ZenData.topics.forEach(t => {
+      getActiveZenData().topics.forEach(t => {
         t.words.forEach(w => {
           if (w.word.toLowerCase() !== correctWordStr.toLowerCase() && !pool.some(p => p.word.toLowerCase() === w.word.toLowerCase())) {
             pool.push(w);
@@ -407,7 +407,7 @@ window.VocabularyModule = {
     const vocab = ZenStorage.getVocabulary();
     let pool = vocab.filter(v => v.word.toLowerCase() !== correctWordStr.toLowerCase());
     if (pool.length < count) {
-      ZenData.topics.forEach(t => {
+      getActiveZenData().topics.forEach(t => {
         t.words.forEach(w => {
           if (w.word.toLowerCase() !== correctWordStr.toLowerCase() && !pool.some(p => p.word.toLowerCase() === w.word.toLowerCase())) {
             pool.push(w);

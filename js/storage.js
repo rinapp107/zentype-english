@@ -21,6 +21,10 @@ const ZenStorage = {
           if (key === this.keys.VOCAB) return 'zen_vocab_de';
           if (key === this.keys.PROGRESS) return 'zen_progress_de';
           if (key === this.keys.HISTORY) return 'zen_history_de';
+        } else if (lang === 'kr') {
+          if (key === this.keys.VOCAB) return 'zen_vocab_kr';
+          if (key === this.keys.PROGRESS) return 'zen_progress_kr';
+          if (key === this.keys.HISTORY) return 'zen_history_kr';
         }
       }
     } catch (e) {
@@ -34,7 +38,7 @@ const ZenStorage = {
       const settingsStr = localStorage.getItem(this.keys.SETTINGS);
       const settings = settingsStr ? JSON.parse(settingsStr) : {};
       const activeLang = settings.language || 'en';
-      const dataObj = activeLang === 'de' ? ZenDataDE : ZenData;
+      const dataObj = activeLang === 'de' ? ZenDataDE : (activeLang === 'kr' ? ZenDataKR : ZenData);
       const vocabKey = this.resolveKey(this.keys.VOCAB);
       
       const currentVocab = this.getVocabulary();
@@ -119,7 +123,7 @@ const ZenStorage = {
       const settingsStr = localStorage.getItem(this.keys.SETTINGS);
       const settings = settingsStr ? JSON.parse(settingsStr) : {};
       const activeLang = settings.language || 'en';
-      const dataObj = activeLang === 'de' ? ZenDataDE : ZenData;
+      const dataObj = activeLang === 'de' ? ZenDataDE : (activeLang === 'kr' ? ZenDataKR : ZenData);
       
       const defaultVocab = dataObj.getAllWords().map(w => ({
         ...w,
@@ -356,5 +360,38 @@ const ZenStorage = {
   resetAll() {
     localStorage.clear();
     this.init();
+  }
+};
+
+// Global helper to get the active language's dataset
+window.getActiveZenData = function() {
+  try {
+    const settingsStr = localStorage.getItem('zen_settings');
+    const settings = settingsStr ? JSON.parse(settingsStr) : {};
+    const lang = settings.language || 'en';
+    let dataObj = ZenData;
+    if (lang === 'de') {
+      dataObj = typeof ZenDataDE !== 'undefined' ? ZenDataDE : ZenData;
+    } else if (lang === 'kr') {
+      dataObj = typeof ZenDataKR !== 'undefined' ? ZenDataKR : ZenData;
+    }
+    
+    // Ensure phrase/sentence compatibility alias (item.en = item[lang])
+    if (lang !== 'en') {
+      if (dataObj.phrases) {
+        dataObj.phrases.forEach(item => {
+          if (item[lang] && !item.en) item.en = item[lang];
+        });
+      }
+      if (dataObj.sentences) {
+        dataObj.sentences.forEach(item => {
+          if (item[lang] && !item.en) item.en = item[lang];
+        });
+      }
+    }
+    return dataObj;
+  } catch (e) {
+    console.error('Error in getActiveZenData:', e);
+    return ZenData;
   }
 };

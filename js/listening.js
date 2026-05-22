@@ -67,10 +67,10 @@ window.ListeningModule = {
 
   generateExercises() {
     if (this.mode === 'dictation') {
-      const shuffled = [...ZenData.sentences].sort(() => Math.random() - 0.5);
+      const shuffled = [...window.getActiveZenData().sentences].sort(() => Math.random() - 0.5);
       this.exercises = shuffled.slice(0, 5);
     } else {
-      const allWords = ZenData.getAllWords();
+      const allWords = window.getActiveZenData().getAllWords();
       const shuffled = [...allWords].sort(() => Math.random() - 0.5);
       const targetWords = shuffled.slice(0, 10);
       

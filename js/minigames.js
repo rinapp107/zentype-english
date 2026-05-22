@@ -64,7 +64,7 @@ window.MinigamesModule = {
     };
     
     // Get 8 random words
-    const allWords = ZenData.getAllWords();
+    const allWords = window.getActiveZenData().getAllWords();
     const selectedWords = [...allWords].sort(() => Math.random() - 0.5).slice(0, 8);
     
     // Create pairs (En and Vi)
@@ -233,7 +233,7 @@ window.MinigamesModule = {
   },
   
   nextScrambleWord() {
-    const allWords = ZenData.getAllWords().filter(w => w.word.length >= 4 && w.word.length <= 10 && !w.word.includes(' '));
+    const allWords = window.getActiveZenData().getAllWords().filter(w => w.word.length >= 4 && w.word.length <= 10 && !w.word.includes(' '));
     const randomWord = allWords[Math.floor(Math.random() * allWords.length)];
     
     let chars = randomWord.word.split('');

@@ -16,7 +16,7 @@ window.QuizModule = {
   },
 
   showSetup() {
-    const topics = ZenData.topics;
+    const topics = window.getActiveZenData().topics;
     
     this.container.innerHTML = `
       <div class="setup-container mx-auto" style="max-width: 600px; padding-top: 40px;">
@@ -87,12 +87,12 @@ window.QuizModule = {
       sourceWords = ZenStorage.getVocabulary().filter(w => w.topicId === this.currentTopicId);
       // Fallback to defaults if user has no words in this topic yet
       if (sourceWords.length < 4) {
-        sourceWords = ZenData.getWordsByTopic(this.currentTopicId);
+        sourceWords = window.getActiveZenData().getWordsByTopic(this.currentTopicId);
       }
     } else {
       sourceWords = ZenStorage.getVocabulary();
       if (sourceWords.length < 4) {
-        sourceWords = ZenData.getAllWords();
+        sourceWords = window.getActiveZenData().getAllWords();
       }
     }
 

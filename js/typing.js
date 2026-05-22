@@ -65,7 +65,7 @@ window.TypingModule = {
   },
 
   generateExercises() {
-    const allSentences = ZenData.sentences;
+    const allSentences = window.getActiveZenData().sentences;
     
     // Pick 10 random sentences
     const shuffled = [...allSentences].sort(() => Math.random() - 0.5);

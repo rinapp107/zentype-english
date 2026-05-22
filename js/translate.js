@@ -112,11 +112,12 @@ window.TranslateModule = {
   getExercisePool() {
     // Primary source: translationExercises
     let pool = [];
-    if (ZenData.translationExercises && ZenData.translationExercises.length > 0) {
-      pool = [...ZenData.translationExercises];
+    const activeData = window.getActiveZenData();
+    if (activeData.translationExercises && activeData.translationExercises.length > 0) {
+      pool = [...activeData.translationExercises];
     } else {
       // Fallback: combine phrases + sentences, wrap with default fields
-      const combined = [...(ZenData.phrases || []), ...(ZenData.sentences || [])];
+      const combined = [...(activeData.phrases || []), ...(activeData.sentences || [])];
       pool = combined.map(item => ({
         en: item.en,
         vi: item.vi,

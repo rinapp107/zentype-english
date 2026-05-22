@@ -12,8 +12,8 @@ window.RoadmapModule = {
     const settings = ZenStorage.getSettings();
     const lang = settings.language || 'en';
     return {
-      currentDay: lang === 'de' ? 'zen_roadmap_current_day_de' : 'zen_roadmap_current_day',
-      completedDays: lang === 'de' ? 'zen_roadmap_completed_days_de' : 'zen_roadmap_completed_days'
+      currentDay: lang === 'de' ? 'zen_roadmap_current_day_de' : (lang === 'kr' ? 'zen_roadmap_current_day_kr' : 'zen_roadmap_current_day'),
+      completedDays: lang === 'de' ? 'zen_roadmap_completed_days_de' : (lang === 'kr' ? 'zen_roadmap_completed_days_kr' : 'zen_roadmap_completed_days')
     };
   },
 
@@ -65,6 +65,21 @@ window.RoadmapModule = {
         { id: 11, name: 'Tháng 11: Ôn Tập Tổng Hợp 1', desc: 'Luyện tập nâng cao cấu trúc', startDay: 301, endDay: 330 },
         { id: 12, name: 'Tháng 12: Làm Chủ', desc: 'Luyện nói và giao tiếp lưu loát', startDay: 331, endDay: 365 }
       ];
+    } else if (lang === 'kr') {
+      return [
+        { id: 1, name: 'Tháng 1: Khởi Đầu', desc: 'Giao tiếp tiếng Hàn cơ bản nhất', startDay: 1, endDay: 30 },
+        { id: 2, name: 'Tháng 2: Đời Sống', desc: 'Sinh hoạt và thói quen hàng ngày', startDay: 31, endDay: 60 },
+        { id: 3, name: 'Tháng 3: Du Lịch', desc: 'Từ vựng di chuyển, khách sạn', startDay: 61, endDay: 90 },
+        { id: 4, name: 'Tháng 4: Gia Đình', desc: 'Mối quan hệ và nhà cửa', startDay: 91, endDay: 120 },
+        { id: 5, name: 'Tháng 5: Công Việc 1', desc: 'Nghề nghiệp và công sở cơ bản', startDay: 121, endDay: 150 },
+        { id: 6, name: 'Tháng 6: Công Việc 2', desc: 'Hợp đồng, lương bổng công sở', startDay: 151, endDay: 180 },
+        { id: 7, name: 'Tháng 7: Ẩm Thực', desc: 'Nhà hàng, món ăn tiếng Hàn', startDay: 181, endDay: 210 },
+        { id: 8, name: 'Tháng 8: Mua Sắm', desc: 'Giá cả và giao dịch thương mại', startDay: 211, endDay: 240 },
+        { id: 9, name: 'Tháng 9: Thời Tiết', desc: 'Khí hậu và hoạt động ngoài trời', startDay: 241, endDay: 270 },
+        { id: 10, name: 'Tháng 10: Sức Khỏe', desc: 'Y tế và cảm xúc cơ bản', startDay: 271, endDay: 300 },
+        { id: 11, name: 'Tháng 11: Ôn Tập Tổng Hợp 1', desc: 'Luyện tập nâng cao cấu trúc', startDay: 301, endDay: 330 },
+        { id: 12, name: 'Tháng 12: Làm Chủ', desc: 'Luyện nói và giao tiếp lưu loát', startDay: 331, endDay: 365 }
+      ];
     } else {
       return [
         { id: 1, name: 'Tháng 1: Khởi Động', desc: 'Giao tiếp & đời sống cơ bản (A1)', startDay: 1, endDay: 30 },
@@ -87,13 +102,13 @@ window.RoadmapModule = {
   getSortedWords() {
     const settings = ZenStorage.getSettings();
     const lang = settings.language || 'en';
-    const dataObj = lang === 'de' ? ZenDataDE : ZenData;
+    const dataObj = lang === 'de' ? ZenDataDE : (lang === 'kr' ? ZenDataKR : ZenData);
     
     // Sort static words systematically from easy to hard
     const allWords = dataObj.getAllWords();
     
-    if (lang === 'de') {
-      // Just return German words in their standard order
+    if (lang === 'de' || lang === 'kr') {
+      // Just return German/Korean words in their standard order
       return allWords;
     }
 

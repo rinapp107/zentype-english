@@ -17,7 +17,7 @@ window.FlashcardModule = {
   },
 
   showSetup() {
-    const topics = ZenData.topics;
+    const topics = window.getActiveZenData().topics;
     
     this.container.innerHTML = `
       <div class="setup-container mx-auto" style="max-width: 600px; padding-top: 40px;">
@@ -72,10 +72,10 @@ window.FlashcardModule = {
       }
     } else if (topicId !== 'all') {
       sourceWords = ZenStorage.getVocabulary().filter(w => w.topicId === topicId);
-      if (sourceWords.length === 0) sourceWords = ZenData.getWordsByTopic(topicId);
+      if (sourceWords.length === 0) sourceWords = window.getActiveZenData().getWordsByTopic(topicId);
     } else {
       sourceWords = ZenStorage.getVocabulary();
-      if (sourceWords.length === 0) sourceWords = ZenData.getAllWords();
+      if (sourceWords.length === 0) sourceWords = window.getActiveZenData().getAllWords();
     }
 
     if (sourceWords.length === 0) {

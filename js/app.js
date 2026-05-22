@@ -55,6 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentLangFlag) currentLangFlag.textContent = '🇩🇪';
     if (currentLangText) currentLangText.textContent = 'DE';
     if (btnLangToggle) btnLangToggle.setAttribute('data-tooltip', 'Đang học: Tiếng Đức (Click để đổi)');
+  } else if (activeLang === 'kr') {
+    document.title = "ZenType Korean — Học Tiếng Hàn Thông Minh";
+    const logoSub = document.querySelector('.logo-sub');
+    if (logoSub) logoSub.textContent = "배우다 → 연습하다 → 기억하다";
+    
+    if (currentLangFlag) currentLangFlag.textContent = '🇰🇷';
+    if (currentLangText) currentLangText.textContent = 'KR';
+    if (btnLangToggle) btnLangToggle.setAttribute('data-tooltip', 'Đang học: Tiếng Hàn (Click để đổi)');
   } else {
     document.title = "ZenType English — Học Tiếng Anh Thông Minh";
     const logoSub = document.querySelector('.logo-sub');
@@ -68,14 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnLangToggle) {
     btnLangToggle.addEventListener('click', () => {
       const currentSettings = ZenStorage.getSettings();
-      const nextLang = currentSettings.language === 'en' ? 'de' : 'en';
-      const nextVoice = nextLang === 'de' ? 'de-DE' : 'en-US';
+      let nextLang = 'en';
+      let nextVoice = 'en-US';
+      if (currentSettings.language === 'en') {
+        nextLang = 'de';
+        nextVoice = 'de-DE';
+      } else if (currentSettings.language === 'de') {
+        nextLang = 'kr';
+        nextVoice = 'ko-KR';
+      } else {
+        nextLang = 'en';
+        nextVoice = 'en-US';
+      }
       ZenStorage.updateSettings({ 
         language: nextLang,
         voiceAccent: nextVoice
       });
       ZenStorage.init();
-      alert(`Đã chuyển sang học tiếng ${nextLang === 'de' ? 'Đức' : 'Anh'}!`);
+      alert(`Đã chuyển sang học tiếng ${nextLang === 'de' ? 'Đức' : (nextLang === 'kr' ? 'Hàn' : 'Anh')}!`);
       location.reload();
     });
   }
@@ -264,13 +282,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Save settings on change
     document.getElementById('setting-lang').addEventListener('change', (e) => {
       const nextLang = e.target.value;
-      const nextVoice = nextLang === 'de' ? 'de-DE' : 'en-US';
+      let nextVoice = 'en-US';
+      if (nextLang === 'de') nextVoice = 'de-DE';
+      else if (nextLang === 'kr') nextVoice = 'ko-KR';
+      
       ZenStorage.updateSettings({ 
         language: nextLang,
         voiceAccent: nextVoice
       });
       ZenStorage.init();
-      alert(`Đã chuyển sang học tiếng ${nextLang === 'de' ? 'Đức' : 'Anh'}!`);
+      alert(`Đã chuyển sang học tiếng ${nextLang === 'de' ? 'Đức' : (nextLang === 'kr' ? 'Hàn' : 'Anh')}!`);
       location.reload();
     });
 
