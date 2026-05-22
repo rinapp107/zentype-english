@@ -2601,3 +2601,310 @@ img { max-width: 100%; height: auto; }
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
+/* ============================================
+   TRANSLATE MODULE REDESIGN
+   ============================================ */
+
+/* Topic selection grid */
+.translate-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.translate-topic-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-sm);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.translate-topic-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
+}
+
+.translate-topic-card.active {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.08);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.translate-topic-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.translate-topic-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 2px;
+}
+
+.translate-topic-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* Analysis panel */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+.translate-analysis-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Section blocks */
+.translate-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  border-left: 4px solid var(--border-primary);
+}
+
+.translate-section-user {
+  border-left-color: #8b5cf6;
+}
+
+.translate-section-reference {
+  border-left-color: var(--primary);
+}
+
+.translate-section-grammar {
+  border-left-color: #f59e0b;
+}
+
+.translate-section-context {
+  border-left-color: var(--success);
+}
+
+.translate-section-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+/* User answer display */
+.translate-user-answer {
+  font-size: 1.05rem;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(139, 92, 246, 0.06);
+  border-radius: var(--radius-sm);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Reference translation */
+.translate-reference {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  padding: var(--space-sm) 0;
+  line-height: 1.5;
+}
+
+/* Alternative translations */
+.translate-alt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.translate-alt-item {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 3px 0;
+  line-height: 1.5;
+}
+
+/* Grammar note */
+.translate-grammar-note {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(245, 158, 11, 0.06);
+  border-radius: var(--radius-sm);
+}
+
+/* Vocabulary items */
+.translate-vocab-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.translate-vocab-item:last-child {
+  border-bottom: none;
+}
+
+.translate-vocab-word {
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+}
+
+.translate-vocab-meaning {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+}
+
+.translate-vocab-note {
+  width: 100%;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding-left: var(--space-sm);
+}
+
+/* Context items */
+.translate-context-item {
+  font-size: 0.9rem;
+  padding: var(--space-xs) 0;
+  line-height: 1.6;
+}
+
+/* Self-rate buttons */
+.translate-rate-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  padding-top: var(--space-md);
+  margin-top: var(--space-sm);
+  border-top: 1px solid var(--border-primary);
+}
+
+.translate-rate-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 50px;
+  border: 2px solid transparent;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+  min-width: 120px;
+}
+
+.translate-rate-btn .rate-xp {
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.translate-rate-btn.rate-review {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.translate-rate-btn.rate-review:hover {
+  background: rgba(245, 158, 11, 0.2);
+  transform: translateY(-2px);
+}
+
+.translate-rate-btn.rate-understood {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.translate-rate-btn.rate-understood:hover {
+  background: rgba(99, 102, 241, 0.2);
+  transform: translateY(-2px);
+}
+
+.translate-rate-btn.rate-mastered {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.translate-rate-btn.rate-mastered:hover {
+  background: rgba(16, 185, 129, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Vocabulary summary in results */
+.translate-vocab-summary {
+  text-align: left;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.translate-vocab-summary h4 {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.translate-vocab-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-xs) var(--space-lg);
+}
+
+.translate-vocab-summary-item {
+  font-size: 0.88rem;
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .translate-topic-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .translate-topic-card {
+    padding: var(--space-sm);
+  }
+
+  .translate-topic-icon {
+    font-size: 1.4rem;
+  }
+
+  .translate-rate-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .translate-rate-btn {
+    flex-direction: row;
+    justify-content: center;
+    min-width: auto;
+    border-radius: var(--radius-md);
+  }
+
+  .translate-vocab-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
